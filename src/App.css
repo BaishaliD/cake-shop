@@ -1,0 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant&family=Dancing+Script&family=Roboto&display=swap");
+
+.dancing-script {
+  font-family: "Dancing Script", cursive;
+}
+
+.roboto {
+  font-family: "Roboto", sans-serif;
+}
+
+.cormorant {
+  font-family: "Cormorant", serif;
+}
+
+.tr-right {
+  transform: translateX(8px);
+}
+
+.tr-left {
+  transform: translateX(-8px);
+}

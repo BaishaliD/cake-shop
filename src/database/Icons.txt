@@ -1,0 +1,8 @@
+Cart 
+<FontAwesomeIcon icon="fa-solid fa-cart-shopping" />
+
+Search
+<FontAwesomeIcon icon="fa-solid fa-search" />
+
+Profile
+regular, user-circle
