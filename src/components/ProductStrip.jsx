@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function ProductStrip() {
   return (
-    <div className="h-8 w-screen bg-secondary2 text-primary2 flex items-center">
+    <div className="h-8 w-screen text-secondary1 bg-primary2 flex items-center">
       <Item name="All Products" />
       <Item name="Collection" />
       <Item name="Soaps" />

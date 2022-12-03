@@ -9,7 +9,7 @@ import {
 
 export default function NavBar() {
   return (
-    <div className="w-screen h-16 bg-primary1 flex items-center justify-between text-secondary2">
+    <div className="w-screen h-16 bg-primary1 flex items-center justify-between text-accent1">
       <div className="flex items-center">
         <NavItem name="Home" link="/" />
         <NavItem name="FAQ" link="/faq" />
@@ -29,7 +29,7 @@ export default function NavBar() {
 const NavItem = ({ name, link }) => {
   return (
     <Link to={link}>
-      <div className="roboto px-4 opacity-50 hover:opacity-100">{name}</div>
+      <div className="roboto px-4 hover:opacity-75">{name}</div>
     </Link>
   );
 };
@@ -37,10 +37,7 @@ const NavItem = ({ name, link }) => {
 const Icon = ({ icon, link }) => {
   return (
     <Link to={link}>
-      <FontAwesomeIcon
-        icon={icon}
-        className="px-4 opacity-50 hover:opacity-100"
-      />
+      <FontAwesomeIcon icon={icon} className="px-4 hover:opacity-75" />
     </Link>
   );
 };
