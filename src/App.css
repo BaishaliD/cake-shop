@@ -19,3 +19,14 @@
 .tr-left {
   transform: translateX(-8px);
 }
+
+.zoom:hover {
+  animation: zoomIn 2s ease-in-out;
+}
+
+@keyframes zoomIn {
+  to {
+    z-index: 50;
+    transform: scale(1.02);
+  }
+}
