@@ -14,6 +14,9 @@ module.exports = {
       height: {
         "70v": "70vh",
       },
+      minWidth: {
+        150: "150px",
+      },
       backgroundImage: {
         hero: "linear-gradient(135deg, #F0DBDB, #DBA39A)",
       },
