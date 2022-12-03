@@ -22,6 +22,7 @@
 
 .zoom:hover {
   animation: zoomIn 2s ease-in-out;
+  color: #251a1a;
 }
 
 @keyframes zoomIn {

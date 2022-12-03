@@ -4,20 +4,22 @@ import GrayImage from "../assets/gray-hex.png";
 import Comb from "../assets/comb-hex.png";
 import GoldLines from "../assets/gold-lines.png";
 import Button from "../subComponents/Button";
+import HexImage from "./HexImage";
+import "./Hex.css";
 
 export default function Hero() {
   return (
-    <div className="h-70v w-full bg-hero flex">
+    <div className="h-70v w-full bg-hero flex overflow-hidden">
       {/* <img src={GoldLines} /> */}
       <Title />
-      <Grid />
+      <Grid3 />
     </div>
   );
 }
 
 const Title = () => {
   const handleShopNow = () => {
-    console.log("Show now button clicked!");
+    console.log("Shop now button clicked!");
   };
   return (
     <div className="w-2/5 h-full flex flex-col justify-center items-center">
@@ -45,7 +47,9 @@ const Grid = () => {
           <img src={Comb} className="h-full" />
           <img src={GrayImage} className="h-full translate-x-4 opacity-0" />
         </div>
-        <img src={Earth1} className="-translate-x-2" />
+        <div className="-translate-x-2 border">
+          <img src={Earth1} className="object-contain" />
+        </div>
         <img src={GrayImage} className="translate-x-2" />
         <div className="absolute h-full translate-y-[calc(75%+1rem)] flex justify-center items-center">
           <img src={GrayImage} className="h-full -translate-x-4 opacity-25" />
@@ -54,5 +58,33 @@ const Grid = () => {
         </div>
       </div>
     </div>
+  );
+};
+
+const Grid3 = () => {
+  //active (default = false) : only active element shows title and description on hover
+  //transparent (default = false): sets opacity to 25%
+  //hide (default = false) : sets opacity to 0
+  return (
+    <ul className="hexGrid w-3/5">
+      <HexImage image={GrayImage} transparent={true} />
+      <HexImage image={Comb} />
+      <HexImage image={GrayImage} hide={true} />
+      <HexImage
+        image={Earth1}
+        active={true}
+        title="The Earth Collection"
+        desc="Organic soaps made in earthly hues and tones"
+      />
+      <HexImage
+        image={GrayImage}
+        active={true}
+        title="The Royal Collection"
+        desc="Gift yourself a luxury fit for the royals"
+      />
+      <HexImage image={GrayImage} transparent={true} />
+      <HexImage image={Earth2} />
+      <HexImage image={GrayImage} transparent={true} />
+    </ul>
   );
 };

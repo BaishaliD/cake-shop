@@ -9,7 +9,7 @@ module.exports = {
         secondary1: "#FEFCF3",
         secondary2: "#F5EBE0",
         accent1: "#815B5B",
-        accent2: "#594040",
+        accent2: "#251a1a",
       },
       height: {
         "70v": "70vh",
@@ -19,6 +19,7 @@ module.exports = {
       },
       backgroundImage: {
         hero: "linear-gradient(135deg, #F0DBDB, #DBA39A)",
+        waves: "url('assets/waves_c.png')",
       },
     },
   },
