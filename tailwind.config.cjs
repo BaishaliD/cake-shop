@@ -10,6 +10,8 @@ module.exports = {
         secondary2: "#F5EBE0",
         accent1: "#815B5B",
         accent2: "#251a1a",
+        "accent2-50": "#241919a8",
+        reviewCard: "#5940404f",
       },
       height: {
         "70v": "70vh",
