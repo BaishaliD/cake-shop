@@ -1,11 +1,7 @@
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSearch,
-  faUser,
-  faHeart,
-  faCartShopping,
-} from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faCartShopping } from "@fortawesome/free-solid-svg-icons";
+import { faUser, faHeart } from "@fortawesome/free-regular-svg-icons";
 
 export default function NavBar() {
   return (
