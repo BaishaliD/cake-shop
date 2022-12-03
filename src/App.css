@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant&family=Dancing+Script&family=Roboto&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Cormorant&family=Dancing+Script&family=Roboto:wght@100;300;400&display=swap");
 
 .dancing-script {
   font-family: "Dancing Script", cursive;
@@ -20,14 +20,24 @@
   transform: translateX(-8px);
 }
 
-.zoom:hover {
-  animation: zoomIn 2s ease-in-out;
-  color: #251a1a;
+.zoom {
+  transition: transform 0.8s;
+}
+.appear {
+  transition: opacity 0.8s;
+  opacity: 0;
 }
 
-@keyframes zoomIn {
-  to {
-    z-index: 50;
-    transform: scale(1.02);
-  }
+.collection-wrapper:hover > .zoom {
+  transform: scale(1.2);
+}
+.collection-wrapper:hover > .appear {
+  opacity: 80%;
+}
+
+.product-wrapper:hover > .zoom {
+  transform: scale(1.2);
+}
+.product-wrapper:hover > .appear {
+  opacity: 50%;
 }
