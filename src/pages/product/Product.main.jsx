@@ -1,5 +1,5 @@
 import { Button } from "antd";
-import Carousel from "../components/Carousel";
+import Carousel from "../../components/Carousel";
 
 export default function Product() {
   return (

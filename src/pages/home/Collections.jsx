@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
-import FruitPunch from "../assets/fruit-punch.jpg";
-import Earth from "../assets/earth.jpg";
-import Earth2 from "../assets/earth2.jpg";
-import Cupcake from "../assets/cupcake.jpeg";
-import Sponge from "../assets/sponge.jpg";
+import FruitPunch from "../../assets/fruit-punch.jpg";
+import Earth from "../../assets/earth.jpg";
+import Earth2 from "../../assets/earth2.jpg";
+import Cupcake from "../../assets/cupcake.jpeg";
+import Sponge from "../../assets/sponge.jpg";
 
 const collectionList = [
   {

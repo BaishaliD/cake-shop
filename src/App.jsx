@@ -1,8 +1,8 @@
 import { useState } from "react";
 import "./App.css";
 import { createBrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Product from "./pages/Product";
+import Home from "./pages/Home/Home.main";
+import Product from "./pages/product/Product.main";
 import AboutUs from "./pages/AboutUs";
 import NavBar from "./components/NavBar";
 import ProductStrip from "./components/ProductStrip";

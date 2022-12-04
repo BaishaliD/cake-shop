@@ -1,11 +1,11 @@
-import Earth1 from "../assets/earth_hex.png";
-import Earth2 from "../assets/earth2-hex.png";
-import GrayImage from "../assets/gray-hex.png";
-import Comb from "../assets/comb-hex.png";
-import GoldLines from "../assets/gold-lines.png";
-import Button from "../subComponents/Button";
-import HexImage from "./HexImage";
-import "./Hex.css";
+import Earth1 from "../../assets/earth_hex.png";
+import Earth2 from "../../assets/earth2-hex.png";
+import GrayImage from "../../assets/gray-hex.png";
+import Comb from "../../assets/comb-hex.png";
+import GoldLines from "../../assets/gold-lines.png";
+import Button from "../../components/Button";
+import HexImage from "../../components/HexImage";
+import "../../components/Hex.css";
 
 export default function Hero() {
   return (
