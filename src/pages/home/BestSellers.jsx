@@ -1,9 +1,9 @@
-import ProductCard from "../subComponents/ProductCard";
-import FruitPunch from "../assets/fruit-punch.jpg";
-import Earth from "../assets/earth.jpg";
-import Earth2 from "../assets/earth2.jpg";
-import Cupcake from "../assets/cupcake.jpeg";
-import Sponge from "../assets/sponge.jpg";
+import ProductCard from "../../components/ProductCard";
+import FruitPunch from "../../assets/fruit-punch.jpg";
+import Earth from "../../assets/earth.jpg";
+import Earth2 from "../../assets/earth2.jpg";
+import Cupcake from "../../assets/cupcake.jpeg";
+import Sponge from "../../assets/sponge.jpg";
 
 const list = [
   {
