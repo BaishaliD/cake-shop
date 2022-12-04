@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Cormorant&family=Dancing+Script&family=Roboto:wght@100;300;400&display=swap");
 
+body {
+  font-family: "Roboto", sans-serif;
+}
+
 .dancing-script {
   font-family: "Dancing Script", cursive;
 }
@@ -40,4 +44,10 @@
 }
 .product-wrapper:hover > .appear {
   opacity: 50%;
+}
+
+.ant-carousel,
+.slick-slider,
+.slick-list {
+  height: 100% !important;
 }
