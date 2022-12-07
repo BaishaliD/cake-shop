@@ -41,14 +41,17 @@ export default function CarouselComponent() {
   };
 
   return (
-    <div className="h-70v w-1/2 flex flex-col bg-red-200">
-      <Carousel ref={ref} beforeChange={beforeChange}>
-        {slides.map((slide, index) => (
-          <div key={slide.id} className="h-full w-full">
-            <img src={slide.image} className="h-full w-full" />
-          </div>
-        ))}
-      </Carousel>
+    <div className="w-1/2 flex flex-col">
+      <div className="h-70v">
+        <Carousel ref={ref} beforeChange={beforeChange}>
+          {slides.map((slide, index) => (
+            <div key={slide.id} className="h-full w-full">
+              <img src={slide.image} className="h-full w-full" />
+            </div>
+          ))}
+        </Carousel>
+      </div>
+
       <CarouselPagination activeSlide={activeSlide} goTo={goTo} />
     </div>
   );

@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.border {
+  border: 1px solid;
+}
+
+.border-x {
+  border-right: 1px solid;
+  border-left: 1px solid;
+}
+
+.border-y {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+}
+
+.border-l {
+  border-left: 1px solid;
+}
+.border-r {
+  border-right: 1px solid;
+}
+.border-t {
+  border-top: 1px solid;
+}
+.border-b {
+  border-bottom: 1px solid;
+}
+
+.border-accent1 {
+  border-color: #815b5b;
+}
+
+.border-accent2 {
+  border-color: #251a1a;
+}
