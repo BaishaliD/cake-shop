@@ -1,0 +1,24 @@
+.ant-collapse,
+.ant-collapse {
+  background-color: rgba(0, 0, 0, 0) !important;
+}
+
+.ant-collapse-header {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #251a1a !important;
+}
+
+.ant-collapse-content {
+  color: #815b5b !important;
+}
+
+.site-collapse-custom-collapse .site-collapse-custom-panel,
+.site-collapse-custom-collapse .site-collapse-custom-panel {
+  color: #815b5b !important;
+  /* margin-bottom: 24px; */
+  /* overflow: hidden; */
+  /* background: #ff0000; */
+  /* border: 0px !important; */
+  /* border-radius: 2px; */
+}
