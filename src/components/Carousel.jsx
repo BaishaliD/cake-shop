@@ -52,7 +52,7 @@ export default function CarouselComponent() {
         </Carousel>
       </div>
 
-      {/* <CarouselPagination activeSlide={activeSlide} goTo={goTo} /> */}
+      <CarouselPagination activeSlide={activeSlide} goTo={goTo} />
     </div>
   );
 }

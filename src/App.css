@@ -47,7 +47,7 @@ body {
   transform: scale(1.2);
 }
 .product-wrapper:hover > .appear {
-  opacity: 50%;
+  opacity: 30%;
 }
 
 .ant-carousel,
