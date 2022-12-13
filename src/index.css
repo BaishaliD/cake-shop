@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+a,
+a:-webkit-any-link {
+  text-decoration: "none" !important;
+}
 .border {
   border: 1px solid;
 }
