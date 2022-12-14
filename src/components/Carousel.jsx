@@ -7,27 +7,8 @@ import Cupcake from "../assets/cupcake.jpeg";
 import Sponge from "../assets/sponge.jpg";
 import { useState } from "react";
 
-const slides = [
-  {
-    id: 1,
-    image: FruitPunch,
-  },
-  {
-    id: 2,
-    image: Earth,
-  },
-  {
-    id: 3,
-    image: Earth2,
-  },
-  {
-    id: 4,
-    image: Cupcake,
-  },
-  { id: 5, image: Sponge },
-];
-
-export default function CarouselComponent() {
+export default function CarouselComponent({ slides }) {
+  console.log("Carousel slides :: ", slides);
   const ref = useRef();
   const [activeSlide, setActiveSlide] = useState(0);
 
@@ -41,35 +22,46 @@ export default function CarouselComponent() {
   };
 
   return (
-    <div className="w-1/2 flex flex-col">
-      <div className="">
+    <div className="w-full flex justify-around">
+      <CarouselPagination
+        slides={slides}
+        activeSlide={activeSlide}
+        goTo={goTo}
+      />
+      <div className="w-3/4 h-full mt-4">
         <Carousel ref={ref} beforeChange={beforeChange}>
           {slides.map((slide, index) => (
-            <div key={slide.id} className="h-full w-full">
-              <img src={slide.image} className="h-full w-full" />
+            <div
+              key={index}
+              className="h-[calc(45vw)] w-full acme bg-white rounded-xl overflow-hidden p-4"
+            >
+              <img
+                src={slide}
+                className="h-full w-full rounded-xl rounded-xl object-cover"
+              />
             </div>
           ))}
         </Carousel>
       </div>
-
-      <CarouselPagination activeSlide={activeSlide} goTo={goTo} />
     </div>
   );
 }
 
-const CarouselPagination = ({ activeSlide, goTo }) => {
+const CarouselPagination = ({ slides, activeSlide, goTo }) => {
   return (
-    <div className="flex p-8">
+    <div className="flex-col p-2">
       {slides.map((slide, index) => (
         <div
-          className="h-28 w-32 mx-2"
+          className="h-28 w-28 m-2 rounded-xl overflow-hidden"
           onClick={() => {
             goTo(index);
           }}
         >
           <img
-            src={slide.image}
-            className={`h-full w-full ${activeSlide === index && "opacity-50"}`}
+            src={slide}
+            className={`h-full w-full object-cover ${
+              activeSlide === index && "opacity-50"
+            }`}
           />
         </div>
       ))}
