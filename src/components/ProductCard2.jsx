@@ -7,7 +7,7 @@ export default function ProductCard2({ id, name, image, price, rating }) {
   return (
     <div
       onClick={() => {
-        navigate(`/product/${id}`);
+        navigate(`/product?id=${id}`);
       }}
       className="acme flex flex-col justify-center items-center w-64 m-8 bg-white rounded-xl p-4 shadow-md hover:shadow-lg"
     >

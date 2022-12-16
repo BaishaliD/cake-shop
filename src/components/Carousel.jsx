@@ -8,7 +8,6 @@ import Sponge from "../assets/sponge.jpg";
 import { useState } from "react";
 
 export default function CarouselComponent({ slides }) {
-  console.log("Carousel slides :: ", slides);
   const ref = useRef();
   const [activeSlide, setActiveSlide] = useState(0);
 
@@ -52,6 +51,7 @@ const CarouselPagination = ({ slides, activeSlide, goTo }) => {
     <div className="flex-col p-2">
       {slides.map((slide, index) => (
         <div
+          key={index}
           className="h-28 w-28 m-2 rounded-xl overflow-hidden"
           onClick={() => {
             goTo(index);
