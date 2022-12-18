@@ -4,6 +4,7 @@ import Hero from "./Hero";
 import NewLaunch from "./NewLaunch";
 import Occasions from "./Occasions";
 import Flavours from "./Flavours";
+import MailList from "./MailList";
 
 export default function Home() {
   return (
@@ -13,6 +14,8 @@ export default function Home() {
       <Occasions />
       <Categories />
       <Flavours />
+      <MailList />
+      <Categories />
     </div>
   );
 }

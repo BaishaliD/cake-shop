@@ -10,6 +10,7 @@ const collectionList = [
     type: "collection",
     name: "Cakes",
     image: Cake,
+    route: "cake",
     description:
       "The newly launched Jade Collection is a set of 4 handcrafted soap bars made in hues of crystals. The soaps are rich in minerals and essential oil, and scrubs the skin and provides a beautiful afterglow.",
   },
@@ -18,6 +19,7 @@ const collectionList = [
     type: "collection",
     name: "Cupcakes",
     image: Cupcake,
+    route: "cupcake",
     description:
       "The newly launched Jade Collection is a set of 4 handcrafted soap bars made in hues of crystals. The soaps are rich in minerals and essential oil, and scrubs the skin and provides a beautiful afterglow.",
   },
@@ -26,6 +28,7 @@ const collectionList = [
     type: "collection",
     name: "Jar Cakes",
     image: JarCake,
+    route: "jarcake",
     description:
       "The newly launched Jade Collection is a set of 4 handcrafted soap bars made in hues of crystals. The soaps are rich in minerals and essential oil, and scrubs the skin and provides a beautiful afterglow.",
   },
@@ -47,20 +50,20 @@ export default function Collections() {
           key={collection.id}
           image={collection.image}
           name={collection.name}
-          id={collection.id}
+          route={collection.route}
         />
       ))}
     </div>
   );
 }
 
-const Collection = ({ image, name, id }) => {
+const Collection = ({ image, name, route }) => {
   const navigateTo = useNavigate();
   return (
     <div
       className="h-96 w-1/4 overflow-hidden relative collection-wrapper rounded-xl m-6 border-8 border-white"
       onClick={() => {
-        navigateTo(`/collection/${id}`);
+        navigateTo(`/collection/${route}`);
       }}
     >
       <img src={image} className="h-full w-full zoom object-cover" />
