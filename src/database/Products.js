@@ -70,121 +70,6 @@ const occasion = {
   VALENTINES: "Valentine's Day",
 };
 
-export const cupcakes_old = [
-  {
-    id: "01_01",
-    type: "item",
-    name: "Christmas Confetti",
-    image: Christmas,
-    price: "Rs. 250",
-    rating: 4.5,
-  },
-  {
-    id: "01_02",
-    type: "item",
-    name: "Happy Halloween",
-    image: Halloween,
-    price: "Rs. 350",
-    rating: 4.0,
-  },
-  {
-    id: "01_03",
-    type: "item",
-    name: "Zingy Lemon",
-    image: Lemon,
-    price: "Rs. 300",
-    rating: 5.0,
-  },
-  {
-    id: "01_04",
-    type: "item",
-    name: "Matcha Magic",
-    image: Matcha,
-    price: "Rs. 250",
-    rating: 3.5,
-  },
-  {
-    id: "01_05",
-    type: "item",
-    name: "Baby Blue",
-    image: Teal,
-    price: "Rs. 250",
-    rating: 3.0,
-  },
-  {
-    id: "01_06",
-    type: "item",
-    name: "Peachy Tropicana",
-    image: Peach,
-    price: "Rs. 350",
-    rating: 4.0,
-  },
-  {
-    id: "01_07",
-    type: "item",
-    name: "Classic Red Velvet",
-    image: RedVelvet,
-    price: "Rs. 300",
-    rating: 4.5,
-  },
-  {
-    id: "01_08",
-    type: "item",
-    name: "Sinful Chocolate",
-    image: Choco,
-    price: "Rs. 250",
-    rating: 5.0,
-  },
-  {
-    id: "01_09",
-    type: "item",
-    name: "For the Kid in You",
-    image: Kid,
-    price: "Rs. 250",
-    rating: 3.0,
-  },
-  {
-    id: "01_10",
-    type: "item",
-    name: "Zesty Orange",
-    image: Orange,
-    price: "Rs. 350",
-    rating: 4.0,
-  },
-  {
-    id: "01_11",
-    type: "item",
-    name: "Truffle Love",
-    image: Truffle,
-    price: "Rs. 300",
-    rating: 4.5,
-  },
-  {
-    id: "01_12",
-    type: "item",
-    name: "Oreo Cupcake",
-    image: Oreo,
-    price: "Rs. 250",
-    rating: 4.0,
-  },
-  {
-    id: "01_13",
-    type: "item",
-    name: "Love is Love",
-    image: Rainbow,
-    price: "Rs. 300",
-    rating: 4.5,
-  },
-  {
-    id: "01_14",
-    type: "item",
-    name: "Breath of Ice",
-    image: Ice,
-    price: "Rs. 250",
-    rating: 3.5,
-  },
-];
-
 export const cupcakes = [
   {
     id: "cc_01",
@@ -986,7 +871,7 @@ export const cupcakes = [
   },
   {
     id: "cc_11",
-    name: "ruffle Love",
+    name: "Ruffle Love",
     desc: "Chocolate Cupcake with Confetti",
     price: "Rs. 300",
     rating: 4.0,
@@ -1395,7 +1280,7 @@ export const fetchProduct = (id) => {
   return cupcakes.find((item) => item.id === id);
 };
 
-export const fetchRandomList = (cupcakes, n, excludeId) => {
+export const fetchRandomList = (n, excludeId) => {
   //Filter array to exclude current product
   let filteredList = cupcakes.filter((item) => item.id !== excludeId);
   // Shuffle array

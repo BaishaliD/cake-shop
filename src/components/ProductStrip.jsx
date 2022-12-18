@@ -57,10 +57,6 @@ export default function ProductStrip() {
       {list.map((item) => (
         <Item label={item.label} items={item.dropdown} route={item.route} />
       ))}
-      {/* <Item name="Type" />
-      <Item name="Cupcakes" />
-      <Item name="Jar Cakes" />
-      <Item name="Macarons" /> */}
     </div>
   );
 }

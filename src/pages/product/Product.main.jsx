@@ -28,13 +28,13 @@ export default function Product() {
     const product = fetchProduct(id);
     setData(product);
 
-    const _ymal = fetchRandomList(cupcakes, 4, id);
+    const _ymal = fetchRandomList(4, id);
     setYmal(_ymal);
 
-    const _moreFl = fetchRandomList(cupcakes, 4, id);
+    const _moreFl = fetchRandomList(4, id);
     setMoreFl(_moreFl);
 
-    const _moreCat = fetchRandomList(cupcakes, 4, id);
+    const _moreCat = fetchRandomList(4, id);
     setMoreCat(_moreCat);
   }, [searchParams]);
 
