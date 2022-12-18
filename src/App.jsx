@@ -13,7 +13,7 @@ function App() {
     <div className="App">
       <div className="fixed z-50">
         <NavBar />
-        <ProductStrip />
+        {/* <ProductStrip /> */}
       </div>
 
       <Routes>

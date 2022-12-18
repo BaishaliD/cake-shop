@@ -25,7 +25,7 @@ export default function ProductCard2({ id, name, image, price, rating }) {
         </div>
       </div>
 
-      <div className="w-full mb-2 py-2 text-center bg-accent1 font-normal text-secondary1 uppercase rounded-md">
+      <div className="w-full mb-2 py-2 text-center bg-accent1 font-normal text-base text-secondary1 uppercase rounded-md">
         Add To Cart
       </div>
     </div>

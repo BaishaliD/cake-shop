@@ -15,15 +15,23 @@ module.exports = {
         accent2: "#251a1a",
         "accent2-50": "#241919a8",
         reviewCard: "#5940404f",
+        black50: "#00000080",
+        white20: "#ffffff33",
+        transparent: "#00000080",
       },
       height: {
+        "70v": "70vh",
+      },
+      minHeight: {
+        "60v": "60vh",
         "70v": "70vh",
       },
       minWidth: {
         150: "150px",
       },
       backgroundImage: {
-        hero: "linear-gradient(135deg, #F0DBDB, #DBA39A)",
+        nav: "linear-gradient(to right, #F0DBDB, #DBA39A)",
+        hero: "linear-gradient(to right, #F0DBDB, #DBA39A)",
         waves: "url('assets/waves_c.png')",
       },
     },
