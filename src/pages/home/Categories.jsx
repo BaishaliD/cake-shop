@@ -44,7 +44,7 @@ const collectionList = [
 
 export default function Categories() {
   return (
-    <div className="w-full flex flex-wrap justify-center cursor-pointer bg-secondary2 py-16">
+    <div className="w-full flex flex-wrap justify-center bg-secondary2 py-16">
       {collectionList.map((collection) => (
         <Collection
           key={collection.id}
@@ -61,7 +61,7 @@ const Collection = ({ image, name, route }) => {
   const navigateTo = useNavigate();
   return (
     <div
-      className="h-96 w-1/4 overflow-hidden relative collection-wrapper rounded-xl m-6 border-8 border-white"
+      className="h-96 w-1/4 overflow-hidden relative collection-wrapper rounded-xl m-6 border-8 border-white cursor-pointer"
       onClick={() => {
         navigateTo(`/collection/${route}`);
       }}

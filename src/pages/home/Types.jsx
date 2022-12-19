@@ -33,7 +33,7 @@ const collectionList = [
 
 export default function Types() {
   return (
-    <div className="w-full flex flex-wrap justify-center cursor-pointer bg-accent2 py-16">
+    <div className="w-full flex flex-wrap justify-center bg-accent2 py-16">
       {/* <div className="w-full acme text-4xl mx-auto my-8 text-accent1 text-center">
         Choose from your favourite flavours!
       </div> */}
@@ -58,11 +58,14 @@ const Collection = ({ index, image, name, route }) => {
     <div className="w-1/2 flex h-60 p-4 text-primary1">
       {Math.floor(index / 2) % 2 === 0 ? (
         <>
-          <img src={image} className="w-1/2 h-full object-cover" />
+          <div className="w-1/2 h-full overflow-hidden cursor-pointer collection-wrapper">
+            <img src={image} className="w-full h-full object-cover zoom" />
+          </div>
+
           <div className="w-1/2 h-full flex flex-col items-center justify-center">
             <h2
               className="acme border-b w-full px-6 pb-2 text-left"
-              style={{ borderColor: "pink" }}
+              style={{ borderColor: "#F0DBDB" }}
             >
               {name}
             </h2>
@@ -86,7 +89,9 @@ const Collection = ({ index, image, name, route }) => {
               between uses to maximise product utilisation
             </h4>
           </div>
-          <img src={image} className="w-1/2 h-full object-cover" />
+          <div className="w-1/2 h-full overflow-hidden cursor-pointer collection-wrapper">
+            <img src={image} className="w-full h-full object-cover zoom" />
+          </div>
         </>
       )}
     </div>
