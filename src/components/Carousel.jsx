@@ -1,11 +1,6 @@
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 import { Carousel } from "antd";
-import FruitPunch from "../assets/fruit-punch.jpg";
-import Earth from "../assets/earth.jpg";
-import Earth2 from "../assets/earth2.jpg";
-import Cupcake from "../assets/cupcake.jpeg";
-import Sponge from "../assets/sponge.jpg";
-import { useState } from "react";
+import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
 
 export default function CarouselComponent({ slides }) {
   const ref = useRef();
@@ -27,20 +22,42 @@ export default function CarouselComponent({ slides }) {
         activeSlide={activeSlide}
         goTo={goTo}
       />
-      <div className="w-3/4 h-full mt-4">
-        <Carousel ref={ref} beforeChange={beforeChange}>
-          {slides.map((slide, index) => (
-            <div
-              key={index}
-              className="h-[calc(45vw)] w-full acme bg-white rounded-xl overflow-hidden p-4"
-            >
-              <img
-                src={slide}
-                className="h-full w-full rounded-xl rounded-xl object-cover"
+      <div className="w-3/4 h-full mt-4 bg-white p-4 rounded-xl">
+        <div className="w-full h-full relative">
+          {slides && slides.length > 1 && (
+            <div className="flex items-center">
+              <LeftCircleOutlined
+                className="text-5xl text-white bg-black50 rounded-full z-10 absolute top-1/2 left-5 -translate-y-1/2"
+                onClick={() => {
+                  ref.current.prev();
+                }}
               />
             </div>
-          ))}
-        </Carousel>
+          )}
+          <Carousel ref={ref} beforeChange={beforeChange}>
+            {slides.map((slide, index) => (
+              <div
+                key={index}
+                className="h-[calc(45vw)] w-full acme rounded-xl overflow-hidden relative"
+              >
+                <img
+                  src={slide}
+                  className="h-full w-full rounded-xl rounded-xl object-cover"
+                />
+              </div>
+            ))}
+          </Carousel>
+          {slides && slides.length > 1 && (
+            <div className="flex items-center">
+              <RightCircleOutlined
+                className="text-5xl text-white bg-black50 rounded-full z-10 absolute top-1/2 right-5 -translate-y-1/2"
+                onClick={() => {
+                  ref.current.prev();
+                }}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

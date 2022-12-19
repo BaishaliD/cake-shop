@@ -12,7 +12,7 @@ export default function ProductSuggestion({ title, list, bgColor, textColor }) {
             id={item.id}
             name={item.name}
             image={item.images[0]}
-            price={item.price}
+            price={item.minPrice}
             rating={item.rating}
           />
         ))}

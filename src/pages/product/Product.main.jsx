@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Button, Rate, Segmented, Divider } from "antd";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import ProductSuggestion from "./ProductSuggestion";
@@ -15,28 +15,28 @@ import {
 
 export default function Product() {
   const [data, setData] = useState(null);
-  const [ymal, setYmal] = useState(null);
-  const [moreFl, setMoreFl] = useState(null);
-  const [moreCat, setMoreCat] = useState(null);
+  const [price, setPrice] = useState();
+  const [suggested, setSuggested] = useState(null); //You Might Also Like sections
+  const [moreFlavour, setmoreFlavour] = useState(null); //More product from same flavour
+  const [moreCategory, setmoreCategory] = useState(null); //More product from same category
   const [wishlisted, setWishlisted] = useState(true);
-  const [searchParams] = useSearchParams();
+  let { id } = useParams();
 
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    const id = searchParams.get("id");
     const product = fetchProduct(id);
     setData(product);
 
-    const _ymal = fetchRandomList(4, id);
-    setYmal(_ymal);
+    const _suggested = fetchRandomList(4, id);
+    setSuggested(_suggested);
 
-    const _moreFl = fetchRandomList(4, id);
-    setMoreFl(_moreFl);
+    const _moreFlavour = fetchRandomList(4, id);
+    setmoreFlavour(_moreFlavour);
 
-    const _moreCat = fetchRandomList(4, id);
-    setMoreCat(_moreCat);
-  }, [searchParams]);
+    const _moreCategory = fetchRandomList(4, id);
+    setmoreCategory(_moreCategory);
+  }, [id]);
 
   return (
     <div className="pt-24 bg-secondary2">
@@ -48,7 +48,7 @@ export default function Product() {
           <div className="w-2/5 p-8">
             <h3 className="text-accent1 font-thin">{data.desc}</h3>
             <h1 className="text-accent2 acme">{data.name}</h1>
-            <h2 className="text-accent2">{data.price}</h2>
+            <h2 className="text-accent2">{data.minPrice}</h2>
             <div className="text-accent1 text-base flex items-end">
               <Rate
                 style={{ color: "#815B5B", fontSize: "14px" }}
@@ -59,43 +59,10 @@ export default function Product() {
               <div className="px-2">({data.ratingNo})</div>
             </div>
 
-            {/* SELECT EGG OPTION START */}
-            {Array.isArray(data.eggOption) && (
-              <div className="my-4 text-accent1">
-                {data.eggOption.length > 1 ? (
-                  <>
-                    <div>Select Type</div>
-                    <div className="flex my-4">
-                      {data.eggOption.map((el, i) => (
-                        <button
-                          key={el}
-                          className={`p-2 mx-2 rounded ${
-                            i === 1
-                              ? "text-secondary2 border border-accent1 bg-accent1"
-                              : "bg-secondary2 border border-accent1 text-accent1 hover:shadow-md"
-                          }`}
-                        >
-                          {el}
-                        </button>
-                      ))}
-                    </div>
-                  </>
-                ) : (
-                  <div className="flex items-center">
-                    <img
-                      src={data.eggOption[0] === "Eggless" ? Veg : NonVeg}
-                      className="h-5 w-5 mr-2"
-                    />
-                    <span>
-                      {data.eggOption[0] === "Eggless"
-                        ? "Eggless"
-                        : "Contains Egg"}
-                    </span>
-                  </div>
-                )}
-              </div>
-            )}
-            {/* SELECT EGG OPTION END */}
+            <div className="flex items-center my-4">
+              <img src={data.eggless ? Veg : NonVeg} className="h-5 w-5 mr-2" />
+              <span>{data.eggless ? "Eggless" : "Contains Egg"}</span>
+            </div>
 
             {/* SELECT FLAVOUR START */}
             {Array.isArray(data.flavour) && (
@@ -187,26 +154,26 @@ export default function Product() {
           </div>
         </div>
       )}
-      {ymal && (
+      {suggested && (
         <ProductSuggestion
           title="You May Also Like"
-          list={ymal}
+          list={suggested}
           bgColor="bg-primary1"
           textColor="text-accent1"
         />
       )}
-      {moreFl && (
+      {moreFlavour && (
         <ProductSuggestion
           title="More Chocolate Cakes"
-          list={moreFl}
+          list={moreFlavour}
           bgColor="bg-accent2"
           textColor="text-primary2"
         />
       )}
-      {moreCat && (
+      {moreCategory && (
         <ProductSuggestion
           title="More Cupcakes"
-          list={moreCat}
+          list={moreCategory}
           bgColor="bg-secondary2"
           textColor="text-accent1"
         />
