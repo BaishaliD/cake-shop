@@ -17,7 +17,7 @@ module.exports = {
         reviewCard: "#5940404f",
         black50: "#00000080",
         white20: "#ffffff33",
-        transparent: "#00000080",
+        white50: "#ffffff80",
       },
       height: {
         "70v": "70vh",
