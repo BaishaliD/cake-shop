@@ -7,7 +7,6 @@ import Flavours from "./Flavours";
 import Types from "./Types";
 import Team from "./Team";
 import MailList from "./MailList";
-import Footer from "./Footer";
 
 export default function Home() {
   return (
@@ -20,7 +19,6 @@ export default function Home() {
       <Flavours />
       <Team />
       <MailList />
-      <Footer />
     </div>
   );
 }

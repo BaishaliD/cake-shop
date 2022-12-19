@@ -52,7 +52,7 @@ export default function NewLaunch() {
                         <div className="px-2">({item.ratingNo})</div>
                       </div>
                       <div className="text-2xl text-accent1 my-4">
-                        {item.price}
+                        {item.minPrice}
                       </div>
                       <div className="text-center">
                         {
