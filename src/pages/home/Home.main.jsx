@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Categories from "../home_old/Collections";
+import Categories from "./Categories";
 import Hero from "./Hero";
 import NewLaunch from "./NewLaunch";
 import Occasions from "./Occasions";
 import Flavours from "./Flavours";
+import Types from "./Types";
+import Team from "./Team";
 import MailList from "./MailList";
 
 export default function Home() {
@@ -14,8 +16,9 @@ export default function Home() {
       <Occasions />
       <Categories />
       <Flavours />
+      <Types />
+      <Team />
       <MailList />
-      <Categories />
     </div>
   );
 }

@@ -46,8 +46,6 @@ const flavour = {
   VANILLA: "Vanilla",
   STRAWBERRY: "Strawberry",
   REDVELVET: "Red Velvet",
-  TIRAMISU: "Tiramisu",
-  BUTTERSCOTCH: "Butterscotch",
   FRUIT: "Fruit",
   BLACKFOREST: "Black Forest",
 };
@@ -55,10 +53,9 @@ const flavour = {
 const type = {
   NONE: "None",
   FONDANT: "Fondant",
-  DRIP: "Drip",
-  TEA: "Tea",
-  SPONGE: "Sponge",
-  MARBLE: "Marble",
+  PULLUP: "Pull-Up",
+  BENTO: "Bento",
+  MOUSSE: "Mousse",
 };
 
 const occasion = {
