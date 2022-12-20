@@ -7,8 +7,7 @@ export default function NewLaunch() {
   const ref = useRef(null);
   const [list, setList] = useState(null);
   useEffect(() => {
-    const _list = fetchRandomList(3);
-    setList(_list);
+    fetchRandomList(3).then((list) => setList(list));
   }, []);
 
   return (

@@ -28,11 +28,6 @@ import ChocoRed2 from "../assets/cupcakes/choco-red-2.webp";
 import ChocoRed3 from "../assets/cupcakes/choco-red-3.webp";
 import ChocoRed4 from "../assets/cupcakes/choco-red-4.webp";
 
-const eggOption = {
-  EGG: "Egg",
-  EGGLESS: "Eggless",
-};
-
 const category = {
   NONE: "None",
   CAKE: "Cake",
@@ -87,12 +82,34 @@ export const cupcakes = [
     weight: ["500 gm", "1 kg"],
     priceList: [
       {
-        wt: "500 gm",
-        price: "Rs. 350",
+        weight: "500 gm",
+        flavour: flavour.CHOCOLATE,
+        price: "Rs. 400",
       },
       {
-        wt: "1 kg",
+        weight: "1 kg",
+        flavour: flavour.CHOCOLATE,
         price: "Rs. 450",
+      },
+      {
+        weight: "500 gm",
+        flavour: flavour.VANILLA,
+        price: "Rs. 200",
+      },
+      {
+        weight: "1 kg",
+        flavour: flavour.VANILLA,
+        price: "Rs. 250",
+      },
+      {
+        weight: "500 gm",
+        flavour: flavour.STRAWBERRY,
+        price: "Rs. 300",
+      },
+      {
+        weight: "1 kg",
+        flavour: flavour.STRAWBERRY,
+        price: "Rs. 350",
       },
     ],
     info: [
@@ -112,7 +129,6 @@ export const cupcakes = [
         images: [Christmas3],
         weight: null,
         flavour: null,
-        eggOption: eggOption.EGG,
         text: "I ordered a cupcake and danced Salsa with it.",
       },
       {
@@ -122,7 +138,6 @@ export const cupcakes = [
         images: [Christmas, Christmas2],
         weight: null,
         flavour: null,
-        eggOption: eggOption.EGG,
         text: "I ordered a cupcake and dunked it into the bin.",
       },
       {
@@ -132,7 +147,6 @@ export const cupcakes = [
         images: null,
         weight: null,
         flavour: null,
-        eggOption: eggOption.EGGLESS,
         text: "I ordered a cupcake and shot it in the goal.",
       },
     ],
@@ -156,11 +170,11 @@ export const cupcakes = [
     weight: ["500 gm", "1 kg"],
     priceList: [
       {
-        wt: "500 gm",
+        weight: "500 gm",
         price: "Rs. 350",
       },
       {
-        wt: "1 kg",
+        weight: "1 kg",
         price: "Rs. 450",
       },
     ],
@@ -222,7 +236,7 @@ export const cupcakes = [
     weight: ["1 kg"],
     priceList: [
       {
-        wt: "1 kg",
+        weight: "1 kg",
         price: "Rs. 450",
       },
     ],
@@ -341,11 +355,11 @@ export const cupcakes = [
     weight: ["500 gm", "1 kg"],
     priceList: [
       {
-        wt: "500 gm",
+        weight: "500 gm",
         price: "Rs. 350",
       },
       {
-        wt: "1 kg",
+        weight: "1 kg",
         price: "Rs. 450",
       },
     ],
@@ -408,22 +422,22 @@ export const cupcakes = [
   //   priceList: [
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 350",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 300",
   //     },
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 450",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 400",
   //     },
   //   ],
@@ -489,22 +503,22 @@ export const cupcakes = [
   //   priceList: [
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 350",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 300",
   //     },
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 450",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 400",
   //     },
   //   ],
@@ -570,22 +584,22 @@ export const cupcakes = [
   //   priceList: [
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 350",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 300",
   //     },
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 450",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 400",
   //     },
   //   ],
@@ -651,22 +665,22 @@ export const cupcakes = [
   //   priceList: [
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 350",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 300",
   //     },
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 450",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 400",
   //     },
   //   ],
@@ -732,22 +746,22 @@ export const cupcakes = [
   //   priceList: [
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 350",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 300",
   //     },
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 450",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 400",
   //     },
   //   ],
@@ -813,22 +827,22 @@ export const cupcakes = [
   //   priceList: [
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 350",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 300",
   //     },
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 450",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 400",
   //     },
   //   ],
@@ -894,22 +908,22 @@ export const cupcakes = [
   //   priceList: [
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 350",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 300",
   //     },
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 450",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 400",
   //     },
   //   ],
@@ -975,22 +989,22 @@ export const cupcakes = [
   //   priceList: [
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 350",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 300",
   //     },
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 450",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 400",
   //     },
   //   ],
@@ -1056,22 +1070,22 @@ export const cupcakes = [
   //   priceList: [
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 350",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 300",
   //     },
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 450",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 400",
   //     },
   //   ],
@@ -1137,22 +1151,22 @@ export const cupcakes = [
   //   priceList: [
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 350",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "500 gm",
+  //       weight: "500 gm",
   //       price: "Rs. 300",
   //     },
   //     {
   //       egg: eggOption.EGG,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 450",
   //     },
   //     {
   //       egg: eggOption.EGGLESS,
-  //       wt: "1 kg",
+  //       weight: "1 kg",
   //       price: "Rs. 400",
   //     },
   //   ],
@@ -1201,7 +1215,10 @@ export const cupcakes = [
 ];
 
 export const fetchProduct = (id) => {
-  return cupcakes.find((item) => item.id === id);
+  return new Promise((resolve, reject) => {
+    let data = cupcakes.find((item) => item.id === id);
+    resolve(data);
+  });
 };
 
 export const fetchRandomList = (n, excludeId) => {
@@ -1212,5 +1229,5 @@ export const fetchRandomList = (n, excludeId) => {
   // Get sub-array of first n elements after shuffle
   let selected = shuffled.slice(0, n);
 
-  return selected;
+  return new Promise((resolve, reject) => resolve(selected));
 };
