@@ -5,6 +5,7 @@ import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import ProductSuggestion from "./ProductSuggestion";
 import Carousel from "../../components/Carousel";
 import Quantity from "../../components/Quantity";
+import ReviewBoard from "./ReviewBoard";
 import Veg from "../../assets/icons/veg.png";
 import NonVeg from "../../assets/icons/nonveg.jpeg";
 import {
@@ -180,6 +181,7 @@ export default function Product() {
           </div>
         </div>
       )}
+      <ReviewBoard />
       {suggested && (
         <ProductSuggestion
           title="You May Also Like"
