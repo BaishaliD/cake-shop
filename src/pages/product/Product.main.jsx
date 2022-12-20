@@ -15,28 +15,46 @@ import {
 
 export default function Product() {
   const [data, setData] = useState(null);
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState(null);
+  const [flavour, setFlavour] = useState(null);
+  const [weight, setWeight] = useState(null);
+
   const [suggested, setSuggested] = useState(null); //You Might Also Like sections
   const [moreFlavour, setmoreFlavour] = useState(null); //More product from same flavour
   const [moreCategory, setmoreCategory] = useState(null); //More product from same category
   const [wishlisted, setWishlisted] = useState(true);
   let { id } = useParams();
 
+  const getPrice = (flavour, weight) => {
+    const obj = data.priceList.find(
+      (item) => item.flavour === flavour && item.weight === weight
+    );
+    setPrice(obj && obj.price ? obj.price : obj.minPrice);
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    const product = fetchProduct(id);
-    setData(product);
+    fetchProduct(id).then((product) => {
+      setData(product);
+      setPrice(product.priceList[0].price);
+      setFlavour(product.priceList[0].flavour);
+      setWeight(product.priceList[0].weight);
+    });
 
-    const _suggested = fetchRandomList(4, id);
+    fetchSuggestions();
+  }, [id]);
+
+  const fetchSuggestions = async () => {
+    const _suggested = await fetchRandomList(4, id);
     setSuggested(_suggested);
 
-    const _moreFlavour = fetchRandomList(4, id);
+    const _moreFlavour = await fetchRandomList(4, id);
     setmoreFlavour(_moreFlavour);
 
-    const _moreCategory = fetchRandomList(4, id);
+    const _moreCategory = await fetchRandomList(4, id);
     setmoreCategory(_moreCategory);
-  }, [id]);
+  };
 
   return (
     <div className="pt-24 bg-secondary2">
@@ -48,7 +66,7 @@ export default function Product() {
           <div className="w-2/5 p-8">
             <h3 className="text-accent1 font-thin">{data.desc}</h3>
             <h1 className="text-accent2 acme">{data.name}</h1>
-            <h2 className="text-accent2">{data.minPrice}</h2>
+            <h2 className="text-accent2">{price}</h2>
             <div className="text-accent1 text-base flex items-end">
               <Rate
                 style={{ color: "#815B5B", fontSize: "14px" }}
@@ -75,10 +93,14 @@ export default function Product() {
                         <button
                           key={el}
                           className={`p-2 mx-2 rounded ${
-                            i === 1
+                            el === flavour
                               ? "text-secondary2 border border-accent1 bg-accent1"
                               : "bg-secondary2 border border-accent1 text-accent1 hover:shadow-md"
                           }`}
+                          onClick={() => {
+                            setFlavour(el);
+                            getPrice(el, weight);
+                          }}
                         >
                           {el}
                         </button>
@@ -103,10 +125,14 @@ export default function Product() {
                         <button
                           key={el}
                           className={`p-2 mx-2 rounded ${
-                            i === 1
+                            el === weight
                               ? "text-secondary2 border border-accent1 bg-accent1"
                               : "bg-secondary2 border border-accent1 text-accent1 hover:shadow-md"
                           }`}
+                          onClick={() => {
+                            setWeight(el);
+                            getPrice(flavour, el);
+                          }}
                         >
                           {el}
                         </button>
@@ -141,7 +167,7 @@ export default function Product() {
                 )}
               </div>
             </div>
-            <div className="w-full my-2 py-2 text-center bg-accent2 roboto font-thin text-secondary1 uppercase">
+            <div className="w-full my-2 py-2 text-center bg-accent2 roboto text-secondary1 uppercase rounded-md">
               Add To Cart
             </div>
             <div className="my-12">
