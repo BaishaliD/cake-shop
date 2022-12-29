@@ -12,9 +12,9 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <div className="App">
-      <div className="fixed z-50">
+      <div className="fixed" style={{ zIndex: "99999" }}>
         <NavBar />
-        {/* <ProductStrip /> */}
+        <ProductStrip />
       </div>
 
       <Routes>
