@@ -73,11 +73,12 @@ const Item = ({ label, route, items }) => {
             items,
             onClick,
           }}
+          overlayStyle={{ zIndex: "999999" }}
         >
           <a onClick={(e) => e.preventDefault()}>
             <Space>
               {label}
-              <DownOutlined />
+              <DownOutlined className="text-xs" />
             </Space>
           </a>
         </Dropdown>

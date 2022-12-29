@@ -13,6 +13,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         theme={{
           token: {
             colorPrimary: "#DBA39A",
+            colorPrimaryHover: "#815B5B",
             fontFamily: "Roboto, sans-serif",
             fontSize: 16,
           },

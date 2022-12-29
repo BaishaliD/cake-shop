@@ -10,7 +10,7 @@ import MailList from "./MailList";
 
 export default function Home() {
   return (
-    <div className="pt-16 bg-hero">
+    <div className="pt-24 bg-hero">
       <Hero />
       <NewLaunch />
       <Occasions />

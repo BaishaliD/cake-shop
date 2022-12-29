@@ -60,7 +60,7 @@ export default function Product() {
   return (
     <div className="pt-24 bg-secondary2">
       {data && (
-        <div className="flex pb-16">
+        <div className="flex">
           <div className="w-3/5">
             <Carousel slides={data.images} />
           </div>
@@ -181,6 +181,7 @@ export default function Product() {
           </div>
         </div>
       )}
+      <Divider />
       <ReviewBoard />
       {suggested && (
         <ProductSuggestion
