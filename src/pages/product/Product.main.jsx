@@ -13,6 +13,7 @@ import {
   fetchProduct,
   fetchRandomList,
 } from "../../database/Products";
+import { getData, getDataById } from "../../../firebase";
 
 export default function Product() {
   const [data, setData] = useState(null);
@@ -36,7 +37,8 @@ export default function Product() {
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    fetchProduct(id).then((product) => {
+    getDataById(id).then((product) => {
+      console.log("GET DATA IN PRODCU PAGE :: ", product);
       setData(product);
       setPrice(product.priceList[0].price);
       setFlavour(product.priceList[0].flavour);
