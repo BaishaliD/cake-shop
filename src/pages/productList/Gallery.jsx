@@ -5,13 +5,13 @@ import { cupcakes } from "../../database/Products";
 
 const list = cupcakes;
 
-export default function Gallery() {
-  const [products, setProducts] = useState(list.slice(0, 6));
+export default function Gallery({ products }) {
+  // const [products, setProducts] = useState(list.slice(0, 6));
 
   const pageChanged = (p) => {
     console.log("Page no. ", p);
     console.log("LISTT :: ", list.slice((p - 1) * 6, p * 6));
-    setProducts(list.slice((p - 1) * 6, p * 6));
+    // setProducts(list.slice((p - 1) * 6, p * 6));
     window.scrollTo(0, 0);
   };
 

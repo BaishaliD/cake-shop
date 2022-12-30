@@ -68,6 +68,8 @@ export const cupcakes = [
     name: "Christmas Confetti",
     desc: "Chocolate Cupcake with Confetti",
     minPrice: "Rs. 200",
+    discountedPrice: "Rs. 150",
+    discount: "20%",
     rating: 4.5,
     ratingNo: 13,
     images: [Christmas, Christmas2, Christmas3],
@@ -85,6 +87,8 @@ export const cupcakes = [
         weight: "500 gm",
         flavour: flavour.CHOCOLATE,
         price: "Rs. 400",
+        discountedPrice: "Rs. 320",
+        discount: "20%",
       },
       {
         weight: "1 kg",
@@ -100,6 +104,8 @@ export const cupcakes = [
         weight: "1 kg",
         flavour: flavour.VANILLA,
         price: "Rs. 250",
+        discountedPrice: "Rs. 150",
+        discount: "10%",
       },
       {
         weight: "500 gm",
