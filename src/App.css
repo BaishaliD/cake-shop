@@ -67,17 +67,6 @@ body {
   background-size: cover;
 }
 
-.parallax2 {
-  /* The image used */
-  background-image: url("./assets/pattern.jpeg");
-
-  /* Create the parallax scrolling effect */
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: repeat;
-  background-size: cover;
-}
-
 .parallax3 {
   /* The image used */
   background-image: url("./assets/baking.gif");
