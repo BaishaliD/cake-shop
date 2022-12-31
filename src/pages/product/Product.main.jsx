@@ -9,11 +9,10 @@ import ReviewBoard from "./ReviewBoard";
 import Veg from "../../assets/icons/veg.png";
 import NonVeg from "../../assets/icons/nonveg.jpeg";
 import {
-  cupcakes,
+  getProductById,
   fetchProduct,
   fetchRandomList,
-} from "../../database/Products";
-import { getData, getDataById } from "../../../firebase";
+} from "../../../firebase";
 
 export default function Product() {
   const [data, setData] = useState(null);
@@ -37,12 +36,27 @@ export default function Product() {
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    getDataById(id).then((product) => {
-      console.log("GET DATA IN PRODCU PAGE :: ", product);
+    fetchProduct(id).then((product) => {
+      // getProductById(id).then((product) => {
+      console.log("GET DATA IN PRODUCT PAGE :: ", product);
       setData(product);
-      setPrice(product.priceList[0].price);
-      setFlavour(product.priceList[0].flavour);
-      setWeight(product.priceList[0].weight);
+      if (product.priceList && product.priceList.length > 0) {
+        setPrice(product.priceList[0].price);
+        setFlavour(product.priceList[0].flavour);
+        setWeight(product.priceList[0].weight);
+      } else {
+        setPrice(
+          product.discountedPrice ? product.discountedPrice : product.minPrice
+        );
+        setFlavour(
+          product.flavour && product.flavour.length > 0
+            ? product.flavour[0]
+            : null
+        );
+        setWeight(
+          product.weight && product.weight.length > 0 ? product.weight[0] : null
+        );
+      }
     });
 
     fetchSuggestions();

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Carousel, Rate } from "antd";
-import { fetchRandomList } from "../../database/Products";
+import { fetchRandomList } from "../../../firebase";
 import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
 
 export default function NewLaunch() {

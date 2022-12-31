@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { getData } from "../../../firebase";
+import { getAllProducts, fetchAllProducts } from "../../../firebase";
 import Filter from "./Filter";
 import Gallery from "./Gallery";
 
@@ -8,8 +8,7 @@ export default function ProductList() {
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    getData("category", "Cupcake").then((data) => {
-      console.log("DATA IN PRODUCT LIST PAGE :: ", data);
+    fetchAllProducts().then((data) => {
       setProducts(data);
       setIsLoading(false);
     });

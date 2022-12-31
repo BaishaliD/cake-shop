@@ -8,6 +8,8 @@ import AboutUs from "./pages/AboutUs";
 import NavBar from "./components/NavBar";
 import ProductStrip from "./components/ProductStrip";
 import Footer from "./components/Footer";
+import { addCupcakes } from "../firebase";
+import { Button } from "antd";
 
 function App() {
   return (
@@ -15,6 +17,14 @@ function App() {
       <div className="fixed" style={{ zIndex: "99999" }}>
         <NavBar />
         <ProductStrip />
+        {/* <Button
+          onClick={() => {
+            console.log("Add cupcakes function called!");
+            addCupcakes();
+          }}
+        >
+          ADD CUPCAKES
+        </Button> */}
       </div>
 
       <Routes>

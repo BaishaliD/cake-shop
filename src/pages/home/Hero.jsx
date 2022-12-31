@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import HeroImage from "../../assets/hero-cutout-cropped.png";
 
 export default function Hero() {
+  const navigate = useNavigate();
   return (
     <div className="min-h-screen flex flex-col bg-hero">
       <div className="w-full flex justify-end relative">
@@ -18,7 +20,12 @@ export default function Hero() {
             the tiniest moment of joy, we have the perfect cake for every
             occasion.
           </h2>
-          <div className="my-4 py-2 px-8 text-center bg-accent2 shadow-lg hover:shadow-md text-primary1 uppercase rounded-md">
+          <div
+            className="my-4 py-2 px-8 text-center bg-accent2 shadow-lg hover:shadow-md text-primary1 uppercase rounded-md"
+            onClick={() => {
+              navigate("/products");
+            }}
+          >
             Order Now
           </div>
         </div>
