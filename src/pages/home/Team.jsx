@@ -25,7 +25,7 @@ const bakersList = [
 
 export default function Team() {
   return (
-    <div className="relative w-full h-96 text-white parallax3">
+    <div className="relative w-full h-96 text-white parallax parallaxBg2">
       {/* <img src={Baking} className="h-full w-full object-cover" /> */}
       <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center">
         <div className="text-3xl p-2 bg-accent2 mb-4">

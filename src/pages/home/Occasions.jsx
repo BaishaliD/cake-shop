@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function Occasions() {
   return (
-    <div className="parallax h-96">
+    <div className="parallax parallaxBg1 h-96">
       <div className="h-full w-full flex flex-col items-center justify-center text-primary1 roboto font-bold bg-black50">
         <div className="mb-6 text-3xl opacity-100 acme">
           Get the perfect cake for every occasion
