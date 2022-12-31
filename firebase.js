@@ -8,8 +8,10 @@ import {
   query,
   where,
   limit,
+  serverTimestamp,
 } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { cupcakes } from "./src/database/AllProducts";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -21,6 +23,7 @@ const firebaseConfig = {
   appId: "1:860337102509:web:a5dc270bbc77a683ee3024",
 };
 
+console.log("Firebase file loaded!");
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
@@ -30,157 +33,58 @@ const db = getFirestore(app);
 // Get a reference to the storage service, which is used to create references in your storage bucket
 const storage = getStorage();
 
-const category = {
-  NONE: "None",
-  CAKE: "Cake",
-  CUPCAKE: "Cupcake",
-  JAR: "Jar Cake",
-};
-
-const flavour = {
-  NONE: "None",
-  CHOCOLATE: "Chocolate",
-  VANILLA: "Vanilla",
-  STRAWBERRY: "Strawberry",
-  REDVELVET: "Red Velvet",
-  FRUIT: "Fruit",
-  BLACKFOREST: "Black Forest",
-};
-
-const type = {
-  NONE: "None",
-  FONDANT: "Fondant",
-  PULLUP: "Pull-Up",
-  BENTO: "Bento",
-  MOUSSE: "Mousse",
-};
-
-const occasion = {
-  NONE: "None",
-  BIRTHDAY: "Birthday",
-  WEDDING: "Wedding",
-  ANNIVERSARY: "Anniversary",
-  CHRISTMAS: "Christmas",
-  VALENTINES: "Valentine's Day",
-};
-
-const dummyData = {
-  id: "cupcake_christmas_confetti",
-  name: "Christmas Confetti",
-  desc: "Chocolate Cupcake with Confetti",
-  minPrice: "Rs. 200",
-  discountedPrice: "Rs. 150",
-  discount: "20%",
-  rating: 4.5,
-  ratingNo: 13,
-  images: [
-    "/cupcakes/christmas.webp",
-    "/cupcakes/christmas-2.webp",
-    "/cupcakes/christmas-3.webp",
-  ],
-  flavour: [flavour.CHOCOLATE, flavour.VANILLA, flavour.STRAWBERRY],
-  occasion: occasion.CHRISTMAS,
-  category: category.CUPCAKE,
-  type: type.NONE,
-  sameDayDelivery: true,
-  bestSeller: false,
-  new: true,
-  eggless: true,
-  weight: ["500 gm", "1 kg"],
-  priceList: [
-    {
-      weight: "500 gm",
-      flavour: flavour.CHOCOLATE,
-      price: "Rs. 400",
-      discountedPrice: "Rs. 320",
-      discount: "20%",
-    },
-    {
-      weight: "1 kg",
-      flavour: flavour.CHOCOLATE,
-      price: "Rs. 450",
-    },
-    {
-      weight: "500 gm",
-      flavour: flavour.VANILLA,
-      price: "Rs. 200",
-    },
-    {
-      weight: "1 kg",
-      flavour: flavour.VANILLA,
-      price: "Rs. 250",
-      discountedPrice: "Rs. 150",
-      discount: "10%",
-    },
-    {
-      weight: "500 gm",
-      flavour: flavour.STRAWBERRY,
-      price: "Rs. 300",
-    },
-    {
-      weight: "1 kg",
-      flavour: flavour.STRAWBERRY,
-      price: "Rs. 350",
-    },
-  ],
-  info: [
-    "Our Christmas Confetti cake is the perfect dessert for your Christmas spread.",
-    "This chocolate cupcake has a moist and soft base, topped with a dollop with confetti-filled buttercream.",
-    "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
-    "Note: Please consume within 24 hours of receiving",
-  ],
-};
-
-export const addData = async () => {
+export const addCupcakes = () => {
   try {
-    const docRef = await addDoc(collection(db, "products"), dummyData);
-    console.log("Document written with ID: ", docRef.id);
+    cupcakes.forEach((doc) => {
+      doc = { ...doc, createdAt: serverTimestamp() };
+      console.log("Add cupcake :: ", doc);
+      addDoc(collection(db, "products"), doc);
+    });
   } catch (e) {
-    console.error("Error adding document: ", e);
+    console.error("Error adding cupcake : ", e);
+  } finally {
+    console.log("Cupcakes added", cupcakes);
   }
 };
 
-export const getDataById = async (id) => {
-  console.log("getGataById CALLED!", id);
-  const collectionRef = collection(db, "products");
-  const q = query(collectionRef, where("id", "==", id), limit(1));
-  const querySnapshot = await getDocs(q);
-  console.log("hgdfuhefuwjefgi ", querySnapshot);
-  let dataArray = [];
+export const getProductById = (id) => {
+  return new Promise(async (resolve, reject) => {
+    console.log("getProductById called! ", id);
+    const q = query(
+      collection(db, "products"),
+      where("id", "==", id),
+      limit(1)
+    );
+    const querySnapshot = await getDocs(q);
+    let dataArray = [];
+    let promiseArr = [];
 
-  let promise = new Promise((resolve) => {
-    querySnapshot.forEach(async (doc) => {
-      const data = doc.data();
-      let imageArr = await Promise.all(
-        data.images.map(async (image) => {
-          const spaceRef = ref(storage, image);
-          const url = await getDownloadURL(spaceRef);
-          return url;
-        })
-      );
-      data.images = imageArr;
-      dataArray.push(data);
-      resolve(dataArray);
-    });
-  });
+    processData(querySnapshot, dataArray, promiseArr);
 
-  return new Promise((resolve) => {
-    promise.then((dataArray) => {
-      console.log("DATA ARRAY PROD : ", dataArray);
-      resolve(dataArray[0]);
-    });
+    await Promise.all(promiseArr).catch((e) => reject(e));
+
+    console.log("getProductById Data : ", dataArray[0]);
+    resolve(dataArray[0]);
   });
 };
 
-export const getData = async (field, value) => {
-  console.log("GET DATA CALLED!", field, value);
-  const collectionRef = collection(db, "products");
-  const q = query(collectionRef, where(field, "==", value));
-  const querySnapshot = await getDocs(q);
-  let dataArray = [];
+export const getAllProducts = new Promise(async (resolve, reject) => {
+  console.log("getAllProducts called !!!!");
+  // const querySnapshot = await getDocs(collection(db, "products"));
+  // let dataArray = [];
+  // let promiseArr = [];
 
-  let promise = new Promise((resolve) => {
-    querySnapshot.forEach(async (doc) => {
+  // processData(querySnapshot, dataArray, promiseArr);
+
+  // await Promise.all(promiseArr).catch((e) => reject(e));
+
+  // console.log("getAllProducts Data : ", dataArray);
+  // resolve(dataArray);
+});
+
+const processData = (querySnapshot, dataArray, promiseArr) => {
+  querySnapshot.forEach(async (doc) => {
+    let promise = new Promise(async (resolve, reject) => {
       const data = doc.data();
       let imageArr = await Promise.all(
         data.images.map(async (image) => {
@@ -188,17 +92,35 @@ export const getData = async (field, value) => {
           const url = await getDownloadURL(spaceRef);
           return url;
         })
-      );
+      ).catch((e) => reject(e));
       data.images = imageArr;
       dataArray.push(data);
-      resolve(dataArray);
+      resolve();
     });
+    promiseArr.push(promise);
   });
+};
 
-  return new Promise((resolve) => {
-    promise.then((dataArray) => {
-      console.log("DATA ARRAY : ", dataArray);
-      resolve(dataArray);
-    });
+export const fetchProduct = (id) => {
+  return new Promise((resolve, reject) => {
+    let data = cupcakes.find((item) => item.id === id);
+    resolve(data);
   });
+};
+
+export const fetchAllProducts = () => {
+  return new Promise((resolve, reject) => {
+    resolve(cupcakes);
+  });
+};
+
+export const fetchRandomList = (n, excludeId) => {
+  //Filter array to exclude current product
+  let filteredList = cupcakes.filter((item) => item.id !== excludeId);
+  // Shuffle array
+  const shuffled = filteredList.sort(() => 0.5 - Math.random());
+  // Get sub-array of first n elements after shuffle
+  let selected = shuffled.slice(0, n);
+
+  return new Promise((resolve, reject) => resolve(selected));
 };
