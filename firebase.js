@@ -11,7 +11,7 @@ import {
   serverTimestamp,
 } from "firebase/firestore";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { cupcakes } from "./src/database/AllProducts";
+import { cupcakes, cakes } from "./src/database/AllProducts";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -103,14 +103,14 @@ const processData = (querySnapshot, dataArray, promiseArr) => {
 
 export const fetchProduct = (id) => {
   return new Promise((resolve, reject) => {
-    let data = cupcakes.find((item) => item.id === id);
+    let data = cakes.find((item) => item.id === id);
     resolve(data);
   });
 };
 
 export const fetchAllProducts = () => {
   return new Promise((resolve, reject) => {
-    resolve(cupcakes);
+    resolve(cakes);
   });
 };
 
