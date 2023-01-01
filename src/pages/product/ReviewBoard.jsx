@@ -22,76 +22,45 @@ import {
   StarFilled,
 } from "@ant-design/icons";
 import "./Masonry.css";
+import { useEffect } from "react";
 
-const data = {
-  rating: 4.5,
-  ratingNo: 23,
-  reviewsList: [
-    {
-      name: "John Travolta",
-      rating: 4,
-      location: "Patna, Bihar",
-      date: "24/10/2021",
-      images: [Christmas, Oreo],
-      weight: null,
-      flavour: "Chocolate",
-      text: "I ordered a cupcake and danced Salsa with it.I ordered a cupcake and danced Salsa with it. I ordered a cupcake and danced Salsa with it.",
-    },
-    {
-      name: "LeBron James",
-      rating: 3,
-      location: "Patna, Bihar",
-      date: "04/09/2021",
-      images: [Rainbow],
-      weight: null,
-      flavour: null,
-      text: "I ordered a cupcake and dunked it into the bin.",
-    },
-    {
-      name: "Lionel Messy",
-      rating: 3.5,
-      location: "Kolkata, West Bengal",
-      date: "20/09/2021",
-      images: null,
-      weight: "500gm",
-      flavour: "Vanilla",
-      text: "I ordered a cupcake and shot it in the goal.",
-    },
-    {
-      name: "John Travolta",
-      rating: 4,
-      location: "Patna, Bihar",
-      date: "24/10/2021",
-      images: [Oreo],
-      weight: null,
-      flavour: "Chocolate",
-      text: "I ordered a cupcake and danced Salsa with it.I ordered a cupcake and danced Salsa with it. I ordered a cupcake and danced Salsa with it.",
-    },
-  ],
-};
-
-const breakpointColumnsObj = {
+let breakpointColumnsObj = {
   default: 4,
   1100: 3,
   800: 2,
   540: 1,
 };
 
-export default function ReviewBoard() {
-  const [reviews, setReviews] = useState(data.reviewsList);
+export default function ReviewBoard(props) {
+  const [rating, setRating] = useState();
+  const [ratingNo, setRatingNo] = useState();
+  const [reviews, setReviews] = useState([]);
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    setRating(props.rating > 0 ? props.rating : null);
+    setRatingNo(props.ratingNo > 0 ? props.ratingNo : 0);
+    setReviews(props.reviews && props.reviews.length > 0 ? props.reviews : []);
+    if (props.reviews && props.reviews.length > 0) {
+      breakpointColumnsObj = {
+        default: Math.min(props.reviews.length, 4),
+        1100: Math.min(props.reviews.length, 3),
+        800: Math.min(props.reviews.length, 2),
+        540: 1,
+      };
+    }
+  }, []);
 
   const showMore = () => {
     let newList = [...reviews, ...reviews];
     setReviews(newList);
   };
 
-  const showReviewDetails = () => {};
-
   return (
     <div className="w-full flex flex-col items-center">
       <h2 className="mt-4 mb-8">Customer Reviews</h2>
-      <ReviewDetails />
+
+      <ReviewDetails data={props} />
       <Masonry
         breakpointCols={breakpointColumnsObj}
         className="my-masonry-grid"
@@ -115,9 +84,9 @@ export default function ReviewBoard() {
 const CardItem = ({ data }) => {
   const ref = useRef(null);
   return (
-    <div className="w-[250px] bg-white rounded-xl shadow-lg p-3">
+    <div className="w-[300px] bg-white rounded-xl shadow-lg p-3">
       {data.images && data.images.length > 0 && (
-        <div className="w-full mb-4 relative">
+        <div className="w-full relative">
           {data.images && data.images.length > 1 && (
             <div className="flex items-center">
               <LeftCircleOutlined
@@ -153,8 +122,8 @@ const CardItem = ({ data }) => {
           )}
         </div>
       )}
-      <div className="w-full h-full flex flex-col">
-        <h4>This is a great cake!</h4>
+      <div className="w-full h-full flex flex-col mt-4">
+        <h4>{data.title}</h4>
         <Rate
           style={{ color: "#815B5B", fontSize: "14px" }}
           allowHalf
@@ -171,7 +140,7 @@ const CardItem = ({ data }) => {
   );
 };
 
-const ReviewDetails = ({ open, setOpen }) => {
+const ReviewDetails = ({ data, open, setOpen }) => {
   const hide = () => {
     setOpen(false);
   };
@@ -181,7 +150,7 @@ const ReviewDetails = ({ open, setOpen }) => {
   return (
     <div className="w-full flex justify-around items-center mb-4">
       <Popover
-        content={<ReviewCount />}
+        content={<Ratings ratings={data.ratings} />}
         title={
           <h1 className="text-accent2">
             {data.rating} <StarFilled />
@@ -192,10 +161,7 @@ const ReviewDetails = ({ open, setOpen }) => {
         open={open}
         onOpenChange={handleOpenChange}
       >
-        <div
-          className="text-accent1 flex cursor-pointer"
-          // onClick={showReviewDetails}
-        >
+        <div className="text-accent1 flex cursor-pointer">
           <Rate
             style={{ color: "#815B5B", fontSize: "14px" }}
             allowHalf
@@ -219,11 +185,19 @@ const ReviewDetails = ({ open, setOpen }) => {
   );
 };
 
-const ReviewCount = () => {
+const Ratings = ({ ratings }) => {
+  let count = 0;
+  for (const i in ratings) {
+    count += ratings[i];
+  }
   return (
-    <div className="w-[300px] flex flex-col">
-      {[5, 4, 3, 2, 1].map((item) => (
-        <ReviewDetailsRow stars={item} perc={item * 10} n={item} />
+    <div className="w-[320px] flex flex-col">
+      {["5", "4", "3", "2", "1"].map((item) => (
+        <ReviewDetailsRow
+          stars={parseInt(item)}
+          perc={(ratings[item] * 100) / count}
+          n={ratings[item]}
+        />
       ))}
     </div>
   );

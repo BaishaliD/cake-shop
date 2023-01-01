@@ -1,3 +1,9 @@
+import Wedding1_1 from "../assets/cakes/wedding1-1.jpeg";
+import Wedding1_2 from "../assets/cakes/wedding1-2.webp";
+import Wedding1_R1 from "../assets/cakes/wedding1-r1.jpeg";
+import Wedding1_R2 from "../assets/cakes/wedding1-r2.jpeg";
+import Wedding1_R3 from "../assets/cakes/wedding1-r3.jpeg";
+
 const category = {
   NONE: "None",
   CAKE: "Cake",
@@ -520,5 +526,125 @@ export const cupcakes = [
       "Note: Please consume within 24 hours of receiving",
     ],
     reviews: [],
+  },
+];
+
+export const cakes = [
+  {
+    id: "wedding_vintage_fruit_delight",
+    name: "Vintage Fruit Delight",
+    desc: "Buttercream covered wedding cake with chocolate drip",
+    minPrice: "Rs. 6,500",
+    discountedPrice: "Rs. 5,525",
+    discount: "15%",
+    rating: 4.5,
+    ratingNo: 7,
+    images: [Wedding1_1, Wedding1_2],
+    flavour: [flavour.CHOCOLATE, flavour.VANILLA, flavour.BLACKFOREST],
+    occasion: occasion.WEDDING,
+    category: category.CAKE,
+    type: type.NONE,
+    sameDayDelivery: false,
+    bestSeller: false,
+    new: true,
+    eggless: true,
+    weight: ["3 kg", "4 kg"],
+    priceList: [
+      {
+        weight: "3 kg",
+        flavour: flavour.VANILLA,
+        price: "Rs. 6,500",
+        discountedPrice: "Rs. 5,525",
+        discount: "15%",
+      },
+      {
+        weight: "4 kg",
+        flavour: flavour.VANILLA,
+        price: "Rs. 7,200",
+        discountedPrice: "Rs. 6,120",
+        discount: "15%",
+      },
+      {
+        weight: "3 kg",
+        flavour: flavour.CHOCOLATE,
+        price: "Rs. 6,500",
+        discountedPrice: "Rs. 5,525",
+        discount: "15%",
+      },
+      {
+        weight: "4 kg",
+        flavour: flavour.CHOCOLATE,
+        price: "Rs. 7,200",
+        discountedPrice: "Rs. 6,120",
+        discount: "15%",
+      },
+      {
+        weight: "3 kg",
+        flavour: flavour.BLACKFOREST,
+        price: "Rs. 7,000",
+        discountedPrice: "Rs. 5,950",
+        discount: "15%",
+      },
+      {
+        weight: "4 kg",
+        flavour: flavour.BLACKFOREST,
+        price: "Rs. 7,600",
+        discountedPrice: "Rs. 6,460",
+        discount: "15%",
+      },
+    ],
+    info: [
+      "Make your grandest day even more grand with our vintage buttercream-covered wedding cake.",
+
+      "The cake is decorated with fresh fruits and dripping chocolate ganache.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving",
+    ],
+    ratings: {
+      1: 0,
+      2: 0,
+      3: 1,
+      4: 2,
+      5: 4,
+    },
+    reviews: [
+      {
+        name: "Rishika Malik",
+        location: "Gurgaon, Haryana",
+        date: "October 19, 2021",
+        rating: 4,
+        images: [Wedding1_R1, Wedding1_R2],
+        title: "Made my day!",
+        text: "The cake was perfect. All the guests really enjoyed it.",
+      },
+      {
+        name: "Prithwa Agarwal",
+        location: "Kolkata, West Bengal",
+        date: "January 19, 2021",
+        rating: 4,
+        title: "The cake was gorgeous.",
+        text: "After going through a lot of options, I finally chose this royal cake for my big day. The cake was delicious and extremely pretty. The fruits were fresh and the buttercream was just the right amouut of sweet and creamy. The Cake Bar & Co. team was in touch with me throughout the process, and made the experience extremely hassle-free",
+      },
+      {
+        name: "Rosey Diaz",
+        location: "Vaizag, Andhra Pradesh",
+        date: "October 17, 2020",
+        rating: 5,
+        images: [Wedding1_R3],
+        title: "Beautiful and delicious!",
+        text: "My wedding cake was the star of the evening. The cake was as tasty as it was beautiful, and the service from the team was pariseworthy.",
+      },
+      {
+        name: "Rosey Diaz",
+        location: "Vaizag, Andhra Pradesh",
+        date: "October 17, 2020",
+        rating: 5,
+        images: [Wedding1_R3],
+        title: "Beautiful and delicious!",
+        text: "My wedding cake was the star of the evening. The cake was as tasty as it was beautiful, and the service from the team was pariseworthy.",
+      },
+    ],
   },
 ];

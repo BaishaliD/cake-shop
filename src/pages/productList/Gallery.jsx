@@ -33,14 +33,16 @@ export default function Gallery({ products }) {
             />
           ))}
       </div>
-      <div className="w-full text-center my-8">
-        <Pagination
-          defaultCurrent={1}
-          defaultPageSize={6}
-          total={14}
-          onChange={pageChanged}
-        />
-      </div>
+      {productList && productList.length > 0 && (
+        <div className="w-full text-center my-8">
+          <Pagination
+            defaultCurrent={1}
+            defaultPageSize={6}
+            total={productList && productList.length}
+            onChange={pageChanged}
+          />
+        </div>
+      )}
     </div>
   );
 }
