@@ -1,20 +1,9 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowUpWideShort } from "@fortawesome/free-solid-svg-icons";
 // import { faArrowUpWideShort, faHeart } from "@fortawesome/free-regular-svg-icons";
 import Masonry from "react-masonry-css";
-import {
-  Button,
-  Upload,
-  Rate,
-  Divider,
-  Carousel,
-  Popover,
-  Progress,
-} from "antd";
-import Christmas from "../../assets/cupcakes/christmas.webp";
-import Oreo from "../../assets/cupcakes/oreo.webp";
-import Rainbow from "../../assets/cupcakes/rainbow.jpeg";
+import { Button, Upload, Rate, Divider, Carousel, Modal, Progress } from "antd";
 import {
   CaretDownFilled,
   LeftCircleOutlined,
@@ -22,7 +11,7 @@ import {
   StarFilled,
 } from "@ant-design/icons";
 import "./Masonry.css";
-import { useEffect } from "react";
+import AddReview from "./AddReview";
 
 let breakpointColumnsObj = {};
 
@@ -30,7 +19,7 @@ export default function ReviewBoard(props) {
   const [rating, setRating] = useState();
   const [ratingNo, setRatingNo] = useState();
   const [reviews, setReviews] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     setRating(props.rating > 0 ? props.rating : null);
@@ -51,11 +40,31 @@ export default function ReviewBoard(props) {
     setReviews(newList);
   };
 
+  const addReview = () => {};
+
   return (
     <div className="w-full flex flex-col items-center">
       <h2 className="mt-4 mb-8">Customer Reviews</h2>
       <div className="w-3/4 flex items-center justify-end mb-8">
-        <Button type="default">Write a Review</Button>
+        <Button
+          type="default"
+          onClick={() => {
+            setOpenModal(true);
+          }}
+        >
+          Write a Review
+        </Button>
+        <Modal
+          title="How would you rate this product?"
+          centered
+          footer={null}
+          open={openModal}
+          // onOk={handleOk}
+          // confirmLoading={confirmLoading}
+          onCancel={() => setOpenModal(false)}
+        >
+          <AddReview />
+        </Modal>
         <div
           className="bg-white rounded p-2 ml-2"
           style={{ border: "1px solid #d1d1d1" }}
