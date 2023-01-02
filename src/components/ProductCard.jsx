@@ -1,20 +1,50 @@
-import { Link } from "react-router-dom";
-import FruitPunch from "../assets/fruit-punch.jpg";
+import { useNavigate } from "react-router-dom";
+import { StarFilled } from "@ant-design/icons";
 
-export default function ProductCard({ id, name, image, price }) {
+export default function ProductCard({
+  id,
+  name,
+  image,
+  price,
+  discountedPrice = "Rs. 280",
+  rating,
+}) {
+  const navigate = useNavigate();
+
   return (
-    <Link to="product">
-      <div className="flex flex-col justify-center items-center w-56 mx-8">
-        <div className="w-full h-60 relative overflow-hidden product-wrapper">
-          <img src={image} className="w-full h-full zoom" />
-          <div className="absolute bottom-0 h-full w-full z-10 bg-primary1 flex justify-center items-center appear"></div>
-        </div>
-        <div className="w-full my-2 py-2 text-center bg-accent2 roboto font-thin text-secondary1 uppercase">
-          Add To Cart
-        </div>
-        <div>{name}</div>
-        <div>{price}</div>
+    <div
+      onClick={() => {
+        navigate(`/product/${id}`);
+      }}
+      className="acme flex flex-col justify-center items-center w-64 m-8 bg-white rounded-xl p-4 shadow-md hover:shadow-lg"
+    >
+      <div className="w-full h-60 relative overflow-hidden product-wrapper rounded-xl shadow-md">
+        <img src={image} className="w-full h-full object-cover zoom" />
+        <div className="absolute bottom-0 h-full w-full z-10 bg-primary1 flex justify-center items-center appear"></div>
       </div>
-    </Link>
+      <div className="w-full flex flex-col items-start my-4 text-accent1 text-xl">
+        <div>{name}</div>
+        <div className="w-full flex justify-between text-lg">
+          {discountedPrice ? (
+            <div className="flex items-center">
+              <span>{discountedPrice}</span>
+              <span className="text-gray-400 line-through ml-2 text-base">
+                {price}
+              </span>
+            </div>
+          ) : (
+            <span>{price}</span>
+          )}
+
+          <span>
+            <StarFilled /> {rating.toFixed(1)}
+          </span>
+        </div>
+      </div>
+
+      <div className="w-full mb-2 py-2 text-center bg-accent1 font-normal text-base text-secondary1 uppercase rounded-md">
+        Add To Cart
+      </div>
+    </div>
   );
 }

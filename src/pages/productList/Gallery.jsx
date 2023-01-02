@@ -1,4 +1,4 @@
-import ProductCard2 from "../../components/ProductCard2";
+import ProductCard from "../../components/ProductCard";
 import { Pagination } from "antd";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -23,12 +23,13 @@ export default function Gallery({ products }) {
         {productList &&
           productList.length > 0 &&
           productList.map((item) => (
-            <ProductCard2
+            <ProductCard
               key={item.id}
               id={item.id}
               name={item.name}
               image={item.images[0]}
               price={item.minPrice}
+              discountedPrice={item.discountedPrice}
               rating={item.rating}
             />
           ))}

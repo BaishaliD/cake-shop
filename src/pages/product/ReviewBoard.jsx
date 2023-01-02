@@ -24,12 +24,7 @@ import {
 import "./Masonry.css";
 import { useEffect } from "react";
 
-let breakpointColumnsObj = {
-  default: 4,
-  1100: 3,
-  800: 2,
-  540: 1,
-};
+let breakpointColumnsObj = {};
 
 export default function ReviewBoard(props) {
   const [rating, setRating] = useState();
@@ -43,8 +38,8 @@ export default function ReviewBoard(props) {
     setReviews(props.reviews && props.reviews.length > 0 ? props.reviews : []);
     if (props.reviews && props.reviews.length > 0) {
       breakpointColumnsObj = {
-        default: Math.min(props.reviews.length, 4),
-        1100: Math.min(props.reviews.length, 3),
+        default: Math.min(props.reviews.length, 3),
+        1100: Math.min(props.reviews.length, 2),
         800: Math.min(props.reviews.length, 2),
         540: 1,
       };
@@ -59,24 +54,42 @@ export default function ReviewBoard(props) {
   return (
     <div className="w-full flex flex-col items-center">
       <h2 className="mt-4 mb-8">Customer Reviews</h2>
+      <div className="w-3/4 flex items-center justify-end mb-8">
+        <Button type="default">Write a Review</Button>
+        <div
+          className="bg-white rounded p-2 ml-2"
+          style={{ border: "1px solid #d1d1d1" }}
+        >
+          <FontAwesomeIcon icon={faArrowUpWideShort} />
+        </div>
+      </div>
+      <div className="w-full flex">
+        <div className="w-[300px] flex justify-center">
+          <Ratings ratings={props.ratings} />
+        </div>
 
-      <ReviewDetails data={props} />
-      <Masonry
-        breakpointCols={breakpointColumnsObj}
-        className="my-masonry-grid"
-        columnClassName="my-masonry-grid_column"
-      >
-        {reviews.map((item) => (
-          <CardItem data={item} />
-        ))}
-      </Masonry>
-      <Button
-        type="primary"
-        className="px-8 bg-accent1 m-12"
-        onClick={showMore}
-      >
-        Show More
-      </Button>
+        <div className="flex-grow flex-col">
+          <div className="w-full flex justify-center">
+            <Masonry
+              breakpointCols={breakpointColumnsObj}
+              className="my-masonry-grid"
+              columnClassName="my-masonry-grid_column"
+            >
+              {reviews.map((item) => (
+                <CardItem data={item} />
+              ))}
+            </Masonry>
+          </div>
+
+          <Button
+            type="primary"
+            className="px-8 bg-accent1 m-12"
+            onClick={showMore}
+          >
+            Show More
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -140,65 +153,23 @@ const CardItem = ({ data }) => {
   );
 };
 
-const ReviewDetails = ({ data, open, setOpen }) => {
-  const hide = () => {
-    setOpen(false);
-  };
-  const handleOpenChange = (newOpen) => {
-    setOpen(newOpen);
-  };
-  return (
-    <div className="w-full flex justify-around items-center mb-4">
-      <Popover
-        content={<Ratings ratings={data.ratings} />}
-        title={
-          <h1 className="text-accent2">
-            {data.rating} <StarFilled />
-          </h1>
-        }
-        placement="bottomLeft"
-        trigger="click"
-        open={open}
-        onOpenChange={handleOpenChange}
-      >
-        <div className="text-accent1 flex cursor-pointer">
-          <Rate
-            style={{ color: "#815B5B", fontSize: "14px" }}
-            allowHalf
-            disabled
-            defaultValue={data.rating}
-          />
-          <div className="px-2">({data.ratingNo} Reviews)</div>
-          <CaretDownFilled />
-        </div>
-      </Popover>
-      <div className="flex items-center">
-        <Button type="default">Write a Review</Button>
-        <div
-          className="bg-white rounded p-2 ml-2"
-          style={{ border: "1px solid #d1d1d1" }}
-        >
-          <FontAwesomeIcon icon={faArrowUpWideShort} />
-        </div>
-      </div>
-    </div>
-  );
-};
-
 const Ratings = ({ ratings }) => {
   let count = 0;
   for (const i in ratings) {
     count += ratings[i];
   }
   return (
-    <div className="w-[320px] flex flex-col">
-      {["5", "4", "3", "2", "1"].map((item) => (
-        <ReviewDetailsRow
-          stars={parseInt(item)}
-          perc={(ratings[item] * 100) / count}
-          n={ratings[item]}
-        />
-      ))}
+    <div className="flex flex-col">
+      <h4 className="text-accent2 mb-4">Ratings ({count})</h4>
+      <div className="w-[250px] flex flex-col">
+        {["5", "4", "3", "2", "1"].map((item) => (
+          <ReviewDetailsRow
+            stars={parseInt(item)}
+            perc={(ratings[item] * 100) / count}
+            n={ratings[item]}
+          />
+        ))}
+      </div>
     </div>
   );
 };

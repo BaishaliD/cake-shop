@@ -1,7 +1,11 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { Button, Rate, Segmented, Divider } from "antd";
-import { HeartFilled, HeartOutlined } from "@ant-design/icons";
+import { Button, Rate, Segmented, Divider, Popover } from "antd";
+import {
+  HeartFilled,
+  HeartOutlined,
+  InfoCircleOutlined,
+} from "@ant-design/icons";
 import ProductSuggestion from "./ProductSuggestion";
 import Carousel from "../../components/Carousel";
 import Quantity from "../../components/Quantity";
@@ -16,7 +20,9 @@ import {
 
 export default function Product() {
   const [data, setData] = useState(null);
+  const [discountedPrice, setDiscountedPrice] = useState(null);
   const [price, setPrice] = useState(null);
+  const [discount, setDiscount] = useState(null);
   const [flavour, setFlavour] = useState(null);
   const [weight, setWeight] = useState(null);
 
@@ -24,14 +30,17 @@ export default function Product() {
   const [moreFlavour, setmoreFlavour] = useState(null); //More product from same flavour
   const [moreCategory, setmoreCategory] = useState(null); //More product from same category
   const [wishlisted, setWishlisted] = useState(true);
-  let { id } = useParams();
 
-  const getPrice = (flavour, weight) => {
-    const obj = data.priceList.find(
-      (item) => item.flavour === flavour && item.weight === weight
-    );
-    setPrice(obj && obj.price ? obj.price : obj.minPrice);
+  const [open, setOpen] = useState(false);
+
+  const hide = () => {
+    setOpen(false);
   };
+  const handleOpenChange = (newOpen) => {
+    setOpen(newOpen);
+  };
+
+  let { id } = useParams();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -42,12 +51,14 @@ export default function Product() {
       setData(product);
       if (product.priceList && product.priceList.length > 0) {
         setPrice(product.priceList[0].price);
+        setDiscountedPrice(product.priceList[0].discountedPrice);
+        setDiscount(product.priceList[0].discount);
         setFlavour(product.priceList[0].flavour);
         setWeight(product.priceList[0].weight);
       } else {
-        setPrice(
-          product.discountedPrice ? product.discountedPrice : product.minPrice
-        );
+        setPrice(product.minPrice);
+        setDiscountedPrice(product.discountedPrice);
+        setDiscount(product.discount);
         setFlavour(
           product.flavour && product.flavour.length > 0
             ? product.flavour[0]
@@ -61,6 +72,15 @@ export default function Product() {
 
     fetchSuggestions();
   }, [id]);
+
+  const getPrice = (flavour, weight) => {
+    const obj = data.priceList.find(
+      (item) => item.flavour === flavour && item.weight === weight
+    );
+    setPrice(obj && obj.price ? obj.price : obj.minPrice);
+    setDiscountedPrice(obj.discountedPrice ? obj.discountedPrice : null);
+    setDiscount(obj.discount ? obj.discount : null);
+  };
 
   const fetchSuggestions = async () => {
     const _suggested = await fetchRandomList(4, id);
@@ -84,7 +104,30 @@ export default function Product() {
             <div className="w-2/5 p-8">
               <h3 className="text-accent1 font-thin">{data.desc}</h3>
               <h1 className="text-accent2 acme">{data.name}</h1>
-              <h2 className="text-accent2">{price}</h2>
+              <div className="flex items-center mb-3">
+                {discountedPrice ? (
+                  <>
+                    <span className="text-accent2 text-2xl font-bold mr-2">
+                      {discountedPrice}
+                    </span>
+                    <span className="text-gray-500 line-through text-xl font-normal mr-2">
+                      {price}
+                    </span>
+                    {discount && (
+                      <div className="bg-green-300 rounded px-2 text-green-800 text-sm mr-2">
+                        {discount} OFF
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <span className="text-accent2 text-2xl font-bold mr-2">
+                    {price}
+                  </span>
+                )}
+
+                <span className="text-gray-500">(Inclusive of GST)</span>
+              </div>
+
               <div className="text-accent1 text-base flex items-end">
                 <Rate
                   style={{ color: "#815B5B", fontSize: "14px" }}
@@ -105,7 +148,7 @@ export default function Product() {
 
               {/* SELECT FLAVOUR START */}
               {Array.isArray(data.flavour) && (
-                <div className="my-4 text-accent1">
+                <div className="my-8 text-accent1">
                   {data.flavour.length > 1 ? (
                     <>
                       <div>Select Flavour</div>
@@ -137,10 +180,23 @@ export default function Product() {
 
               {/* SELECT WEIGHT START */}
               {Array.isArray(data.weight) && (
-                <div className="my-4 text-accent1">
+                <div className="my-8 text-accent1">
                   {data.weight.length > 1 ? (
                     <>
-                      <div>Select Weight</div>
+                      <div className="flex items-center">
+                        <div>Select Weight</div>
+                        <Popover
+                          content={<ServingInfo />}
+                          title={<h4 className="text-accent2">Serving Info</h4>}
+                          placement="bottomLeft"
+                          trigger="click"
+                          open={open}
+                          onOpenChange={handleOpenChange}
+                        >
+                          <InfoCircleOutlined className="text-gray-500 ml-2" />
+                        </Popover>
+                      </div>
+
                       <div className="flex my-4 -ml-2">
                         {data.weight.map((el, i) => (
                           <button
@@ -167,7 +223,7 @@ export default function Product() {
               )}
               {/* SELECT WEIGHT END */}
 
-              <div className="my-4 flex justify-between items-center">
+              <div className="my-8 flex justify-between items-center">
                 <Quantity />
                 <div
                   className="pr-2"
@@ -239,3 +295,29 @@ export default function Product() {
     </div>
   );
 }
+
+const servinfInfo = [
+  { wt: "0.5 kg", serves: "4-6 persons" },
+  { wt: "1 kg", serves: "10-12 persons" },
+  { wt: "1.5 kg", serves: "14-16 persons" },
+  { wt: "2 kg", serves: "20-22 persons" },
+  { wt: "2.5 kg", serves: "24-26 persons" },
+  { wt: "3 kg", serves: "30-32 persons" },
+  { wt: "3.5 kg", serves: "35-38 persons" },
+  { wt: "4 kg", serves: "40-42 persons" },
+];
+const ServingInfo = () => {
+  return (
+    <div className="w-[250px] max-h-40 overflow-scroll bg-gray-200 rounded-xl">
+      {servinfInfo.map((item) => (
+        <div
+          className="flex justify-between items-center bg-white p-2 text-sm text-gray-500"
+          style={{ borderBottom: "solid 0.5px lightgray" }}
+        >
+          <div>{item.wt}</div>
+          <div>{item.serves}</div>
+        </div>
+      ))}
+    </div>
+  );
+};
