@@ -63,7 +63,7 @@ export default function ReviewBoard(props) {
           // confirmLoading={confirmLoading}
           onCancel={() => setOpenModal(false)}
         >
-          <AddReview />
+          <AddReview setOpenModal={setOpenModal} />
         </Modal>
         <div
           className="bg-white rounded p-2 ml-2"

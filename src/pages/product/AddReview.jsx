@@ -3,6 +3,10 @@ import { Button, Carousel, Divider, Input, Rate } from "antd";
 const { TextArea } = Input;
 import UploadImages from "./UploadImages";
 import { uploadReviewImages } from "../../../firebase";
+import Image from "../../components/Image";
+import Success from "../../assets/review-success.svg";
+import Fail from "../../assets/review-error.svg";
+import Pending from "../../assets/review-pending.svg";
 
 const ratingList = [
   { rating: 5, desc: "It was extrordinary" },
@@ -12,9 +16,12 @@ const ratingList = [
   { rating: 1, desc: "It was terrible" },
 ];
 
-export default function AddReview() {
+export default function AddReview({ setOpenModal }) {
   const ref = useRef(null);
-  const [slide, setSlide] = useState(1);
+  const slideRef = useRef(0);
+
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [status, setStatus] = useState("PENDING");
   const [rating, setRating] = useState(null);
   const [title, setTitle] = useState(null);
   const [review, setReview] = useState(null);
@@ -30,13 +37,13 @@ export default function AddReview() {
   });
 
   const rateProduct = (res) => {
-    console.log("Product rated!", res);
     setRating(res.rating);
     setDisableNext(false);
   };
 
   const beforeChange = (from, to) => {
-    console.log("beforeChange :: ", from, to);
+    setCurrentSlide(to);
+    slideRef.current = to;
     if (to === 0) {
       setBtnText("Next");
       setDisablePrev(true);
@@ -49,14 +56,15 @@ export default function AddReview() {
     if (to === 2) {
       setBtnText("Done");
     }
+    if (to === 3) {
+      setBtnText("Close");
+    }
   };
 
   const handleBtnText = (field1, field2, field3) => {
     if (!field1 && !field2 && !field3) {
-      console.log("SKIP");
       setBtnText("Skip");
     } else {
-      console.log("NEXT");
       setBtnText("Next");
     }
   };
@@ -67,7 +75,22 @@ export default function AddReview() {
   };
 
   const saveReview = () => {
-    console.log("SAVE REVIEW :::: ", rating, title, review, fileList, userinfo);
+    console.log(
+      "SAVE REVIEW :::: ",
+      ref.current,
+      rating,
+      title,
+      review,
+      fileList,
+      userinfo
+    );
+    setTimeout(() => {
+      setStatus("FAIL");
+    }, 5000);
+  };
+
+  const btnPressed = () => {
+    console.log("BTN PRESSED!! ", slideRef.current);
   };
 
   return (
@@ -75,16 +98,17 @@ export default function AddReview() {
       <Carousel
         dots={false}
         ref={ref}
-        // effect="fade"
         beforeChange={beforeChange}
         infinite={false}
       >
         <Slide1
+          slideNo={0}
           rating={rating}
           ratingList={ratingList}
           rateProduct={rateProduct}
         />
         <Slide2
+          slideNo={1}
           title={title}
           setTitle={setTitle}
           review={review}
@@ -95,12 +119,15 @@ export default function AddReview() {
           fileList={fileList}
           setFileList={setFileList}
         />
-        <Slide3 userinfo={userinfo} setUserinfo={setUserinfo} />
+        <Slide3 slideNo={2} userinfo={userinfo} setUserinfo={setUserinfo} />
+        <Slide4 slideNo={3} status={status} />
       </Carousel>
       <div className="w-full flex justify-between">
         <Button
           onClick={() => {
-            ref.current.prev();
+            if (!disablePrev) {
+              ref.current.prev();
+            }
           }}
           disabled={disablePrev}
         >
@@ -110,8 +137,12 @@ export default function AddReview() {
           onClick={() => {
             if (!disableNext) {
               ref.current.next();
+              if (slideRef.current === 2) {
+                saveReview();
+              } else if (slideRef.current === 3) {
+                setOpenModal(false);
+              }
             }
-            saveReview();
           }}
           disabled={disableNext}
         >
@@ -222,6 +253,31 @@ const Slide3 = ({ userinfo, setUserinfo }) => {
           setUserinfo({ ...userinfo, email: e.target.value });
         }}
       />
+    </div>
+  );
+};
+
+const Slide4 = ({ status }) => {
+  return (
+    <div className="mt-16 h-full flex flex-col items-center justify-center">
+      {status === "FAIL" ? (
+        <>
+          <h2 className="mb-8 text-center">
+            Something went wrong. Please try again!
+          </h2>
+          <Image height="200px" src={Fail} />
+        </>
+      ) : status === "SUCCESS" ? (
+        <>
+          <h2 className="mb-8 text-center">Your review is submitted!</h2>
+          <Image height="200px" src={Success} />
+        </>
+      ) : (
+        <>
+          <h2 className="mb-8 text-center">Submitting your review...</h2>
+          <Image height="200px" src={Pending} />
+        </>
+      )}
     </div>
   );
 };
