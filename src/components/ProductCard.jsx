@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { StarFilled } from "@ant-design/icons";
+import Image from "../components/Image";
 
 export default function ProductCard({
   id,
@@ -19,7 +20,7 @@ export default function ProductCard({
       className="acme flex flex-col justify-center items-center w-64 m-8 bg-white rounded-xl p-4 shadow-md hover:shadow-lg"
     >
       <div className="w-full h-60 relative overflow-hidden product-wrapper rounded-xl shadow-md">
-        <img src={image} className="w-full h-full object-cover zoom" />
+        <Image height="100%" width="100%" src={image} className="cover zoom" />
         <div className="absolute bottom-0 h-full w-full z-10 bg-primary1 flex justify-center items-center appear"></div>
       </div>
       <div className="w-full flex flex-col items-start my-4 text-accent1 text-xl">
