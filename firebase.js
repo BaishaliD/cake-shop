@@ -10,7 +10,12 @@ import {
   limit,
   serverTimestamp,
 } from "firebase/firestore";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  getDownloadURL,
+  uploadString,
+} from "firebase/storage";
 import { cupcakes, cakes } from "./src/database/AllProducts";
 
 // Your web app's Firebase configuration
@@ -123,4 +128,17 @@ export const fetchRandomList = (n, excludeId) => {
   let selected = shuffled.slice(0, n);
 
   return new Promise((resolve, reject) => resolve(selected));
+};
+
+export const uploadReviewImages = (url, filename) => {
+  return new Promise((resolve, reject) => {
+    console.log("uploadReviewImages called : ", url, filename);
+    const imageRef = ref(storage, `reviews/${filename}`);
+    uploadString(imageRef, url, "data_url")
+      .then((snapshot) => {
+        console.log("Uploaded a data_url string!");
+        resolve();
+      })
+      .catch((err) => reject(err));
+  });
 };
