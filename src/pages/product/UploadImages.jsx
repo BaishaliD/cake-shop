@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Upload } from "antd";
+import { uploadReviewImages } from "../../../firebase";
+
 const getBase64 = (file) =>
   new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -8,49 +10,11 @@ const getBase64 = (file) =>
     reader.onload = () => resolve(reader.result);
     reader.onerror = (error) => reject(error);
   });
-export default function UploadImages() {
+export default function UploadImages({ imageUploaded, fileList, setFileList }) {
   const [previewOpen, setPreviewOpen] = useState(false);
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
-  const [fileList, setFileList] = useState([]);
-  // const [fileList, setFileList] = useState([
-  //   {
-  //     uid: '-1',
-  //     name: 'image.png',
-  //     status: 'done',
-  //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  //   },
-  //   {
-  //     uid: '-2',
-  //     name: 'image.png',
-  //     status: 'done',
-  //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  //   },
-  //   {
-  //     uid: '-3',
-  //     name: 'image.png',
-  //     status: 'done',
-  //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  //   },
-  //   {
-  //     uid: '-4',
-  //     name: 'image.png',
-  //     status: 'done',
-  //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  //   },
-  //   {
-  //     uid: '-xxx',
-  //     percent: 50,
-  //     name: 'image.png',
-  //     status: 'uploading',
-  //     url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-  //   },
-  //   {
-  //     uid: '-5',
-  //     name: 'image.png',
-  //     status: 'error',
-  //   },
-  // ]);
+
   const handleCancel = () => setPreviewOpen(false);
   const handlePreview = async (file) => {
     if (!file.url && !file.preview) {
@@ -62,23 +26,47 @@ export default function UploadImages() {
       file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
     );
   };
-  const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
+  const handleChange = ({ fileList: newFileList }) => {
+    console.log("Handle change called!");
+    console.log("newFileList :: ", newFileList);
+    setFileList(newFileList);
+    if (newFileList && newFileList.length > 0) {
+      imageUploaded(true);
+    } else {
+      imageUploaded(false);
+    }
+  };
   const uploadButton = (
     <div className="text-gray-500">
       <PlusOutlined />
       <div className="mt-2">Add images</div>
     </div>
   );
+
+  const handleUpload = async ({ onError, onSuccess, file }) => {
+    //TODO Upload all images to Firebase after DONE button is clicked
+    console.log("customRequest :: ", file);
+    const dataUrl = await getBase64(file);
+    uploadReviewImages(dataUrl, file.name)
+      .then((res) => {
+        console.log("filelist :::: ", fileList, file);
+        file.status = "done";
+        onSuccess(null, file);
+      })
+      .catch((err) => onError(err));
+  };
+
   return (
     <div className="mt-4">
       <Upload
-        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        // action={handleUpload}
+        customRequest={handleUpload}
         listType="picture-card"
         fileList={fileList}
         onPreview={handlePreview}
         onChange={handleChange}
       >
-        {fileList.length >= 8 ? null : uploadButton}
+        {fileList.length >= 3 ? null : uploadButton}
       </Upload>
       <Modal
         open={previewOpen}

@@ -55,7 +55,12 @@ export default function ProductStrip() {
   return (
     <div className="h-8 w-screen text-secondary1 bg-primary2 flex items-center">
       {list.map((item) => (
-        <Item label={item.label} items={item.dropdown} route={item.route} />
+        <Item
+          key={item.label}
+          label={item.label}
+          items={item.dropdown}
+          route={item.route}
+        />
       ))}
     </div>
   );

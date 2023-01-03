@@ -55,7 +55,6 @@ export default function ReviewBoard(props) {
           Write a Review
         </Button>
         <Modal
-          title="How would you rate this product?"
           centered
           footer={null}
           open={openModal}
@@ -74,7 +73,7 @@ export default function ReviewBoard(props) {
       </div>
       <div className="w-full flex">
         <div className="w-[300px] flex justify-center">
-          <Ratings ratings={props.ratings} />
+          <Ratings ratings={props.ratings} rating={props.rating} />
         </div>
 
         <div className="flex-grow flex-col">
@@ -85,7 +84,7 @@ export default function ReviewBoard(props) {
               columnClassName="my-masonry-grid_column"
             >
               {reviews.map((item) => (
-                <CardItem data={item} />
+                <CardItem key={item.name} data={item} />
               ))}
             </Masonry>
           </div>
@@ -162,7 +161,7 @@ const CardItem = ({ data }) => {
   );
 };
 
-const Ratings = ({ ratings }) => {
+const Ratings = ({ rating, ratings }) => {
   let count = 0;
   for (const i in ratings) {
     count += ratings[i];
@@ -170,9 +169,14 @@ const Ratings = ({ ratings }) => {
   return (
     <div className="flex flex-col">
       <h4 className="text-accent2 mb-4">Ratings ({count})</h4>
+      <div className="flex items-center text-2xl text-accent2 mb-4">
+        <StarFilled className="mr-2 hover:scale-110" />
+        <div>{rating}</div>
+      </div>
       <div className="w-[250px] flex flex-col">
         {["5", "4", "3", "2", "1"].map((item) => (
           <ReviewDetailsRow
+            key={item}
             stars={parseInt(item)}
             perc={(ratings[item] * 100) / count}
             n={ratings[item]}
