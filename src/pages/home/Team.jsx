@@ -1,6 +1,7 @@
 import Man1 from "../../assets/team/man.png";
 import Man2 from "../../assets/team/man-2.png";
 import Woman from "../../assets/team/woman.png";
+import Image from "../../components/Image";
 
 const bakersList = [
   {
@@ -49,9 +50,16 @@ export default function Team() {
 const Item = ({ name, image, des }) => {
   return (
     <div className="flex flex-col justify-center items-center mx-8">
-      <img
+      {/* <img
         src={image}
         className="h-40 w-40 rounded-full bg-secondary2 border"
+        style={{ borderColor: "#251a1a", borderWidth: "4px" }}
+      /> */}
+      <Image
+        height="160px"
+        width="160px"
+        src={image}
+        className="rounded-full bg-secondary2 border"
         style={{ borderColor: "#251a1a", borderWidth: "4px" }}
       />
       <h3 className="my-2">{name}</h3>

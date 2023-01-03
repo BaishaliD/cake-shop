@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Carousel, Rate } from "antd";
 import { fetchRandomList } from "../../../firebase";
 import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
+import Image from "../../components/Image";
 
 export default function NewLaunch() {
   const ref = useRef(null);
@@ -33,9 +34,11 @@ export default function NewLaunch() {
                   className="h-96 w-full rounded-xl overflow-hidden p-4"
                 >
                   <div className="flex w-full h-full">
-                    <img
+                    <Image
+                      width={"50%"}
+                      height={"100%"}
+                      className="rounded-l-xl object-cover"
                       src={item.images[0]}
-                      className="h-full w-1/2 rounded-l-xl object-cover"
                     />
                     <div className="w-1/2 flex flex-col justify-center items-center bg-white20 text-accent1 p-8 rounded-r-xl">
                       <div className="text-3xl text-accent2 acme">

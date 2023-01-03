@@ -12,6 +12,7 @@ import {
 } from "@ant-design/icons";
 import "./Masonry.css";
 import AddReview from "./AddReview";
+import Image from "../../components/Image";
 
 let breakpointColumnsObj = {};
 
@@ -124,7 +125,9 @@ const CardItem = ({ data }) => {
                 key={index}
                 className="w-[300px] w-full acme rounded-xl overflow-hidden relative"
               >
-                <img
+                <Image
+                  height="100%"
+                  width="100%"
                   src={slide}
                   className="h-full w-full rounded-xl rounded-xl object-cover"
                 />

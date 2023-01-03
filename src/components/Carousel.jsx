@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { Carousel } from "antd";
 import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
+import Image from "../components/Image";
 
 export default function CarouselComponent({ slides }) {
   const ref = useRef();
@@ -40,9 +41,11 @@ export default function CarouselComponent({ slides }) {
                 key={index}
                 className="h-[calc(45vw)] w-full acme rounded-xl overflow-hidden relative"
               >
-                <img
+                <Image
+                  width="100%"
+                  height="100%"
                   src={slide}
-                  className="h-full w-full rounded-xl rounded-xl object-cover"
+                  className="rounded-xl cover"
                 />
               </div>
             ))}
@@ -74,11 +77,11 @@ const CarouselPagination = ({ slides, activeSlide, goTo }) => {
             goTo(index);
           }}
         >
-          <img
+          <Image
+            width="100%"
+            height="100%"
             src={slide}
-            className={`h-full w-full object-cover ${
-              activeSlide === index && "opacity-50"
-            }`}
+            className={`cover ${activeSlide === index && "opacity-50"}`}
           />
         </div>
       ))}

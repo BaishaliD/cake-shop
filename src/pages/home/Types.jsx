@@ -3,6 +3,7 @@ import Fondant from "../../assets/types/fondant.png";
 import Bento from "../../assets/types/bento.jpeg";
 import PullUp from "../../assets/types/pull-up.jpeg";
 import Mousse from "../../assets/types/mousse.webp";
+import Image from "../../components/Image";
 
 const collectionList = [
   {
@@ -59,7 +60,12 @@ const Collection = ({ index, image, name, route }) => {
       {Math.floor(index / 2) % 2 === 0 ? (
         <>
           <div className="w-1/2 h-full overflow-hidden cursor-pointer collection-wrapper">
-            <img src={image} className="w-full h-full object-cover zoom" />
+            <Image
+              width="100%"
+              height="100%"
+              src={image}
+              className="cover zoom"
+            />
           </div>
 
           <div className="w-1/2 h-full flex flex-col items-center justify-center">
@@ -90,7 +96,12 @@ const Collection = ({ index, image, name, route }) => {
             </h4>
           </div>
           <div className="w-1/2 h-full overflow-hidden cursor-pointer collection-wrapper">
-            <img src={image} className="w-full h-full object-cover zoom" />
+            <Image
+              width="100%"
+              height="100%"
+              src={image}
+              className="cover zoom"
+            />
           </div>
         </>
       )}

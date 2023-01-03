@@ -5,6 +5,7 @@ import Strawberry from "../../assets/flavours/strawberry.jpeg";
 import RedVelvet from "../../assets/flavours/redvelvet.jpeg";
 import BlackForest from "../../assets/flavours/blackforest.jpeg";
 import Pineapple from "../../assets/flavours/pineapple.jpeg";
+import Image from "../../components/Image";
 
 const collectionList = [
   {
@@ -74,7 +75,7 @@ const Collection = ({ image, name, route }) => {
         navigateTo(`/collection/${route}`);
       }}
     >
-      <img src={image} className="h-full w-full zoom object-cover" />
+      <Image height="100%" width="100%" src={image} className="zoom cover" />
       <div
         className="absolute top-1/2 left-0 -translate-y-1/2 w-full z-10 bg-white50 flex justify-center items-center py-4 font-bold text-xl"
         style={{

@@ -71,3 +71,7 @@ body {
 .parallaxBg2 {
   background-image: url("./assets/baking.gif");
 }
+
+.cover .ant-image-img {
+  object-fit: cover;
+}

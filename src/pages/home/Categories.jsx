@@ -3,6 +3,7 @@ import Cake from "../../assets/category/cake.jpeg";
 import JarCake from "../../assets/category/jarcake.webp";
 import Cupcake from "../../assets/category/cupcake.jpeg";
 import Macaron from "../../assets/category/macaron.webp";
+import Image from "../../components/Image";
 
 const collectionList = [
   {
@@ -66,7 +67,7 @@ const Collection = ({ image, name, route }) => {
         navigateTo(`/collection/${route}`);
       }}
     >
-      <img src={image} className="h-full w-full zoom object-cover" />
+      <Image height="100%" width="100%" src={image} className="zoom cover" />
       <div className="absolute bottom-0 h-full w-full z-10 bg-secondary2 flex justify-center items-center appear">
         <div className="bg-secondary2 py-2 px-4 min-w-150 text-accent2 text-2xl font-bold acme opacity-100 text-center">
           {name}
