@@ -3,6 +3,39 @@ import Wedding1_2 from "../assets/cakes/wedding1-2.webp";
 import Wedding1_R1 from "../assets/cakes/wedding1-r1.jpeg";
 import Wedding1_R2 from "../assets/cakes/wedding1-r2.jpeg";
 import Wedding1_R3 from "../assets/cakes/wedding1-r3.jpeg";
+import Wedding2_1 from "../assets/cakes/wedding2-2.jpeg";
+import Wedding2_2 from "../assets/cakes/wedding2-1.webp";
+import Wedding3_1 from "../assets/cakes/wedding3-1.jpeg";
+import Wedding3_2 from "../assets/cakes/wedding3-2.jpeg";
+import Wedding4_1 from "../assets/cakes/wedding4-1.jpeg";
+import ChocoDrip1 from "../assets/cakes/choco-drip-1.webp";
+import ChocoDrip2 from "../assets/cakes/choco-drip-2.webp";
+import ChocoDrip3 from "../assets/cakes/choco-drip-3.webp";
+import ChocoFruit1 from "../assets/cakes/choco-fruit-1.jpeg";
+import ChocoFruit2 from "../assets/cakes/choco-fruit-2.webp";
+import ChocoMousse1 from "../assets/cakes/choco-mousse-1.jpeg";
+import ChocoMousse2 from "../assets/cakes/choco-mousse-2.jpeg";
+import LayeredMousse1 from "../assets/cakes/mousse-1.webp";
+import LayeredMousse2 from "../assets/cakes/mousse-2.webp";
+import ChocoPinata1 from "../assets/cakes/choco-pinata.jpeg";
+import ChocoPinata2 from "../assets/cakes/choco-pinata-2.jpeg";
+import SimpleChoco1 from "../assets/cakes/choco-simple-1.webp";
+import SimpleChoco2 from "../assets/cakes/choco-simple-2.jpeg";
+import Ferrero1 from "../assets/cakes/ferrero-1.webp";
+import Ferrero2 from "../assets/cakes/ferrero-2.png";
+import Ferrero3 from "../assets/cakes/ferrero-3.webp";
+import German1 from "../assets/cakes/german-chocolate.webp";
+import German2 from "../assets/cakes/german-chocolate-2.jpeg";
+import German3 from "../assets/cakes/german-chocolate-3.jpeg";
+import HeartBerry from "../assets/cakes/heart-berry.jpeg";
+import HeartBerry2 from "../assets/cakes/heart-berry-2.jpeg";
+import HeartChoco from "../assets/cakes/heart-choco.jpeg";
+import HeartChoco2 from "../assets/cakes/heart-choco-2.webp";
+import Rose1 from "../assets/cakes/rose-1.jpeg";
+import Rose2 from "../assets/cakes/rose-2.webp";
+import Rose3 from "../assets/cakes/rose-3.webp";
+import StrawberryShortcake1 from "../assets/cakes/strawberry-shortcake-1.jpeg";
+import StrawberryShortcake2 from "../assets/cakes/strawberry-shortcake-2.jpeg";
 
 const category = {
   NONE: "None",
@@ -102,7 +135,7 @@ const test = {
 
     "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
 
-    "Note: Please consume within 24 hours of receiving",
+    "Note: Please consume within 24 hours of receiving.",
   ],
   reviews: [
     {
@@ -162,7 +195,7 @@ export const cupcakes = [
       "Our Christmas Confetti cake is the perfect dessert for your Christmas spread.",
       "This chocolate cupcake has a moist and soft base, topped with a dollop of confetti-filled buttercream.",
       "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
-      "Note: Please consume within 24 hours of receiving",
+      "Note: Please consume within 24 hours of receiving.",
     ],
     reviews: [
       {
@@ -197,7 +230,7 @@ export const cupcakes = [
     info: [
       "Our Classic Red Velvet cupcake is the forever-favourite red velvet cake topped with a delicious frosting, sprinkled with chocochips and confetti.",
       "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
-      "Note: Please consume within 24 hours of receiving",
+      "Note: Please consume within 24 hours of receiving.",
     ],
     reviews: [],
   },
@@ -240,7 +273,7 @@ export const cupcakes = [
       "Add a dash of delicious fun to your kid's halloween party with our Halloween-themed cupcakes",
       "Take your pick between Vanilla and Chocolate flavours.",
       "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
-      "Note: Please consume within 24 hours of receiving",
+      "Note: Please consume within 24 hours of receiving.",
     ],
     reviews: [],
   },
@@ -262,7 +295,7 @@ export const cupcakes = [
     info: [
       "These easy lemon cupcakes are moist, fluffy, zingy and topped with an incredible lemon buttercream that's a lemon-lover's dream!",
       "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
-      "Note: Please consume within 24 hours of receiving",
+      "Note: Please consume within 24 hours of receiving.",
     ],
     reviews: [],
   },
@@ -300,7 +333,7 @@ export const cupcakes = [
     info: [
       "Soft and fluffy Matcha Green Tea Cupcakes topped with a white cloud of vanilla whipped cream taste just like a Matcha green tea Frappuccino!",
       "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
-      "Note: Please consume within 24 hours of receiving",
+      "Note: Please consume within 24 hours of receiving.",
     ],
     reviews: [],
   },
@@ -322,7 +355,7 @@ export const cupcakes = [
     info: [
       "These delicious snowy super moist chocolate cupcakes with blue buttercream frosting are here to brighten up your winter holidays!",
       "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
-      "Note: Please consume within 24 hours of receiving",
+      "Note: Please consume within 24 hours of receiving.",
     ],
     reviews: [],
   },
@@ -350,7 +383,7 @@ export const cupcakes = [
     info: [
       "These peach-flavoured cupcakes with soft, peachy frosting are here to satiate your fruity cravings",
       "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
-      "Note: Please consume within 24 hours of receiving",
+      "Note: Please consume within 24 hours of receiving.",
     ],
     reviews: [],
   },
@@ -374,7 +407,7 @@ export const cupcakes = [
     info: [
       "These Chocolate cupcakes are the ultimate party food. These are super moist and bursting with rich, chocolaty flavor.",
       "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
-      "Note: Please consume within 24 hours of receiving",
+      "Note: Please consume within 24 hours of receiving.",
     ],
     reviews: [],
   },
@@ -397,7 +430,7 @@ export const cupcakes = [
       "Fresh orange juice and zest gives these beautiful Orange Cupcakes a sweet, aromatic orange zing.",
       "Each cake is topped with a creamy orange buttercream.",
       "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
-      "Note: Please consume within 24 hours of receiving",
+      "Note: Please consume within 24 hours of receiving.",
     ],
     reviews: [],
   },
@@ -421,7 +454,7 @@ export const cupcakes = [
     info: [
       "A fluffy chocolate cake, filled with semi-sweet chocolate ganache, and topped with cocoa whipped cream frosting.",
       "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
-      "Note: Please consume within 24 hours of receiving",
+      "Note: Please consume within 24 hours of receiving.",
     ],
     reviews: [],
   },
@@ -454,7 +487,7 @@ export const cupcakes = [
       "These Oreo cupcakes have a spongy cupcake base which comes in both vanilla and chocolate flavours.",
       "These cakes are filled with white chocolate ganache and topped with cookies and cream.",
       "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
-      "Note: Please consume within 24 hours of receiving",
+      "Note: Please consume within 24 hours of receiving.",
     ],
     reviews: [],
   },
@@ -493,7 +526,7 @@ export const cupcakes = [
       "Celebrate love and pride with these beautiful and vibrant cupcakes which comes with rainbow-colored fronsting",
       "Cake your pick from Vanilla and Chocolate flavours.",
       "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
-      "Note: Please consume within 24 hours of receiving",
+      "Note: Please consume within 24 hours of receiving.",
     ],
     reviews: [],
   },
@@ -523,13 +556,16 @@ export const cupcakes = [
       "These cupcakes are rich, moist and chocolatey.",
       "They are topped with chocochips-filled frosting, and the perfect afterparty dessert.",
       "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
-      "Note: Please consume within 24 hours of receiving",
+      "Note: Please consume within 24 hours of receiving.",
     ],
     reviews: [],
   },
 ];
 
+/***** CAKES *****/
+
 export const cakes = [
+  /**** WEDDING CAKES ****/
   {
     id: "wedding_vintage_fruit_delight",
     name: "Vintage Fruit Delight",
@@ -600,7 +636,7 @@ export const cakes = [
 
       "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
 
-      "Note: Please consume within 24 hours of receiving",
+      "Note: Please consume within 24 hours of receiving.",
     ],
     ratings: {
       1: 0,
@@ -646,5 +682,710 @@ export const cakes = [
         text: "My wedding cake was the star of the evening. The cake was as tasty as it was beautiful, and the service from the team was pariseworthy.",
       },
     ],
+  },
+  {
+    id: "wedding_ice_and_gold",
+    name: "Ice and Gold",
+    desc: "Buttercream covered wedding cake with decorated with gold foil",
+    minPrice: "Rs. 7,200",
+    discountedPrice: "Rs. 6,120",
+    discount: "15%",
+    rating: 4.5,
+    ratingNo: 6,
+    images: [Wedding2_1, Wedding2_2],
+    flavour: [flavour.CHOCOLATE, flavour.VANILLA],
+    occasion: occasion.WEDDING,
+    category: category.CAKE,
+    type: type.NONE,
+    sameDayDelivery: false,
+    bestSeller: false,
+    new: true,
+    eggless: true,
+    weight: ["3 kg", "4 kg"],
+    priceList: [
+      {
+        weight: "3 kg",
+        flavour: flavour.VANILLA,
+        price: "Rs. 7,200",
+        discountedPrice: "Rs. 6,120",
+        discount: "15%",
+      },
+      {
+        weight: "4 kg",
+        flavour: flavour.VANILLA,
+        price: "Rs. 7,800",
+        discountedPrice: "Rs. 6,630",
+        discount: "15%",
+      },
+      {
+        weight: "3 kg",
+        flavour: flavour.CHOCOLATE,
+        price: "Rs. 7,200",
+        discountedPrice: "Rs. 6,120",
+        discount: "15%",
+      },
+      {
+        weight: "4 kg",
+        flavour: flavour.CHOCOLATE,
+        price: "Rs. 7,800",
+        discountedPrice: "Rs. 6,630",
+        discount: "15%",
+      },
+    ],
+    info: [
+      "This 3-tier wedding cake in available in both vanilla and chocolate flavours.",
+
+      "The gradient of icy-blue buttercream, along with pieces of gold foil, gives this cake a royal touch.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {
+      1: 0,
+      2: 0,
+      3: 0,
+      4: 3,
+      5: 3,
+    },
+    reviews: [],
+  },
+  {
+    id: "wedding_heaven_on_earth",
+    name: "Heaven on Earth",
+    desc: "A flower-studded 4-tiered wedding cake",
+    minPrice: "Rs. 8,000",
+    discountedPrice: "Rs. 7,200",
+    discount: "10%",
+    rating: 5,
+    ratingNo: 4,
+    images: [Wedding3_1, Wedding3_2],
+    flavour: [flavour.VANILLA, flavour.STRAWBERRY],
+    occasion: occasion.WEDDING,
+    category: category.CAKE,
+    type: type.NONE,
+    sameDayDelivery: false,
+    bestSeller: false,
+    new: true,
+    eggless: true,
+    weight: ["3 kg", "3.5 kg", "4 kg"],
+    priceList: [
+      {
+        weight: "3 kg",
+        flavour: flavour.VANILLA,
+        price: "Rs. 8,000",
+        discountedPrice: "Rs. 7,200",
+        discount: "10%",
+      },
+      {
+        weight: "3.5 kg",
+        flavour: flavour.VANILLA,
+        price: "Rs. 8,500",
+        discountedPrice: "Rs. 7,650",
+        discount: "10%",
+      },
+      {
+        weight: "4 kg",
+        flavour: flavour.VANILLA,
+        price: "Rs. 9,000",
+        discountedPrice: "Rs. 8,100",
+        discount: "10%",
+      },
+      {
+        weight: "3 kg",
+        flavour: flavour.STRAWBERRY,
+        price: "Rs. 8,200",
+        discountedPrice: "Rs. 7,216",
+        discount: "12%",
+      },
+      {
+        weight: "3.5 kg",
+        flavour: flavour.STRAWBERRY,
+        price: "Rs. 8,700",
+        discountedPrice: "Rs. 7,830",
+        discount: "10%",
+      },
+      {
+        weight: "4 kg",
+        flavour: flavour.STRAWBERRY,
+        price: "Rs. 9,500",
+        discountedPrice: "Rs. 8,075",
+        discount: "15%",
+      },
+    ],
+    info: [
+      "This majestic cake is decorated with fresh flowers. The embossed self-colored patterns give this cake a subtle yet classy look.",
+
+      "The cake is engraved with the initials of the couple in a golden hue.",
+
+      "The 3 kg variant will be 3-tiered, and the 3.5 kg and 4 kg variants are 4-tiered.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {
+      4: 2,
+      5: 2,
+    },
+    reviews: [],
+  },
+  {
+    id: "wedding_magical_marble",
+    name: "Magical Marble",
+    desc: "Marble-textured fondant cake",
+    minPrice: "Rs. 7,200",
+    discountedPrice: "Rs. 6,120",
+    discount: "15%",
+    rating: 0,
+    ratingNo: 0,
+    images: [Wedding4_1],
+    flavour: [flavour.CHOCOLATE, flavour.VANILLA],
+    occasion: occasion.WEDDING,
+    category: category.CAKE,
+    type: type.NONE,
+    sameDayDelivery: false,
+    bestSeller: false,
+    new: true,
+    eggless: true,
+    weight: ["3 kg", "4 kg"],
+    priceList: [
+      {
+        weight: "3 kg",
+        flavour: flavour.VANILLA,
+        price: "Rs. 7,200",
+        discountedPrice: "Rs. 6,120",
+        discount: "15%",
+      },
+      {
+        weight: "4 kg",
+        flavour: flavour.VANILLA,
+        price: "Rs. 7,800",
+        discountedPrice: "Rs. 6,630",
+        discount: "15%",
+      },
+      {
+        weight: "3 kg",
+        flavour: flavour.CHOCOLATE,
+        price: "Rs. 7,200",
+        discountedPrice: "Rs. 6,120",
+        discount: "15%",
+      },
+      {
+        weight: "4 kg",
+        flavour: flavour.CHOCOLATE,
+        price: "Rs. 7,800",
+        discountedPrice: "Rs. 6,630",
+        discount: "15%",
+      },
+    ],
+    info: [
+      "This 3-tier wedding cake is beautifully wrapped in marble-textured fondant",
+
+      "The gold pipings along the borders give this cake a unique and elegant look. The cake is decorated with fresh pastel-colored roses.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {},
+    reviews: [],
+  },
+
+  /**** CHOCOLATE CAKES ****/
+  {
+    id: "cake_choco_drip",
+    name: "Chocolate Drip Cake",
+    desc: "Chocolate flavoured cake with dark chocolate drip",
+    minPrice: "Rs. 500",
+    rating: 0,
+    ratingNo: 0,
+    images: [ChocoDrip1, ChocoDrip2, ChocoDrip3],
+    flavour: [flavour.CHOCOLATE],
+    occasion: occasion.NONE,
+    category: category.CAKE,
+    type: type.NONE,
+    sameDayDelivery: false,
+    bestSeller: false,
+    new: true,
+    eggless: false,
+    weight: ["700 gm", "1 kg"],
+    priceList: [
+      {
+        weight: "700 gm",
+        price: "Rs. 500",
+      },
+      {
+        weight: "1 kg",
+        price: "Rs. 800",
+      },
+    ],
+    info: [
+      "A soft and flavourful cake, rich in chocolate. Topped with dripping ganache made with dark chocolate.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {},
+    reviews: [],
+  },
+  {
+    id: "cake_choco_fruit",
+    name: "Chocolate Fruit Cake",
+    desc: "Chocolate flavoured cake topped with fresh fruits",
+    minPrice: "Rs. 500",
+    rating: 0,
+    ratingNo: 0,
+    images: [ChocoFruit2, ChocoFruit1],
+    flavour: [flavour.CHOCOLATE],
+    occasion: occasion.BIRTHDAY,
+    category: category.CAKE,
+    type: type.NONE,
+    sameDayDelivery: false,
+    bestSeller: false,
+    new: true,
+    eggless: false,
+    weight: ["700 gm", "1 kg"],
+    priceList: [
+      {
+        weight: "750 gm",
+        price: "Rs. 500",
+      },
+      {
+        weight: "1 kg",
+        price: "Rs. 800",
+      },
+    ],
+    info: [
+      "A rich chocolatey cake with soft and moist base. Topped with chocolate ganache and fresh fruits.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {},
+    reviews: [],
+  },
+  {
+    id: "cake_choco_mousse",
+    name: "Chocolate Mousse Cake",
+    desc: "Chocolate mousse cake with chocolates and nuts topping",
+    minPrice: "Rs. 700",
+    rating: 0,
+    ratingNo: 0,
+    images: [ChocoMousse1, ChocoMousse2],
+    flavour: [flavour.CHOCOLATE],
+    occasion: occasion.NONE,
+    category: category.CAKE,
+    type: type.NONE,
+    sameDayDelivery: false,
+    bestSeller: false,
+    new: true,
+    eggless: false,
+    weight: ["600 gm", "1 kg"],
+    priceList: [
+      {
+        weight: "600 gm",
+        price: "Rs. 700",
+      },
+      {
+        weight: "1 kg",
+        price: "Rs. 900",
+      },
+    ],
+    info: [
+      "Our rich mousse cake with a biscotti base is a staple dessert for chocolate lovers. It is topped with an assortment of chocolates and nuts.",
+
+      "Take a mouthful of our soft, creamy mousse cake and relish it melting in your mouth.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {},
+    reviews: [],
+  },
+  {
+    id: "cake_layered_choco_mousse",
+    name: "Layered Choco Mousse Cake",
+    desc: "Chocolate mousse cake with 3 layers",
+    minPrice: "Rs. 800",
+    discountedPrice: "Rs. 640",
+    discount: "20%",
+    rating: 0,
+    ratingNo: 0,
+    images: [LayeredMousse1, LayeredMousse2],
+    flavour: [flavour.CHOCOLATE],
+    occasion: occasion.NONE,
+    category: category.CAKE,
+    type: type.NONE,
+    sameDayDelivery: false,
+    bestSeller: false,
+    new: true,
+    eggless: false,
+    weight: ["600 gm", "1 kg"],
+    priceList: [
+      {
+        weight: "600 gm",
+        price: "Rs. 800",
+        discountedPrice: "Rs. 640",
+        discount: "20%",
+      },
+      {
+        weight: "1 kg",
+        price: "Rs. 900",
+        discountedPrice: "Rs. 720",
+        discount: "20%",
+      },
+    ],
+    info: [
+      "Our layered mousse cake with an Oreo base has 3 layers - white chocoalte, milk chocolate and dark chocolate.",
+
+      "Enjoy the soft, creamy deliciousness of the perfect mousse cake as it gently melts in your palate.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {},
+    reviews: [],
+  },
+  {
+    id: "cake_choco_pinata",
+    name: "Chocolate Pinata Cake",
+    desc: "Heart-shaped chocolate pinata cake",
+    minPrice: "Rs. 800",
+    discountedPrice: "Rs. 640",
+    discount: "20%",
+    rating: 0,
+    ratingNo: 0,
+    images: [ChocoPinata1, ChocoPinata2],
+    flavour: [flavour.CHOCOLATE],
+    occasion: occasion.NONE,
+    category: category.CAKE,
+    type: type.NONE,
+    sameDayDelivery: false,
+    bestSeller: false,
+    new: true,
+    eggless: false,
+    weight: ["1 kg"],
+    info: [
+      "Make any celebration fun with our heart-shaped Chocolate Pinata cake. Break it with the hammer provided, and enjoy the lip-smacking cake inside.",
+
+      "The inside of the shells contains a heart-shaped soft, moist chocolate cake filled with choco-chips.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {},
+    reviews: [],
+  },
+  {
+    id: "cake_for_the_love_of_chocolate",
+    name: "For the Love of Chocolate",
+    desc: "Classic chocolate cake with dark chocolate ganache coating",
+    minPrice: "Rs. 800",
+    discountedPrice: "Rs. 640",
+    discount: "20%",
+    rating: 0,
+    ratingNo: 0,
+    images: [SimpleChoco1, SimpleChoco2],
+    flavour: [flavour.CHOCOLATE],
+    occasion: occasion.NONE,
+    category: category.CAKE,
+    type: type.NONE,
+    sameDayDelivery: false,
+    bestSeller: false,
+    new: true,
+    eggless: false,
+    weight: ["750 gm", "1 kg"],
+    priceList: [
+      {
+        weight: "750 gm",
+        price: "Rs. 800",
+        discountedPrice: "Rs. 640",
+        discount: "20%",
+      },
+      {
+        weight: "1 kg",
+        price: "Rs. 900",
+        discountedPrice: "Rs. 720",
+        discount: "20%",
+      },
+    ],
+    info: [
+      "This simple, rich chocolate cake, coated with dark chocolate ganache, is the go to dessert for every party.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {},
+    reviews: [],
+  },
+  {
+    id: "cake_ferrero",
+    name: "Ferrero Delight",
+    desc: "Chocolate cake topped with Ferrero Rocher",
+    minPrice: "Rs. 1000",
+    discountedPrice: "Rs. 850",
+    discount: "15%",
+    rating: 0,
+    ratingNo: 0,
+    images: [Ferrero1, Ferrero2, Ferrero3],
+    flavour: [flavour.CHOCOLATE],
+    occasion: occasion.NONE,
+    category: category.CAKE,
+    type: type.NONE,
+    sameDayDelivery: false,
+    bestSeller: false,
+    new: true,
+    eggless: true,
+    weight: ["1 kg", "1.5 kg"],
+    priceList: [
+      {
+        weight: "1 kg",
+        price: "Rs. 1000",
+        discountedPrice: "Rs. 850",
+        discount: "15%",
+      },
+      {
+        weight: "1.5 kg",
+        price: "Rs. 1500",
+        discountedPrice: "Rs. 1,275",
+        discount: "15%",
+      },
+    ],
+    info: [
+      "This simple, rich chocolate cake, coated with dark chocolate ganache, is topped with everybody's favourite chocolate - Ferrero Rocher. This is the go to dessert for every party.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {},
+    reviews: [],
+  },
+  {
+    id: "cake_german_chocolate",
+    name: "German Chocolate Cake",
+    desc: "Meringue-topped German chocolate cake",
+    minPrice: "Rs. 1000",
+    discountedPrice: "Rs. 850",
+    discount: "15%",
+    rating: 0,
+    ratingNo: 0,
+    images: [German1, German2, German3],
+    flavour: [flavour.CHOCOLATE],
+    occasion: occasion.NONE,
+    category: category.CAKE,
+    type: type.NONE,
+    sameDayDelivery: false,
+    bestSeller: false,
+    new: true,
+    eggless: false,
+    weight: ["1 kg", "1.5 kg"],
+    priceList: [
+      {
+        weight: "1 kg",
+        price: "Rs. 1000",
+        discountedPrice: "Rs. 900",
+        discount: "10%",
+      },
+      {
+        weight: "1.5 kg",
+        price: "Rs. 1500",
+        discountedPrice: "Rs. 1,275",
+        discount: "15%",
+      },
+    ],
+    info: [
+      "German chocolate cake is a layered chocolate cake that's traditionally made with sweet baking chocolate and buttermilk.",
+      "It's filled and topped with a frosting made from pecan, coconut, and evaporated milk.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {},
+    reviews: [],
+  },
+  {
+    id: "cake_berry_heart",
+    name: "Heart of Berries",
+    desc: "Heart-shaped cake topped with berries",
+    minPrice: "Rs. 700",
+    rating: 0,
+    ratingNo: 0,
+    images: [HeartBerry, HeartBerry2],
+    flavour: [flavour.REDVELVET, flavour.VANILLA],
+    occasion: [occasion.VALENTINES, occasion.ANNIVERSARY],
+    category: category.CAKE,
+    type: type.NONE,
+    sameDayDelivery: false,
+    bestSeller: false,
+    new: true,
+    eggless: false,
+    weight: ["650 gm", "1 kg"],
+    priceList: [
+      {
+        flavour: flavour.VANILLA,
+        weight: "650 gm",
+        price: "Rs. 700",
+      },
+      {
+        flavour: flavour.VANILLA,
+        weight: "1 kg",
+        price: "Rs. 900",
+      },
+      {
+        flavour: flavour.REDVELVET,
+        weight: "650 gm",
+        price: "Rs. 700",
+      },
+      {
+        flavour: flavour.REDVELVET,
+        weight: "1 kg",
+        price: "Rs. 900",
+      },
+    ],
+    info: [
+      "Perfect for anniversaries, date nights and Valentine's Day, our heart-shaped cake is here to make you fall in love all over again.",
+
+      "The cake base is soft and moist, available in Vanilla and Red Velvet flavours. It is topped with fresh cream and berries.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {},
+    reviews: [],
+  },
+  {
+    id: "cake_choco_heart",
+    name: "Heart of Chocolate",
+    desc: "Heart-shaped cake topped with strawberries",
+    minPrice: "Rs. 700",
+    rating: 0,
+    ratingNo: 0,
+    images: [HeartChoco, HeartChoco2],
+    flavour: [flavour.CHOCOLATE],
+    occasion: [occasion.VALENTINES, occasion.ANNIVERSARY],
+    category: category.CAKE,
+    type: type.NONE,
+    sameDayDelivery: false,
+    bestSeller: false,
+    new: true,
+    eggless: false,
+    weight: ["650 gm", "1 kg"],
+    priceList: [
+      {
+        flavour: flavour.VANILLA,
+        weight: "650 gm",
+        price: "Rs. 700",
+      },
+      {
+        flavour: flavour.VANILLA,
+        weight: "1 kg",
+        price: "Rs. 900",
+      },
+      {
+        flavour: flavour.REDVELVET,
+        weight: "650 gm",
+        price: "Rs. 700",
+      },
+      {
+        flavour: flavour.REDVELVET,
+        weight: "1 kg",
+        price: "Rs. 900",
+      },
+    ],
+    info: [
+      "Share this beautiful heart-shaped cake with your person, and fall in love all over again.",
+
+      "The soft and fluffy cake is coated with a rich layer of chocolate ganache, and topped with freshly cut strawberries.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {},
+    reviews: [],
+  },
+  {
+    id: "cake_rose",
+    name: "Roses For My Love",
+    desc: "Strawberry cake covered with rose-flavoured buttercream",
+    minPrice: "Rs. 1000",
+    discountedPrice: "Rs. 850",
+    discount: "15%",
+    rating: 0,
+    ratingNo: 0,
+    images: [Rose1, Rose2, Rose3],
+    flavour: [flavour.STRAWBERRY],
+    occasion: [occasion.ANNIVERSARY, occasion.VALENTINES, occasion.BIRTHDAY],
+    category: category.CAKE,
+    type: type.NONE,
+    sameDayDelivery: false,
+    bestSeller: false,
+    new: true,
+    eggless: false,
+    weight: ["1 kg", "1.5 kg"],
+    priceList: [
+      {
+        weight: "1 kg",
+        price: "Rs. 1000",
+        discountedPrice: "Rs. 850",
+        discount: "15%",
+      },
+      {
+        weight: "1.5 kg",
+        price: "Rs. 1500",
+        discountedPrice: "Rs. 1,275",
+        discount: "15%",
+      },
+    ],
+    info: [
+      "This strawberry-flavoured cake is sure to make your heart melt with it's beautiful buttercream decorations. As pretty as a rose, indeed!",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {},
+    reviews: [],
+  },
+  {
+    id: "cake_strawberry_shortcake",
+    name: "Strawberry Shortcake",
+    desc: "The classic strawbery shortcake",
+    minPrice: "Rs. 500",
+    discountedPrice: "Rs. 400",
+    discount: "20%",
+    rating: 0,
+    ratingNo: 0,
+    images: [StrawberryShortcake1, StrawberryShortcake2],
+    flavour: [flavour.STRAWBERRY],
+    occasion: occasion.NONE,
+    category: category.CAKE,
+    type: type.NONE,
+    sameDayDelivery: false,
+    bestSeller: false,
+    new: true,
+    eggless: true,
+    weight: ["500 gm"],
+    info: [
+      "Shortcake generally refers to a dessert with a crumbly scone like texture, and are usually served with fruit and cream.",
+
+      "One of the most popular variation is strawberry shortcake, which is typically served with freshly cut strawberries and whipped cream.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {},
+    reviews: [],
   },
 ];

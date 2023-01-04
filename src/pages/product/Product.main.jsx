@@ -128,15 +128,17 @@ export default function Product() {
                 <span className="text-gray-500">(Inclusive of GST)</span>
               </div>
 
-              <div className="text-accent1 text-base flex items-end">
-                <Rate
-                  style={{ color: "#815B5B", fontSize: "14px" }}
-                  allowHalf
-                  disabled
-                  defaultValue={data.rating}
-                />
-                <div className="px-2">({data.ratingNo})</div>
-              </div>
+              {data.ratingNo > 0 && (
+                <div className="text-accent1 text-base flex items-end">
+                  <Rate
+                    style={{ color: "#815B5B", fontSize: "14px" }}
+                    allowHalf
+                    disabled
+                    defaultValue={data.rating}
+                  />
+                  <div className="px-2">({data.ratingNo})</div>
+                </div>
+              )}
 
               <div className="flex items-center my-4">
                 <img

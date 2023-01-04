@@ -108,14 +108,14 @@ const processData = (querySnapshot, dataArray, promiseArr) => {
 
 export const fetchProduct = (id) => {
   return new Promise((resolve, reject) => {
-    let data = cakes.find((item) => item.id === id);
+    let data = [...cupcakes, ...cakes].find((item) => item.id === id);
     resolve(data);
   });
 };
 
 export const fetchAllProducts = () => {
   return new Promise((resolve, reject) => {
-    resolve(cakes);
+    resolve([...cakes, ...cupcakes]);
   });
 };
 

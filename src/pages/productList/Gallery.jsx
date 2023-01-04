@@ -39,7 +39,7 @@ export default function Gallery({ products }) {
           <Pagination
             defaultCurrent={1}
             defaultPageSize={6}
-            total={productList && productList.length}
+            total={products ? products.length : 0}
             onChange={pageChanged}
           />
         </div>
