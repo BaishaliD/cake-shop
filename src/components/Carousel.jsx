@@ -55,7 +55,7 @@ export default function CarouselComponent({ slides }) {
               <RightCircleOutlined
                 className="text-5xl text-white bg-black50 rounded-full z-10 absolute top-1/2 right-5 -translate-y-1/2"
                 onClick={() => {
-                  ref.current.prev();
+                  ref.current.next();
                 }}
               />
             </div>

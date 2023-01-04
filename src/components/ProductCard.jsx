@@ -7,7 +7,7 @@ export default function ProductCard({
   name,
   image,
   price,
-  discountedPrice = "Rs. 280",
+  discountedPrice,
   rating,
 }) {
   const navigate = useNavigate();
@@ -36,10 +36,11 @@ export default function ProductCard({
           ) : (
             <span>{price}</span>
           )}
-
-          <span>
-            <StarFilled /> {rating.toFixed(1)}
-          </span>
+          {rating && rating > 0 ? (
+            <span>
+              <StarFilled /> {rating.toFixed(1)}
+            </span>
+          ) : null}
         </div>
       </div>
 

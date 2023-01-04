@@ -44,7 +44,7 @@ export default function ReviewBoard(props) {
   const addReview = () => {};
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="mb-16 w-full flex flex-col items-center">
       <h2 className="mt-4 mb-8">Customer Reviews</h2>
       <div className="w-3/4 flex items-center justify-end mb-8">
         <Button
@@ -59,8 +59,6 @@ export default function ReviewBoard(props) {
           centered
           footer={null}
           open={openModal}
-          // onOk={handleOk}
-          // confirmLoading={confirmLoading}
           onCancel={() => setOpenModal(false)}
         >
           <AddReview setOpenModal={setOpenModal} />
@@ -78,25 +76,39 @@ export default function ReviewBoard(props) {
         </div>
 
         <div className="flex-grow flex-col">
-          <div className="w-full flex justify-center">
-            <Masonry
-              breakpointCols={breakpointColumnsObj}
-              className="my-masonry-grid"
-              columnClassName="my-masonry-grid_column"
-            >
-              {reviews.map((item) => (
-                <CardItem key={item.name} data={item} />
-              ))}
-            </Masonry>
+          <div className="w-full h-full flex justify-center">
+            {reviews && reviews.length > 0 ? (
+              <Masonry
+                breakpointCols={breakpointColumnsObj}
+                className="my-masonry-grid"
+                columnClassName="my-masonry-grid_column"
+              >
+                {reviews.map((item) => (
+                  <CardItem key={item.name} data={item} />
+                ))}
+              </Masonry>
+            ) : (
+              <div className="w-full h-full flex items-center justify-center">
+                <h3>
+                  Be the first one to{" "}
+                  <span
+                    className="underline cursor-pointer"
+                    onClick={() => setOpenModal(true)}
+                  >
+                    write a review
+                  </span>
+                </h3>
+              </div>
+            )}
           </div>
-
+          {/* 
           <Button
             type="primary"
             className="px-8 bg-accent1 m-12"
             onClick={showMore}
           >
             Show More
-          </Button>
+          </Button> */}
         </div>
       </div>
     </div>
@@ -166,9 +178,12 @@ const CardItem = ({ data }) => {
 
 const Ratings = ({ rating, ratings }) => {
   let count = 0;
-  for (const i in ratings) {
-    count += ratings[i];
+  if (ratings) {
+    for (const i in ratings) {
+      count += ratings[i];
+    }
   }
+
   return (
     <div className="flex flex-col">
       <h4 className="text-accent2 mb-4">Ratings ({count})</h4>
@@ -181,8 +196,8 @@ const Ratings = ({ rating, ratings }) => {
           <ReviewDetailsRow
             key={item}
             stars={parseInt(item)}
-            perc={(ratings[item] * 100) / count}
-            n={ratings[item]}
+            perc={ratings ? (ratings[item] * 100) / count : 0}
+            n={ratings && ratings[item] ? ratings[item] : 0}
           />
         ))}
       </div>
