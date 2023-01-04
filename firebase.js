@@ -121,7 +121,7 @@ export const fetchAllProducts = () => {
 
 export const fetchRandomList = (n, excludeId) => {
   //Filter array to exclude current product
-  let filteredList = cupcakes.filter((item) => item.id !== excludeId);
+  let filteredList = cakes.filter((item) => item.id !== excludeId);
   // Shuffle array
   const shuffled = filteredList.sort(() => 0.5 - Math.random());
   // Get sub-array of first n elements after shuffle
