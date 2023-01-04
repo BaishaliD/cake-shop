@@ -16,7 +16,7 @@ export default function NavBar() {
         <Icon icon={faSearch} />
         <Icon icon={faUser} />
         <Icon icon={faHeart} />
-        <Icon icon={faCartShopping} />
+        <Icon icon={faCartShopping} link="/cart" />
       </div>
     </div>
   );
