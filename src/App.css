@@ -75,3 +75,7 @@ body {
 .cover .ant-image-img {
   object-fit: cover;
 }
+
+.ant-form-item {
+  margin-bottom: 16px !important;
+}

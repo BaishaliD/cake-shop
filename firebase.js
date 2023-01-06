@@ -17,6 +17,7 @@ import {
   uploadString,
 } from "firebase/storage";
 import { cupcakes, cakes } from "./src/database/AllProducts";
+import { addressBook, cartItems } from "./src/database/CartData";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -140,5 +141,37 @@ export const uploadReviewImages = (url, filename) => {
         resolve();
       })
       .catch((err) => reject(err));
+  });
+};
+
+export const fetchCartData = () => {
+  return new Promise((resolve, reject) => {
+    resolve({ cartItems: cartItems, addressBook: addressBook });
+  });
+};
+
+export const removeAddress = (id) => {
+  return new Promise((resolve, reject) => {
+    addressBook.splice(
+      addressBook.findIndex((a) => a.id === id),
+      1
+    );
+    //TODO Update addressBook on Firebase
+    resolve(addressBook);
+  });
+};
+
+export const updateAddress = (address) => {
+  return new Promise((resolve, reject) => {
+    let index = addressBook.findIndex((item) => item.id === address.id);
+    addressBook[index] = address;
+    resolve(addressBook);
+  });
+};
+
+export const addAddress = (address) => {
+  return new Promise((resolve, reject) => {
+    addressBook.push(address);
+    resolve(addressBook);
   });
 };
