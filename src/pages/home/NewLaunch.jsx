@@ -37,7 +37,7 @@ export default function NewLaunch() {
                     <Image
                       width={"50%"}
                       height={"100%"}
-                      className="rounded-l-xl object-cover"
+                      className="rounded-l-xl overflow-hidden cover"
                       src={item.images[0]}
                     />
                     <div className="w-1/2 flex flex-col justify-center items-center bg-white20 text-accent1 p-8 rounded-r-xl">

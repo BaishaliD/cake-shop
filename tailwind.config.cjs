@@ -6,6 +6,9 @@ module.exports = {
   },
   theme: {
     extend: {
+      screens: {
+        xs: "480px",
+      },
       colors: {
         primary1: "#F0DBDB",
         primary2: "#DBA39A",
@@ -18,16 +21,6 @@ module.exports = {
         black50: "#00000080",
         white20: "#ffffff33",
         white50: "#ffffff80",
-      },
-      height: {
-        "70v": "70vh",
-      },
-      minHeight: {
-        "60v": "60vh",
-        "70v": "70vh",
-      },
-      minWidth: {
-        150: "150px",
       },
       backgroundImage: {
         nav: "linear-gradient(to right, #F0DBDB, #DBA39A)",
