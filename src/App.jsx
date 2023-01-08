@@ -10,22 +10,29 @@ import NavBar from "./components/NavBar";
 import ProductStrip from "./components/ProductStrip";
 import Footer from "./components/Footer";
 import { addCupcakes } from "../firebase";
-import { Button } from "antd";
+import { Button, Drawer } from "antd";
 
 function App() {
+  const [sideMenu, setSideMenu] = useState(false);
   return (
     <div className="App">
       <div className="fixed" style={{ zIndex: "99999" }}>
-        <NavBar />
-        <ProductStrip />
-        {/* <Button
-          onClick={() => {
-            console.log("Add cupcakes function called!");
-            addCupcakes();
+        <NavBar setSideMenu={setSideMenu} />
+        <Drawer
+          title="Basic Drawer"
+          placement="left"
+          onClose={() => {
+            setSideMenu(false);
           }}
+          open={sideMenu}
+          bodyStyle={{ padding: 0 }}
+          width="300px"
         >
-          ADD CUPCAKES
-        </Button> */}
+          <SideMenuItem name="Home" link="/" />
+          <SideMenuItem name="FAQ" link="/faq" />
+          <SideMenuItem name="About Us" link="/aboutus" />
+        </Drawer>
+        <ProductStrip />
       </div>
 
       <Routes>
@@ -43,3 +50,14 @@ function App() {
 }
 
 export default App;
+
+const SideMenuItem = ({ name, link }) => {
+  return (
+    <div
+      className="w-full text-gray-600 p-4"
+      style={{ borderBottom: "1px solid lightGray" }}
+    >
+      {name}
+    </div>
+  );
+};

@@ -12,7 +12,7 @@ export default function Hero() {
             className="absolute top-0 left-0 w-1/2 object-fit"
           />
         )}
-        <div className="w-1/2 h-full flex flex-col justify-center items-center px-20 my-20 min-h-60v">
+        <div className="w-1/2 h-full flex flex-col justify-center items-center px-20 my-20 min-h-[60vh]">
           <div className="text-6xl acme text-accent2">The Cake Bar & Co.</div>
           <h1 className="roboto my-8 text-accent1">
             Fresh cakes baked with love
