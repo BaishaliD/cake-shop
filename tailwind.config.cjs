@@ -18,6 +18,7 @@ module.exports = {
         accent2: "#251a1a",
         "accent2-50": "#241919a8",
         reviewCard: "#5940404f",
+        black20: "#00000033",
         black50: "#00000080",
         white20: "#ffffff33",
         white50: "#ffffff80",

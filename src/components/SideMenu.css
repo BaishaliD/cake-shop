@@ -1,0 +1,23 @@
+.ant-collapse,
+.ant-collapse {
+  /* background-color: rgba(0, 0, 0, 0) !important; */
+}
+
+.ant-collapse-header {
+  color: #4b5563 !important;
+  border-radius: 0px !important;
+}
+
+.ant-collapse-content {
+  /* color: #815b5b !important; */
+  /* background-color: #f5ebe0 !important; */
+}
+
+.site-collapse-custom-collapse .site-collapse-custom-panel,
+.site-collapse-custom-collapse .site-collapse-custom-panel {
+  /* color: #815b5b !important; */
+  /* margin-bottom: 24px; */
+  /* overflow: hidden; */
+  /* background: #ff0000; */
+  border-radius: 0px !important;
+}

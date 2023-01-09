@@ -5,43 +5,64 @@ import { MenuOutlined } from "@ant-design/icons";
 import { faSearch, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faUser, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { useWindowSize } from "../Hooks";
-import { Drawer } from "antd";
+import "./SideMenu.css";
+import { Drawer, Collapse } from "antd";
+const { Panel } = Collapse;
+import { sideMenuList } from "../database/Menu";
 
-export default function NavBar({ setSideMenu }) {
-  const [width, height] = useWindowSize();
-
-  useEffect(() => {
-    console.log("Window resized! ", width);
-  }, [width]);
+export default function NavBar({}) {
+  const navigate = useNavigate();
+  const [width] = useWindowSize();
+  const [sideMenu, setSideMenu] = useState(false);
 
   return (
     <div className="w-screen h-16 bg-nav flex items-center justify-between text-accent1">
-      {/* <Drawer
-        title="Basic Drawer"
+      <Drawer
         placement="left"
         onClose={() => {
           setSideMenu(false);
         }}
         open={sideMenu}
-        bodyStyle={{ padding: 0 }}
+        headerStyle={{ background: "#F5EBE0" }}
+        bodyStyle={{ padding: 0, background: "#F5EBE0" }}
         width="300px"
+        getContainer={false}
       >
-        <SideMenuItem name="Home" link="/" />
-        <SideMenuItem name="FAQ" link="/faq" />
-        <SideMenuItem name="About Us" link="/aboutus" />
-      </Drawer> */}
+        {sideMenuList.map((item) =>
+          item.collapsible === false ? (
+            <div
+              className="w-full text-gray-600 p-4 hover:bg-primary1 cursor-pointer"
+              style={{
+                borderBottom:
+                  item.noBorder === true ? "" : "1px solid lightGray",
+              }}
+              onClick={() => {
+                setSideMenu(false);
+                navigate(item.route);
+              }}
+            >
+              {item.name}
+            </div>
+          ) : (
+            <CollapseItem
+              items={item.collapsibleItems}
+              setSideMenu={setSideMenu}
+            />
+          )
+        )}
+      </Drawer>
       {width > 768 ? (
         <>
           <div className="flex items-center">
             <NavItem name="Home" link="/" />
             <NavItem name="FAQ" link="/faq" />
-            <NavItem name="About Us" link="/aboutus" />
+            <NavItem name="About Us" link="/aboutUs" />
           </div>
           <div className="acme text-3xl font-bold">The Cake Bar & Co.</div>
           <div className="flex items-center">
             <Icon icon={faSearch} />
-            <Icon icon={faUser} />
-            <Icon icon={faHeart} />
+            <Icon icon={faUser} link="/profile" />
+            <Icon icon={faHeart} link="/wishlist" />
             <Icon icon={faCartShopping} link="/cart" />
           </div>
         </>
@@ -86,13 +107,32 @@ const Icon = ({ icon, link }) => {
   );
 };
 
-const SideMenuItem = ({ name, link }) => {
+const CollapseItem = ({ items, setSideMenu }) => {
+  const navigate = useNavigate();
   return (
-    <div
-      className="w-full text-gray-600 p-4"
-      style={{ borderBottom: "1px solid lightGray" }}
-    >
-      {name}
-    </div>
+    <Collapse>
+      {items.map((item) => (
+        <Panel
+          header={item.name}
+          key={item.route}
+          className="bg-secondary2 hover:bg-primary1"
+        >
+          {item &&
+            item.panel &&
+            item.panel.length > 0 &&
+            item.panel.map((i) => (
+              <div
+                className="w-full text-gray-600 p-2 hover:bg-primary1 cursor-pointer"
+                onClick={() => {
+                  setSideMenu(false);
+                  navigate(item.route + i.route);
+                }}
+              >
+                {i.name}
+              </div>
+            ))}
+        </Panel>
+      ))}
+    </Collapse>
   );
 };
