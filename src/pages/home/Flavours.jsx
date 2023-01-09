@@ -52,7 +52,7 @@ export default function Categories() {
       <div className="w-full acme text-4xl mx-auto mb-8 text-primary1  text-center">
         Choose from your favourite flavours!
       </div>
-      <div className="w-2/3 flex flex-wrap justify-center">
+      <div className="w-full xl:w-2/3 flex flex-wrap justify-center">
         {collectionList.map((collection) => (
           <Collection
             key={collection.id}
