@@ -23,6 +23,7 @@ export default function Hero() {
         <div
           className="my-4 py-2 px-8 text-center bg-accent2 shadow-lg hover:shadow-md text-primary1 uppercase rounded-md"
           onClick={() => {
+            console.log("peepeepopo");
             navigate("/products");
           }}
         >
