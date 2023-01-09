@@ -4,6 +4,7 @@ import Bento from "../../assets/types/bento.jpeg";
 import PullUp from "../../assets/types/pull-up.jpeg";
 import Mousse from "../../assets/types/mousse.webp";
 import Image from "../../components/Image";
+import { useWindowSize } from "../../Hooks";
 
 const collectionList = [
   {
@@ -54,10 +55,19 @@ export default function Types() {
 }
 
 const Collection = ({ index, image, name, route }) => {
+  const [width] = useWindowSize();
+  let alignment;
+
+  if (width > 640 && Math.floor(index / 2) % 2 === 0) {
+    alignment = "LEFT";
+  } else if (width < 640 && index % 2 === 0) {
+    alignment = "LEFT";
+  }
+
   const navigateTo = useNavigate();
   return (
-    <div className="w-1/2 flex h-60 p-4 text-primary1">
-      {Math.floor(index / 2) % 2 === 0 ? (
+    <div className="w-full sm:w-1/2 flex h-60 p-4 text-primary1">
+      {alignment === "LEFT" ? (
         <>
           <div className="w-1/2 h-full overflow-hidden cursor-pointer collection-wrapper">
             <Image
@@ -76,6 +86,7 @@ const Collection = ({ index, image, name, route }) => {
               {name}
             </h2>
             <h4 className="w-full text-left px-6 font-thin">
+              {index}
               Keep it in cool and dry place away from sunlight. Dry out soaps
               between uses to maximise product utilisation
             </h4>
@@ -91,8 +102,8 @@ const Collection = ({ index, image, name, route }) => {
               {name}
             </h2>
             <h4 className="w-full text-right px-6 font-thin">
-              Keep it in cool and dry place away from sunlight. Dry out soaps
-              between uses to maximise product utilisation
+              {index} Keep it in cool and dry place away from sunlight. Dry out
+              soaps between uses to maximise product utilisation
             </h4>
           </div>
           <div className="w-1/2 h-full overflow-hidden cursor-pointer collection-wrapper">

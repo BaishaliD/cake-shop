@@ -39,7 +39,7 @@ export default function CarouselComponent({ slides }) {
             {slides.map((slide, index) => (
               <div
                 key={index}
-                className="h-[calc(45vw)] w-full acme rounded-xl overflow-hidden relative"
+                className="h-[45vw] w-full acme rounded-xl overflow-hidden relative"
               >
                 <Image
                   width="100%"

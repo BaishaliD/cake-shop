@@ -43,6 +43,13 @@ body {
   opacity: 80%;
 }
 
+@media only screen and (max-width: 768px) {
+  .appear {
+    opacity: 100%;
+    background-color: rgba(255, 255, 255, 0) !important;
+  }
+}
+
 .product-wrapper:hover > .zoom {
   transform: scale(1.2);
 }

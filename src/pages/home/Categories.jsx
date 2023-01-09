@@ -7,39 +7,32 @@ import Image from "../../components/Image";
 
 const collectionList = [
   {
-    id: "coffee",
+    id: "cake",
     type: "collection",
     name: "Cakes",
     image: Cake,
     route: "cake",
-    description:
-      "The newly launched Jade Collection is a set of 4 handcrafted soap bars made in hues of crystals. The soaps are rich in minerals and essential oil, and scrubs the skin and provides a beautiful afterglow.",
   },
   {
-    id: "love",
+    id: "cupcake",
     type: "collection",
     name: "Cupcakes",
     image: Cupcake,
     route: "cupcake",
-    description:
-      "The newly launched Jade Collection is a set of 4 handcrafted soap bars made in hues of crystals. The soaps are rich in minerals and essential oil, and scrubs the skin and provides a beautiful afterglow.",
   },
   {
-    id: "gemstone",
+    id: "jarcake",
     type: "collection",
     name: "Jar Cakes",
     image: JarCake,
     route: "jarcake",
-    description:
-      "The newly launched Jade Collection is a set of 4 handcrafted soap bars made in hues of crystals. The soaps are rich in minerals and essential oil, and scrubs the skin and provides a beautiful afterglow.",
   },
   // {
-  //   id: "fruitpunch",
+  //   id: "macaron",
   //   type: "collection",
   //   name: "Macarons",
   //   image: Macaron,
-  //   description:
-  //     "The newly launched Jade Collection is a set of 4 handcrafted soap bars made in hues of crystals. The soaps are rich in minerals and essential oil, and scrubs the skin and provides a beautiful afterglow.",
+  //   route: "macaron",
   // },
 ];
 
@@ -62,7 +55,7 @@ const Collection = ({ image, name, route }) => {
   const navigateTo = useNavigate();
   return (
     <div
-      className="h-96 w-1/4 overflow-hidden relative collection-wrapper rounded-xl m-6 border-8 border-white cursor-pointer"
+      className="h-96 w-[350px] overflow-hidden relative collection-wrapper rounded-xl m-6 border-8 border-white cursor-pointer"
       onClick={() => {
         navigateTo(`/collection/${route}`);
       }}

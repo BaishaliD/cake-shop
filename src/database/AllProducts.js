@@ -686,7 +686,7 @@ export const cakes = [
   {
     id: "wedding_ice_and_gold",
     name: "Ice and Gold",
-    desc: "Buttercream covered wedding cake with decorated with gold foil",
+    desc: "Buttercream covered wedding cake decorated with gold foil",
     minPrice: "Rs. 7,200",
     discountedPrice: "Rs. 6,120",
     discount: "15%",

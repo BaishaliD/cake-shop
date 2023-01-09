@@ -2,6 +2,7 @@ import Man1 from "../../assets/team/man.png";
 import Man2 from "../../assets/team/man-2.png";
 import Woman from "../../assets/team/woman.png";
 import Image from "../../components/Image";
+import { useWindowSize } from "../../Hooks";
 
 const bakersList = [
   {
@@ -25,11 +26,11 @@ const bakersList = [
 ];
 
 export default function Team() {
+  const [width] = useWindowSize();
   return (
     <div className="relative w-full h-96 text-white parallax parallaxBg2">
-      {/* <img src={Baking} className="h-full w-full object-cover" /> */}
       <div className="absolute top-0 left-0 w-full h-full flex flex-col justify-center items-center">
-        <div className="text-3xl p-2 bg-accent2 mb-4">
+        <div className="text-2xl sm:text-3xl p-2 bg-accent2 mb-4 text-center">
           Meet our stars who bake the prefect cake for you every time!
         </div>
         <div className="flex">
@@ -39,6 +40,7 @@ export default function Team() {
               name={item.name}
               image={item.image}
               des={item.des}
+              width={width}
             />
           ))}
         </div>
@@ -47,22 +49,17 @@ export default function Team() {
   );
 }
 
-const Item = ({ name, image, des }) => {
+const Item = ({ name, image, des, width }) => {
   return (
-    <div className="flex flex-col justify-center items-center mx-8">
-      {/* <img
-        src={image}
-        className="h-40 w-40 rounded-full bg-secondary2 border"
-        style={{ borderColor: "#251a1a", borderWidth: "4px" }}
-      /> */}
+    <div className="flex flex-col justify-center items-center mx-2 sm:mx-8">
       <Image
-        height="160px"
-        width="160px"
+        height={width > 640 ? "160px" : "100px"}
+        width={width > 640 ? "160px" : "100px"}
         src={image}
         className="rounded-full bg-secondary2 border"
         style={{ borderColor: "#251a1a", borderWidth: "4px" }}
       />
-      <h3 className="my-2">{name}</h3>
+      <h3 className="my-2 text-center">{name}</h3>
       <p>{des}</p>
     </div>
   );

@@ -3,11 +3,11 @@ import { useNavigate } from "react-router-dom";
 export default function Occasions() {
   return (
     <div className="parallax parallaxBg1 h-96">
-      <div className="h-full w-full flex flex-col items-center justify-center text-primary1 roboto font-bold bg-black50">
-        <div className="mb-6 text-3xl opacity-100 acme">
+      <div className="h-full w-full flex flex-col items-center justify-center text-primary1 roboto font-bold bg-black50 px-4">
+        <div className="mb-6 text-3xl opacity-100 acme text-center">
           Get the perfect cake for every occasion
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center flex-wrap">
           <Tab name={"Birthday"} route="birthday" />
           <Tab name={"Wedding"} route="wedding" />
           <Tab name={"Anniversary"} route="anniversary" />
@@ -23,7 +23,7 @@ const Tab = ({ name, route }) => {
   const navigate = useNavigate();
   return (
     <div
-      className="bg-primary1 rounded-md py-2 px-4 text-center mx-2 text-accent2"
+      className="bg-primary1 rounded-md py-2 px-4 my-2 text-center mx-2 text-accent2"
       onClick={() => {
         navigate(`/occasion/${route}`);
       }}
