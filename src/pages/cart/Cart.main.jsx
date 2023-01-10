@@ -2,12 +2,14 @@ import { useState, useEffect } from "react";
 import CartProductCard from "./CartProductCard";
 import { fetchCartData, removeAddress } from "../../../firebase";
 import { Button, Divider } from "antd";
-import { TagOutlined } from "@ant-design/icons";
+import { TagOutlined, UserOutlined } from "@ant-design/icons";
 import Step from "./Step";
 import Address from "./Address";
 import ComingSoon from "../../components/ComingSoon";
+import { useWindowSize } from "../../Hooks";
 
 export default function Cart() {
+  const [width] = useWindowSize();
   const [cartItems, setCartItems] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
   const [defaultAddress, setDefaultAddress] = useState({});
@@ -49,19 +51,34 @@ export default function Cart() {
 
   return (
     <div className="pt-24 bg-secondary2 pb-16">
-      <div className="w-1/2 m-auto p-8">
+      <div className="hidden sm:block w-full lg:w-2/3 m-auto p-8">
         <Step currentStep={currentStep} goToStep={goToStep} />
       </div>
+      <div className="flex sm:hidden justify-between px-4 pb-2">
+        <div className="flex">
+          <UserOutlined className="text-accent1" />
+          <div className="pl-2 text-accent1 uppercase tracking-widest">
+            {currentStep === 0
+              ? "Cart"
+              : currentStep === 1
+              ? "Address"
+              : "Payment"}
+          </div>
+        </div>
+        <div className="text-gray-500 text-sm uppercase">
+          Step {currentStep + 1}/3
+        </div>
+      </div>
       {cartItems && cartItems.length > 0 ? (
-        <div className="flex justify-center">
+        <div className="flex flex-col lg:flex-row justify-center">
           <div
-            className="h-full w-2/3 flex flex-col px-8"
-            style={{ borderRight: "solid 1px #0505050f" }}
+            className="h-full w-full lg:w-2/3 flex flex-col px-2 sm:px-8"
+            style={{ borderRight: width > 1023 ? "solid 1px #0505050f" : "" }}
           >
             {currentStep === 0 && (
               <>
                 {cartItems.map((item) => (
-                  <CartProductCard key={item.id} data={item} />
+                  <CartProductCard key={item.id} data={item} width={width} />
                 ))}
               </>
             )}
@@ -74,12 +91,12 @@ export default function Cart() {
               />
             )}
             {currentStep === 2 && (
-              <div className="h-60 mt-16">
+              <div className="h-60 my-16">
                 <ComingSoon text="Payment Section is coming soon!" />
               </div>
             )}
           </div>
-          <div className="h-full w-1/3 px-8 py-16 flex flex-col justify-start">
+          <div className="h-full w-full lg:w-1/3 px-8 py-16 flex flex-col justify-start">
             <h4 className="uppercase">Coupons</h4>
             <div className="flex justify-between items-center">
               <div className="flex items-center">

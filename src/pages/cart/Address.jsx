@@ -38,7 +38,7 @@ export default function Address({
       </Modal>
       <div className="w-full flex justify-end my-8">
         <div
-          className="w-[300px] py-2 text-center bg-accent1 roboto text-secondary1 uppercase rounded cursor-pointer hover:shadow-md"
+          className="w-[300px] py-2 text-center bg-accent1 roboto text-secondary1 uppercase rounded cursor-pointer hover:shadow-md m-auto"
           onClick={() => {
             setAddAdressModal(true);
           }}
@@ -53,7 +53,7 @@ export default function Address({
       >
         {defaultAddress && (
           <>
-            <div className="text-lg mb-4 w-[500px] text-address-2">
+            <div className="text-lg mb-4 w-500 text-address-2">
               Default Address
             </div>
             <Radio value={defaultAddress.id}>
@@ -68,7 +68,7 @@ export default function Address({
         )}
         {addressBook && addressBook.length > 0 && (
           <>
-            <div className="text-lg mt-12 mb-4 w-[500px] text-accent2">
+            <div className="text-lg mt-12 mb-4 w-500 text-accent2">
               Other Addresses
             </div>
             {addressBook.map((address) => (
@@ -97,7 +97,7 @@ const AddressCard = ({
   const [editAddressModal, setEditAddressModal] = useState(false);
   return (
     <div
-      className="w-[500px] my-2 p-4 ml-2 flex"
+      className="w-500 my-2 p-4 xs:ml-2 flex"
       style={{ border: "#0505050f solid 1px" }}
     >
       <div className="w-3/4">

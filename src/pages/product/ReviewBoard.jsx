@@ -70,8 +70,8 @@ export default function ReviewBoard(props) {
           <FontAwesomeIcon icon={faArrowUpWideShort} />
         </div>
       </div>
-      <div className="w-full flex">
-        <div className="w-[300px] flex justify-center">
+      <div className="w-full flex flex-col items-center lg:items-start lg:flex-row ">
+        <div className="w-[300px] flex justify-center mb-8">
           <Ratings ratings={props.ratings} rating={props.rating} />
         </div>
 

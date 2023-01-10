@@ -90,3 +90,7 @@ body {
 .carousel-height {
   height: max(45vw, 400px);
 }
+
+.w-500 {
+  width: min(85vw, 500px);
+}

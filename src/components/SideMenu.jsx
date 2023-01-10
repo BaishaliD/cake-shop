@@ -22,7 +22,7 @@ export default function SideMenu({ sideMenu, setSideMenu }) {
           <div
             className="w-full text-gray-600 p-4 hover:bg-primary1 cursor-pointer"
             style={{
-              borderBottom: item.noBorder === true ? "" : "1px solid lightGray",
+              borderBottom: item.noBorder === true ? "" : "1px solid #0505050f",
             }}
             onClick={() => {
               setSideMenu(false);

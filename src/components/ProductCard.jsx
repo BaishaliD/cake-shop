@@ -16,7 +16,7 @@ export default function ProductCard({
   const navigate = useNavigate();
 
   return (
-    <div className="acme flex flex-col justify-center items-center w-64 min-w-[220px] m-8 bg-white rounded-xl p-4 shadow-md hover:shadow-lg">
+    <div className="acme flex flex-col justify-center items-center w-64 min-w-[240px] m-4 lg:m-8 bg-white rounded-xl p-4 shadow-md hover:shadow-lg">
       <div
         className="w-full h-60 relative overflow-hidden product-wrapper rounded-xl shadow-md cursor-pointer"
         onClick={() => {
