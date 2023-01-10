@@ -21,9 +21,9 @@ export default function Hero() {
           occasion.
         </h2>
         <div
-          className="my-4 py-2 px-8 text-center bg-accent2 shadow-lg hover:shadow-md text-primary1 uppercase rounded-md"
+          role="button"
+          className="my-4 py-2 px-8 text-center bg-accent2 shadow-lg hover:shadow-md text-primary1 uppercase rounded-md cursor-pointer"
           onClick={() => {
-            console.log("peepeepopo");
             navigate("/products");
           }}
         >
