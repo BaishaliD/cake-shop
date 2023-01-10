@@ -9,17 +9,20 @@ export default function ProductCard({
   price,
   discountedPrice,
   rating,
+  wishlist,
+  buttonText,
+  removeFromWishlist,
 }) {
   const navigate = useNavigate();
 
   return (
-    <div
-      onClick={() => {
-        navigate(`/product/${id}`);
-      }}
-      className="acme flex flex-col justify-center items-center w-64 m-8 bg-white rounded-xl p-4 shadow-md hover:shadow-lg"
-    >
-      <div className="w-full h-60 relative overflow-hidden product-wrapper rounded-xl shadow-md">
+    <div className="acme flex flex-col justify-center items-center w-64 m-8 bg-white rounded-xl p-4 shadow-md hover:shadow-lg">
+      <div
+        className="w-full h-60 relative overflow-hidden product-wrapper rounded-xl shadow-md cursor-pointer"
+        onClick={() => {
+          navigate(`/product/${id}`);
+        }}
+      >
         <Image height="100%" width="100%" src={image} className="cover zoom" />
         <div className="absolute bottom-0 h-full w-full z-10 bg-primary1 flex justify-center items-center appear"></div>
       </div>
@@ -44,9 +47,21 @@ export default function ProductCard({
         </div>
       </div>
 
-      <div className="w-full mb-2 py-2 text-center bg-accent1 font-normal text-base text-secondary1 uppercase rounded-md">
-        Add To Cart
+      <div
+        className="w-full mb-2 py-2 text-center bg-accent1 font-normal text-base text-secondary1 uppercase rounded-md"
+        onClick={() => {}}
+      >
+        {buttonText}
       </div>
+
+      {wishlist && (
+        <div
+          className="roboto text-gray-400 underline font-normal text-sm pt-2 cursor-pointer"
+          onClick={() => removeFromWishlist(id)}
+        >
+          Remove from Wishlist
+        </div>
+      )}
     </div>
   );
 }
