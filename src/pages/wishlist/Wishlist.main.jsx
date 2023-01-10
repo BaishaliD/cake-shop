@@ -21,24 +21,29 @@ export default function Wishlist() {
   };
 
   return (
-    <div className="pt-24 flex justify-center flex-wrap bg-secondary2">
-      {list && list.length > 0 ? (
-        list.map((item) => (
-          <ProductCard
-            key={item.id}
-            id={item.id}
-            name={item.name}
-            image={item.images[0]}
-            price={item.minPrice}
-            rating={item.rating}
-            wishlist={true}
-            buttonText="Move to Cart"
-            removeFromWishlist={removeFromWishlist}
-          />
-        ))
-      ) : (
-        <h4>You have no items in your Wishlist!</h4>
-      )}
+    <div className="pt-24 bg-secondary2 flex flex-col items-center">
+      <h3 className="mt-8 text-accent1">
+        My Wishlist ({list ? list.length : 0} items)
+      </h3>
+      <div className="w-full flex justify-center flex-wrap">
+        {list && list.length > 0 ? (
+          list.map((item) => (
+            <ProductCard
+              key={item.id}
+              id={item.id}
+              name={item.name}
+              image={item.images[0]}
+              price={item.minPrice}
+              rating={item.rating}
+              wishlist={true}
+              buttonText="Move to Cart"
+              removeFromWishlist={removeFromWishlist}
+            />
+          ))
+        ) : (
+          <h4>You have no items in your Wishlist!</h4>
+        )}
+      </div>
     </div>
   );
 }
