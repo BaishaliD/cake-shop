@@ -263,12 +263,12 @@ export default function Product() {
             </div>
           </div>
           <Divider />
-          {/* <ReviewBoard
+          <ReviewBoard
             ratings={data.ratings}
             rating={data.rating}
             ratingNo={data.ratingNo}
             reviews={data.reviews}
-          /> */}
+          />
         </>
       )}
 

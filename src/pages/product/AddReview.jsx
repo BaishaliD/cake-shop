@@ -160,7 +160,7 @@ const Slide1 = ({ rating, ratingList, rateProduct }) => {
       {ratingList.map((item) => (
         <div
           key={item.rating}
-          className={`flex p-2 border w-full pl-16 justify-start my-2 hover:bg-gray-200 cursor-pointer ${
+          className={`flex p-2 border w-full pl-8 xs:pl-16 justify-start my-2 hover:bg-gray-200 cursor-pointer ${
             item.rating === rating ? "bg-gray-200" : "bg-white"
           }`}
           onClick={() => rateProduct(item)}
