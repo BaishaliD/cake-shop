@@ -13,6 +13,9 @@ import Footer from "./components/Footer";
 import { addCupcakes } from "../firebase";
 import { useWindowSize } from "./Hooks";
 import SideMenu from "./components/SideMenu";
+import CartPage from "./pages/cart/CartPage";
+import AddressPage from "./pages/cart/AddressPage";
+import PaymentPage from "./pages/cart/PaymentPage";
 
 function App() {
   const [width] = useWindowSize();
@@ -31,7 +34,9 @@ function App() {
         <Route path="/aboutUs" element={<AboutUs />} />
         <Route path="/products" element={<ProductList />} />
         <Route path="/product/:id" element={<Product />} />
-        <Route path="/cart" element={<Cart />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/address" element={<AddressPage />} />
+        <Route path="/payment" element={<PaymentPage />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/faq" element={<div>FAQ Page </div>} />
       </Routes>

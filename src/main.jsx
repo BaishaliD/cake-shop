@@ -4,6 +4,7 @@ import App from "./App";
 import "./index.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ConfigProvider } from "antd";
+import { ContextProvider } from "./Context";
 import "antd/dist/reset.css";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -19,7 +20,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           },
         }}
       >
-        <App />
+        <ContextProvider>
+          <App />
+        </ContextProvider>
       </ConfigProvider>
     </Router>
   </React.StrictMode>

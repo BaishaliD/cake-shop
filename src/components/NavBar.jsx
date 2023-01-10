@@ -8,6 +8,7 @@ import { useWindowSize } from "../Hooks";
 
 export default function NavBar({ setSideMenu }) {
   const [width] = useWindowSize();
+  const navigate = useNavigate();
 
   return (
     <div className="w-screen h-16 bg-nav flex items-center justify-between text-accent1">
@@ -18,7 +19,14 @@ export default function NavBar({ setSideMenu }) {
             <NavItem name="FAQ" link="/faq" />
             <NavItem name="About Us" link="/aboutUs" />
           </div>
-          <div className="acme text-3xl font-bold">The Cake Bar & Co.</div>
+          <div
+            className="acme text-3xl font-bold cursor-pointer"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            The Cake Bar & Co.
+          </div>
           <div className="flex items-center">
             <Icon icon={faSearch} />
             <Icon icon={faUser} link="/profile" />
@@ -32,7 +40,14 @@ export default function NavBar({ setSideMenu }) {
             className="px-4 text-2xl"
             onClick={() => setSideMenu((prev) => !prev)}
           />
-          <div className="acme text-xl font-bold">The Cake Bar & Co.</div>
+          <div
+            className="acme text-xl font-bold cursor-pointer"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            The Cake Bar & Co.
+          </div>
           <Icon icon={faCartShopping} link="/cart" />
         </>
       )}

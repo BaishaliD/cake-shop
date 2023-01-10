@@ -1,9 +1,8 @@
 import React from "react";
 import {
-  LoadingOutlined,
-  SmileOutlined,
+  TransactionOutlined,
   SolutionOutlined,
-  UserOutlined,
+  ShoppingCartOutlined,
 } from "@ant-design/icons";
 import { Steps } from "antd";
 
@@ -19,7 +18,7 @@ export default function Step({ currentStep, goToStep }) {
           ),
           status: currentStep === 0 ? "process" : "finish",
           icon: (
-            <UserOutlined
+            <ShoppingCartOutlined
               className={currentStep >= 0 ? "text-accent1" : "text-gray-500"}
             />
           ),
@@ -58,7 +57,7 @@ export default function Step({ currentStep, goToStep }) {
           ),
           status: currentStep === 2 ? "finish" : "wait",
           icon: (
-            <SmileOutlined
+            <TransactionOutlined
               className={currentStep === 2 ? "text-accent1" : "text-gray-500"}
             />
           ),
