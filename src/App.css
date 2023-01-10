@@ -86,3 +86,7 @@ body {
 .ant-form-item {
   margin-bottom: 16px !important;
 }
+
+.carousel-height {
+  height: max(45vw, 400px);
+}

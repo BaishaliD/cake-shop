@@ -97,11 +97,11 @@ export default function Product() {
     <div className="pt-24 bg-secondary2">
       {data && (
         <>
-          <div className="flex">
-            <div className="w-3/5">
+          <div className="flex flex-col md:flex-row">
+            <div className="w-full md:w-3/5">
               <Carousel slides={data.images} />
             </div>
-            <div className="w-2/5 p-8">
+            <div className="w-full md:w-2/5 p-4 sm:p-8">
               <h3 className="text-accent1 font-thin">{data.desc}</h3>
               <h1 className="text-accent2 acme">{data.name}</h1>
               <div className="flex items-center mb-3">
@@ -125,7 +125,9 @@ export default function Product() {
                   </span>
                 )}
 
-                <span className="text-gray-500">(Inclusive of GST)</span>
+                <span className="text-gray-500 text-xs sm:text-base">
+                  (Inclusive of GST)
+                </span>
               </div>
 
               {data.ratingNo > 0 && (
@@ -261,12 +263,12 @@ export default function Product() {
             </div>
           </div>
           <Divider />
-          <ReviewBoard
+          {/* <ReviewBoard
             ratings={data.ratings}
             rating={data.rating}
             ratingNo={data.ratingNo}
             reviews={data.reviews}
-          />
+          /> */}
         </>
       )}
 
