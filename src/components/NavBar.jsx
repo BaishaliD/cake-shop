@@ -5,52 +5,12 @@ import { MenuOutlined } from "@ant-design/icons";
 import { faSearch, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faUser, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { useWindowSize } from "../Hooks";
-import "./SideMenu.css";
-import { Drawer, Collapse } from "antd";
-const { Panel } = Collapse;
-import { sideMenuList } from "../database/Menu";
 
-export default function NavBar({}) {
-  const navigate = useNavigate();
+export default function NavBar({ setSideMenu }) {
   const [width] = useWindowSize();
-  const [sideMenu, setSideMenu] = useState(false);
 
   return (
     <div className="w-screen h-16 bg-nav flex items-center justify-between text-accent1">
-      <Drawer
-        placement="left"
-        onClose={() => {
-          setSideMenu(false);
-        }}
-        open={sideMenu}
-        headerStyle={{ background: "#F5EBE0" }}
-        bodyStyle={{ padding: 0, background: "#F5EBE0" }}
-        width="300px"
-        getContainer={false}
-      >
-        {sideMenuList.map((item) =>
-          item.collapsible === false ? (
-            <div
-              className="w-full text-gray-600 p-4 hover:bg-primary1 cursor-pointer"
-              style={{
-                borderBottom:
-                  item.noBorder === true ? "" : "1px solid lightGray",
-              }}
-              onClick={() => {
-                setSideMenu(false);
-                navigate(item.route);
-              }}
-            >
-              {item.name}
-            </div>
-          ) : (
-            <CollapseItem
-              items={item.collapsibleItems}
-              setSideMenu={setSideMenu}
-            />
-          )
-        )}
-      </Drawer>
       {width > 768 ? (
         <>
           <div className="flex items-center">
@@ -104,35 +64,5 @@ const Icon = ({ icon, link }) => {
         navigate(link);
       }}
     />
-  );
-};
-
-const CollapseItem = ({ items, setSideMenu }) => {
-  const navigate = useNavigate();
-  return (
-    <Collapse>
-      {items.map((item) => (
-        <Panel
-          header={item.name}
-          key={item.route}
-          className="bg-secondary2 hover:bg-primary1"
-        >
-          {item &&
-            item.panel &&
-            item.panel.length > 0 &&
-            item.panel.map((i) => (
-              <div
-                className="w-full text-gray-600 p-2 hover:bg-primary1 cursor-pointer"
-                onClick={() => {
-                  setSideMenu(false);
-                  navigate(item.route + i.route);
-                }}
-              >
-                {i.name}
-              </div>
-            ))}
-        </Panel>
-      ))}
-    </Collapse>
   );
 };

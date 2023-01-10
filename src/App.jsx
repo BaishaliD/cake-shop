@@ -10,15 +10,18 @@ import NavBar from "./components/NavBar";
 import ProductStrip from "./components/ProductStrip";
 import Footer from "./components/Footer";
 import { addCupcakes } from "../firebase";
-import { Button, Drawer } from "antd";
 import { useWindowSize } from "./Hooks";
+import SideMenu from "./components/SideMenu";
 
 function App() {
   const [width] = useWindowSize();
+  const [sideMenu, setSideMenu] = useState(false);
+
   return (
-    <div className="App">
-      <div className="fixed min-h-screen" style={{ zIndex: "99999" }}>
-        <NavBar />
+    <div className="App h-content">
+      <SideMenu sideMenu={sideMenu} setSideMenu={setSideMenu} />
+      <div className="fixed" style={{ zIndex: "99999" }}>
+        <NavBar setSideMenu={setSideMenu} />
         {width > 768 && <ProductStrip />}
       </div>
 

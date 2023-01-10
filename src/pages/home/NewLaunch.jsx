@@ -46,7 +46,7 @@ export default function NewLaunch() {
                       <div className="text-3xl text-primary1 sm:text-accent2 acme">
                         {item.name}
                       </div>
-                      <div className="text-primary1 sm:text-accent1 text-base flex items-end">
+                      <div className="text-primary1 sm:text-accent1 text-base items-end hidden sm:flex">
                         <Rate
                           style={{ color: "#815B5B", fontSize: "14px" }}
                           allowHalf
