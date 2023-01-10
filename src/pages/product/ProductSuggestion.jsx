@@ -14,6 +14,7 @@ export default function ProductSuggestion({ title, list, bgColor, textColor }) {
             image={item.images[0]}
             price={item.minPrice}
             rating={item.rating}
+            buttonText="Add To Cart"
           />
         ))}
       </div>

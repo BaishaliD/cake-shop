@@ -5,6 +5,7 @@ import Home from "./pages/home/Home.main";
 import Product from "./pages/product/Product.main";
 import ProductList from "./pages/productList/ProductList.main";
 import Cart from "./pages/cart/Cart.main";
+import Wishlist from "./pages/wishlist/Wishlist.main";
 import AboutUs from "./pages/AboutUs";
 import NavBar from "./components/NavBar";
 import ProductStrip from "./components/ProductStrip";
@@ -31,9 +32,9 @@ function App() {
         <Route path="/products" element={<ProductList />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/faq" element={<div>FAQ Page </div>} />
       </Routes>
-
       <Footer />
     </div>
   );
