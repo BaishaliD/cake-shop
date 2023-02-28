@@ -1,5 +1,5 @@
 import Image from "./Image";
-import ComingSoonImage from "../assets/coming_soon.svg";
+import ComingSoonImage from "../assets/undraw/coming_soon.svg";
 
 export default function ComingSoon({ text = "Coming Soon!" }) {
   return (
