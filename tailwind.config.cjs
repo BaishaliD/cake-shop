@@ -27,6 +27,7 @@ module.exports = {
         nav: "linear-gradient(to right, #F0DBDB, #DBA39A)",
         hero: "linear-gradient(to right, #F0DBDB, #DBA39A)",
         waves: "url('assets/waves_c.png')",
+        "cake-pattern": "url('assets/cake-pattern.jpeg')",
       },
     },
   },

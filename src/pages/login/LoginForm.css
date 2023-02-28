@@ -1,0 +1,13 @@
+#login-form .login-form-forgot {
+  float: right;
+  color: #815b5b;
+}
+#login-form .login-form-forgot:hover {
+  color: #251a1a;
+}
+#login-form .ant-col-rtl .login-form-forgot {
+  float: left;
+}
+#login-form .login-form-button {
+  width: 100%;
+}

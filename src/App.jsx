@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import "./App.css";
-import { createBrowserRouter, Routes, Route } from "react-router-dom";
+import { Outlet, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home.main";
 import Product from "./pages/product/Product.main";
 import ProductList from "./pages/productList/ProductList.main";
@@ -16,6 +16,7 @@ import SideMenu from "./components/SideMenu";
 import CartPage from "./pages/cart/CartPage";
 import AddressPage from "./pages/cart/AddressPage";
 import PaymentPage from "./pages/cart/PaymentPage";
+import Login from "./pages/login/Login.main";
 
 function App() {
   const [width] = useWindowSize();
@@ -23,13 +24,17 @@ function App() {
 
   return (
     <div className="App h-content">
-      <SideMenu sideMenu={sideMenu} setSideMenu={setSideMenu} />
-      <div className="fixed" style={{ zIndex: "99999" }}>
-        <NavBar setSideMenu={setSideMenu} />
-        {width > 768 && <ProductStrip />}
-      </div>
-
+      {location.pathname !== "/login" && (
+        <SideMenu sideMenu={sideMenu} setSideMenu={setSideMenu} />
+      )}
+      {location.pathname !== "/login" && (
+        <div className="fixed" style={{ zIndex: "99999" }}>
+          <NavBar setSideMenu={setSideMenu} />
+          {width > 768 && <ProductStrip />}
+        </div>
+      )}
       <Routes>
+        <Route path="/login" element={<Login />} />
         <Route path="/" element={<Home />} />
         <Route path="/aboutUs" element={<AboutUs />} />
         <Route path="/products" element={<ProductList />} />
@@ -40,7 +45,7 @@ function App() {
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/faq" element={<div>FAQ Page </div>} />
       </Routes>
-      <Footer />
+      {location.pathname !== "/login" && <Footer />}
     </div>
   );
 }
