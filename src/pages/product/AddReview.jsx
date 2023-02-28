@@ -4,9 +4,9 @@ const { TextArea } = Input;
 import UploadImages from "./UploadImages";
 import { uploadReviewImages } from "../../../firebase";
 import Image from "../../components/Image";
-import Success from "../../assets/review-success.svg";
-import Fail from "../../assets/review-error.svg";
-import Pending from "../../assets/review-pending.svg";
+import Success from "../../assets/undraw/review-success.svg";
+import Fail from "../../assets/undraw/review-error.svg";
+import Pending from "../../assets/undraw/review-pending.svg";
 
 const ratingList = [
   { rating: 5, desc: "It was extrordinary" },
