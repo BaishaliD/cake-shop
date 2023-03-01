@@ -1,5 +1,6 @@
 import { Button, Checkbox, Form, Input } from "antd";
-import { updateAddress, addAddress } from "../../../firebase";
+import { useEffect } from "react";
+import { updateAddress, addAddress } from "../../firebase";
 
 export default function AddAddress({
   edit = false,
@@ -17,7 +18,7 @@ export default function AddAddress({
       });
     } else {
       addAddress(values).then((res) => {
-        console.log("New address added!");
+        console.log("New address added!", res);
         updateAddressBook(res);
       });
     }
@@ -43,11 +44,16 @@ export default function AddAddress({
           offset: 0,
           span: "100%",
         }}
-        initialValues={{
-          remember: true,
-          layout: "vertical",
-          ...data,
-        }}
+        initialValues={
+          edit
+            ? {
+                layout: "vertical",
+                ...data,
+              }
+            : {
+                layout: "vertical",
+              }
+        }
         onFinish={onFinish}
         onFinishFailed={onFinishFailed}
         autoComplete="off"
