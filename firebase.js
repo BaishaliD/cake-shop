@@ -18,6 +18,7 @@ import {
 } from "firebase/storage";
 import { cupcakes, cakes } from "./src/database/AllProducts";
 import { addressBook, cartItems } from "./src/database/CartData";
+import { Orders } from "./src/database/ProfileData";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -172,6 +173,18 @@ export const updateAddress = (address) => {
 export const addAddress = (address) => {
   return new Promise((resolve, reject) => {
     addressBook.push(address);
+    resolve(addressBook);
+  });
+};
+
+export const fetchOrders = () => {
+  return new Promise((resolve, reject) => {
+    resolve(Orders);
+  });
+};
+
+export const fetchAddressBook = () => {
+  return new Promise((resolve, reject) => {
     resolve(addressBook);
   });
 };

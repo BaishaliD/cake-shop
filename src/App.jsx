@@ -1,6 +1,7 @@
 import { Fragment, useState } from "react";
 import "./App.css";
 import { Outlet, Routes, Route } from "react-router-dom";
+import { message } from "antd";
 import Home from "./pages/home/Home.main";
 import Product from "./pages/product/Product.main";
 import ProductList from "./pages/productList/ProductList.main";
@@ -17,10 +18,12 @@ import CartPage from "./pages/cart/CartPage";
 import AddressPage from "./pages/cart/AddressPage";
 import PaymentPage from "./pages/cart/PaymentPage";
 import Login from "./pages/login/Login.main";
+import Profile from "./pages/profile/Profile.main";
 
 function App() {
   const [width] = useWindowSize();
   const [sideMenu, setSideMenu] = useState(false);
+  const [contextHolder] = message.useMessage();
 
   return (
     <div className="App h-content">
@@ -28,7 +31,7 @@ function App() {
         <SideMenu sideMenu={sideMenu} setSideMenu={setSideMenu} />
       )}
       {location.pathname !== "/login" && (
-        <div className="fixed" style={{ zIndex: "99999" }}>
+        <div className="fixed" style={{ zIndex: "100" }}>
           <NavBar setSideMenu={setSideMenu} />
           {width > 768 && <ProductStrip />}
         </div>
@@ -43,6 +46,7 @@ function App() {
         <Route path="/address" element={<AddressPage />} />
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/wishlist" element={<Wishlist />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="/faq" element={<div>FAQ Page </div>} />
       </Routes>
       {location.pathname !== "/login" && <Footer />}
