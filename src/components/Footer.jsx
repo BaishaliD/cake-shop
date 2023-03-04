@@ -1,15 +1,38 @@
 import { FacebookFilled, InstagramFilled } from "@ant-design/icons";
 import { useWindowSize } from "../Hooks";
+import { useNavigate } from "react-router-dom";
 
 export default function Footer() {
   const [width] = useWindowSize();
+  const navigate = useNavigate();
+
   return (
     <div className="bg-hero flex flex-col sm:flex-row justify-center items-center sm:h-60 py-8 lg:px-20 text-accent1">
       <div className="px-4 md:px-8 pb-6 sm:pb-0 w-full sm:w-1/4 md:w-1/3 h-full flex flex-col justify-center">
-        <h3 className="font-normal">FAQs</h3>
-        <h3 className="font-normal">Delivery & Shipping</h3>
-        <h3 className="font-normal">Track Order</h3>
-        <h3 className="font-normal">Reviews</h3>
+        <h3
+          className="font-normal cursor-pointer"
+          onClick={() => navigate("/faq")}
+        >
+          FAQs
+        </h3>
+        <h3
+          className="font-normal cursor-pointer"
+          onClick={() => navigate("/privacyPolicy")}
+        >
+          Privacy Policy
+        </h3>
+        <h3
+          className="font-normal cursor-pointer"
+          onClick={() => navigate("/trackOrder")}
+        >
+          Track Order
+        </h3>
+        <h3
+          className="font-normal cursor-pointer"
+          onClick={() => navigate("/reviews")}
+        >
+          Reviews
+        </h3>
       </div>
       <div
         className={`px-4 md:px-8 py-8 sm:py-0 w-full sm:w-1/2 md:w-1/3 h-full flex flex-col justify-center ${
