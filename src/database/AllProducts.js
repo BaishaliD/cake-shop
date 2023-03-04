@@ -672,15 +672,6 @@ export const cakes = [
         title: "Beautiful and delicious!",
         text: "My wedding cake was the star of the evening. The cake was as tasty as it was beautiful, and the service from the team was pariseworthy.",
       },
-      {
-        name: "Rosey Diaz",
-        location: "Vaizag, Andhra Pradesh",
-        date: "October 17, 2020",
-        rating: 5,
-        images: [Wedding1_R3],
-        title: "Beautiful and delicious!",
-        text: "My wedding cake was the star of the evening. The cake was as tasty as it was beautiful, and the service from the team was pariseworthy.",
-      },
     ],
   },
   {
