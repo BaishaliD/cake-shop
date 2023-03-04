@@ -97,3 +97,42 @@ export let Orders = [
     },
   },
 ];
+
+export let Reviews = [
+  {
+    order_id: "ABCD1234",
+    item_id: "wedding_ice_and_gold",
+    item: "Ice and Gold",
+    images: [Rose1, German1],
+    reviewed: true,
+    name: "Rishika Malik",
+    location: "Gurgaon, Haryana",
+    date: "October 19, 2021",
+    rating: 4,
+    uploadedImages: [Rose1, German1],
+    title: "Made my day!",
+    text: "The cake was perfect. All the guests really enjoyed it.",
+  },
+  {
+    order_id: "ABCD1234",
+    item_id: "wedding_ice_and_gold",
+    item: "Ice and Gold",
+    images: [Rose1, German1],
+    date: "January 19, 2021",
+    reviewed: false,
+  },
+  {
+    order_id: "ABCD1234",
+    item_id: "wedding_ice_and_gold",
+    item: "Ice and Gold",
+    images: [Rose1, German1],
+    name: "Rosey Diaz",
+    location: "Vaizag, Andhra Pradesh",
+    date: "October 17, 2020",
+    reviewed: true,
+    rating: 5,
+    // uploadedImages: [HeartChoco],
+    // title: "Beautiful and delicious!",
+    // text: "My wedding cake was the star of the evening. The cake was as tasty as it was beautiful, and the service from the team was pariseworthy.",
+  },
+];

@@ -32,13 +32,21 @@ export default function Profile() {
       </div>
       <div className="w-2/3 p-4">
         {selectedTab === "orders" ? (
-          <MyOrders />
+          <div>
+            <MyOrders />
+          </div>
         ) : selectedTab === "address" ? (
-          <AddressBook />
+          <div className="pl-16">
+            <AddressBook />
+          </div>
         ) : selectedTab === "reviews" ? (
-          <MyReviews />
+          <div>
+            <MyReviews />
+          </div>
         ) : (
-          <MyProfile />
+          <div>
+            <MyProfile />
+          </div>
         )}
       </div>
     </div>
