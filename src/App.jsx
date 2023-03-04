@@ -19,6 +19,8 @@ import AddressPage from "./pages/cart/AddressPage";
 import PaymentPage from "./pages/cart/PaymentPage";
 import Login from "./pages/login/Login.main";
 import Profile from "./pages/profile/Profile.main";
+import Faq from "./pages/Faq";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 function App() {
   const [width] = useWindowSize();
@@ -47,7 +49,8 @@ function App() {
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/faq" element={<div>FAQ Page </div>} />
+        <Route path="/faq" element={<Faq />} />
+        <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
       </Routes>
       {location.pathname !== "/login" && <Footer />}
     </div>
