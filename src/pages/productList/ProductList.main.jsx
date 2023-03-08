@@ -8,6 +8,7 @@ export default function ProductList() {
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchAllProducts().then((data) => {
       setProducts(data);
       setIsLoading(false);

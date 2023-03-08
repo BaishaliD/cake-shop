@@ -1,6 +1,10 @@
 import { Divider } from "antd";
+import { useEffect } from "react";
 
 export default function PrivacyPolicy() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="pt-32 px-16">
       <h1>Privacy Policy</h1>

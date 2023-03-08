@@ -1,7 +1,11 @@
 import { Collapse } from "antd";
+import { useEffect } from "react";
 const { Panel } = Collapse;
 
 export default function Faq() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="py-8 px-16 pt-32 bg-secondary1">
       <Collapse accordion size="large" className="bg-white">
