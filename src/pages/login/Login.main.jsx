@@ -3,6 +3,7 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import React, { useState, useEffect } from "react";
 import Google from "../../assets/icons/google.png";
 import Facebook from "../../assets/icons/facebook.png";
+import Logo from "../../assets/cake-shop-logo.png";
 import "./LoginForm.css";
 
 export default function Login() {
@@ -14,7 +15,10 @@ export default function Login() {
   };
   return (
     <div className="w-screen h-screen bg-cake-pattern bg-center bg-repeat bg-[length:400px] flex justify-center items-center">
-      <div className="bg-white w-[500px] xs:rounded-xl shadow-md p-8 xs:p-16 flex-col justify-center items-center">
+      <div className="bg-white w-[500px] xs:rounded-xl shadow-lg p-8 xs:p-16 flex-col justify-center items-center">
+        <h1 className="text-primary2 text-center p-4 mb-8 rounded shadow-md">
+          The Cake Bar and Co.
+        </h1>
         <div className="mb-8 flex flex-row justify-center items-center">
           <div className="text-gray-500 mr-8 ppp">Login With</div>
           <img src={Google} className="h-8 w-8 mx-2 cursor-pointer" />
