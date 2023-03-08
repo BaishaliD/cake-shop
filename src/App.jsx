@@ -1,7 +1,6 @@
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import { Outlet, Routes, Route } from "react-router-dom";
-import { message } from "antd";
 import Home from "./pages/home/Home.main";
 import Product from "./pages/product/Product.main";
 import ProductList from "./pages/productList/ProductList.main";
@@ -25,7 +24,6 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 function App() {
   const [width] = useWindowSize();
   const [sideMenu, setSideMenu] = useState(false);
-  const [contextHolder] = message.useMessage();
 
   return (
     <div className="App h-content">

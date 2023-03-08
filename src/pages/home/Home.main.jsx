@@ -9,6 +9,9 @@ import Team from "./Team";
 import MailList from "./MailList";
 
 export default function Home() {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <div className="pt-24 bg-hero">
       <Hero />

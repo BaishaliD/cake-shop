@@ -16,6 +16,7 @@ export default function Cart() {
   const [addressBook, setAddressBook] = useState([]);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     fetchCartData().then((res) => {
       setCartItems(res.cartItems);
       const defaultAdd = res.addressBook.find(
