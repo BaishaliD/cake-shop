@@ -32,7 +32,7 @@ export default function Wishlist() {
               key={item.id}
               id={item.id}
               name={item.name}
-              image={item.images[0]}
+              image={item.images && item.images[0]}
               price={item.minPrice}
               rating={item.rating}
               wishlist={true}

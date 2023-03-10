@@ -17,6 +17,7 @@ import {
   fetchProduct,
   fetchRandomList,
 } from "../../../firebase";
+import NoImage from "../../assets/no-image.jpeg";
 
 export default function Product() {
   const [data, setData] = useState(null);
@@ -45,8 +46,8 @@ export default function Product() {
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    fetchProduct(id).then((product) => {
-      // getProductById(id).then((product) => {
+    // fetchProduct(id).then((product) => {
+    getProductById(id).then((product) => {
       console.log("GET DATA IN PRODUCT PAGE :: ", product);
       setData(product);
       if (product.priceList && product.priceList.length > 0) {
@@ -99,8 +100,15 @@ export default function Product() {
         <>
           <div className="flex flex-col md:flex-row">
             <div className="w-full md:w-3/5">
-              <Carousel slides={data.images} />
+              <Carousel
+                slides={
+                  data.images && data.images.length > 0
+                    ? data.images
+                    : [NoImage]
+                }
+              />
             </div>
+
             <div className="w-full md:w-2/5 p-4 sm:p-8">
               <h3 className="text-accent1 font-thin">{data.desc}</h3>
               <h1 className="text-accent2 acme">{data.name}</h1>
