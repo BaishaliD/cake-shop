@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import { Outlet, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home.main";
@@ -10,7 +10,6 @@ import AboutUs from "./pages/AboutUs";
 import NavBar from "./components/NavBar";
 import ProductStrip from "./components/ProductStrip";
 import Footer from "./components/Footer";
-import { addCupcakes } from "../firebase";
 import { useWindowSize } from "./Hooks";
 import SideMenu from "./components/SideMenu";
 import CartPage from "./pages/cart/CartPage";

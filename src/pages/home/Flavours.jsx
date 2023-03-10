@@ -40,9 +40,9 @@ const collectionList = [
   },
   {
     id: "06",
-    name: "Pineapple",
+    name: "Fruit",
     image: Pineapple,
-    route: "pineapple",
+    route: "fruit",
   },
 ];
 
