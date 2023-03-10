@@ -27,7 +27,7 @@ export default function Gallery({ products }) {
               key={item.id}
               id={item.id}
               name={item.name}
-              image={item.images[0]}
+              image={item.images && item.images[0]}
               price={item.minPrice}
               discountedPrice={item.discountedPrice}
               rating={item.rating}

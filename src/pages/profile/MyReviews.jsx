@@ -23,7 +23,11 @@ export default function MyReviews() {
           <>
             <div className="w-[full] bg-white rounded-xl shadow-lg p-8 my-4">
               <div className="flex items-center">
-                <img src={data.images[0]} height="60px" width="60px" />
+                <img
+                  src={data.images && data.images[0]}
+                  height="60px"
+                  width="60px"
+                />
                 <div className="ml-4 flex-grow">
                   <h3>{data.item}</h3>
                   <div>
