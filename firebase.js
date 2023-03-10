@@ -2,8 +2,10 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import {
+  doc,
   collection,
   addDoc,
+  setDoc,
   getDocs,
   query,
   where,
@@ -40,17 +42,16 @@ const db = getFirestore(app);
 // Get a reference to the storage service, which is used to create references in your storage bucket
 const storage = getStorage();
 
-export const addCupcakes = () => {
+export const addCakes = () => {
   try {
-    cupcakes.forEach((doc) => {
-      doc = { ...doc, createdAt: serverTimestamp() };
-      console.log("Add cupcake :: ", doc);
-      addDoc(collection(db, "products"), doc);
+    cakes.forEach((_doc) => {
+      _doc = { ..._doc, createdAt: serverTimestamp() };
+      console.log("Add cake :: ", _doc, _doc.id);
+      // addDoc(collection(db, "products", doc.id), doc);
+      setDoc(doc(db, "products", _doc.id), _doc);
     });
   } catch (e) {
-    console.error("Error adding cupcake : ", e);
-  } finally {
-    console.log("Cupcakes added", cupcakes);
+    console.error("Error adding cake : ", e);
   }
 };
 
@@ -75,19 +76,46 @@ export const getProductById = (id) => {
   });
 };
 
-export const getAllProducts = new Promise(async (resolve, reject) => {
-  console.log("getAllProducts called !!!!");
-  // const querySnapshot = await getDocs(collection(db, "products"));
-  // let dataArray = [];
-  // let promiseArr = [];
+export const getAllProducts = () => {
+  return new Promise(async (resolve, reject) => {
+    console.log("getAllProducts called !!!!");
+    const querySnapshot = await getDocs(collection(db, "products"));
+    let dataArray = [];
+    let promiseArr = [];
 
-  // processData(querySnapshot, dataArray, promiseArr);
+    processData(querySnapshot, dataArray, promiseArr);
 
-  // await Promise.all(promiseArr).catch((e) => reject(e));
+    await Promise.all(promiseArr).catch((e) => reject(e));
 
-  // console.log("getAllProducts Data : ", dataArray);
-  // resolve(dataArray);
-});
+    console.log("getAllProducts Data : ", dataArray);
+    resolve(dataArray);
+  });
+};
+
+export const getProducts = async (key, value, n = null) => {
+  let q;
+  if (n === null) {
+    q = query(collection(db, "products"), where(key, "==", value));
+  } else {
+    q = query(
+      collection(db, "products"),
+      where("category", "==", category),
+      limit(n)
+    );
+  }
+  const querySnapshot = await getDocs(q);
+  let dataArray = [];
+  let promiseArr = [];
+  processData(querySnapshot, dataArray, promiseArr);
+  await Promise.all(promiseArr).catch((e) => reject(e));
+  resolve(dataArray);
+};
+
+export const getProductsWithFlavour = () => {};
+
+export const getProductsWithType = () => {};
+
+export const getProductsWithOccassion = () => {};
 
 const processData = (querySnapshot, dataArray, promiseArr) => {
   querySnapshot.forEach(async (doc) => {
@@ -99,7 +127,7 @@ const processData = (querySnapshot, dataArray, promiseArr) => {
           const url = await getDownloadURL(spaceRef);
           return url;
         })
-      ).catch((e) => reject(e));
+      ).catch((e) => resolve());
       data.images = imageArr;
       dataArray.push(data);
       resolve();
@@ -107,6 +135,21 @@ const processData = (querySnapshot, dataArray, promiseArr) => {
     promiseArr.push(promise);
   });
 };
+
+export const uploadReviewImages = (url, filename) => {
+  return new Promise((resolve, reject) => {
+    console.log("uploadReviewImages called : ", url, filename);
+    const imageRef = ref(storage, `reviews/${filename}`);
+    uploadString(imageRef, url, "data_url")
+      .then((snapshot) => {
+        console.log("Uploaded a data_url string!");
+        resolve();
+      })
+      .catch((err) => reject(err));
+  });
+};
+
+/** ********* FETCH FROM LOCAL DATABASE *************** */
 
 export const fetchProduct = (id) => {
   return new Promise((resolve, reject) => {
@@ -130,19 +173,6 @@ export const fetchRandomList = (n, excludeId) => {
   let selected = shuffled.slice(0, n);
 
   return new Promise((resolve, reject) => resolve(selected));
-};
-
-export const uploadReviewImages = (url, filename) => {
-  return new Promise((resolve, reject) => {
-    console.log("uploadReviewImages called : ", url, filename);
-    const imageRef = ref(storage, `reviews/${filename}`);
-    uploadString(imageRef, url, "data_url")
-      .then((snapshot) => {
-        console.log("Uploaded a data_url string!");
-        resolve();
-      })
-      .catch((err) => reject(err));
-  });
 };
 
 export const fetchCartData = () => {
