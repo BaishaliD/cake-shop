@@ -16,6 +16,9 @@ const list = [
       { label: "Chocolate Cakes", key: "/chocolate" },
       { label: "Vanilla Cakes", key: "/vanilla" },
       { label: "Strawberry Cakes", key: "/strawberry" },
+      { label: "Red Velvet Cakes", key: "/redvelvet" },
+      { label: "Black Forest Cakes", key: "/blackforest" },
+      { label: "Fruit Cakes", key: "/fruit" },
     ],
   },
   {
@@ -34,23 +37,18 @@ const list = [
     route: "/type",
     dropdown: [
       { label: "Fondant Cakes", key: "/fondant" },
-      { label: "Drip Cakes", key: "/drip" },
-      { label: "Tea Cakes", key: "/tea" },
-      { label: "Sponge Cakes", key: "/fond" },
-      { label: "Marble Cakes", key: "/marble" },
+      { label: "Cake Rolls", key: "/cakeroll" },
+      { label: "Bento Cakes", key: "/bento" },
+      { label: "Mousse Cakes", key: "/mousse" },
     ],
   },
   {
     label: "Cupcakes",
-    route: "/cupcakes",
+    route: "/category/cupcake",
   },
   {
     label: "Jar Cakes",
-    route: "/jarcakes",
-  },
-  {
-    label: "Macarons",
-    route: "/macaron",
+    route: "/category/jarcake",
   },
 ];
 
@@ -76,7 +74,7 @@ const Item = ({ label, route, items }) => {
     navigate(`${route}${key}`);
   };
   return (
-    <div className="roboto px-4 flex items-center">
+    <div className="roboto px-4 flex items-center cursor-pointer">
       {items && items.length > 0 ? (
         <Dropdown
           menu={{
@@ -93,7 +91,7 @@ const Item = ({ label, route, items }) => {
           </a>
         </Dropdown>
       ) : (
-        <span>{label}</span>
+        <span onClick={() => navigate(route)}>{label}</span>
       )}
     </div>
   );

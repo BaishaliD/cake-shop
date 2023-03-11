@@ -18,6 +18,16 @@ export const sideMenuList = [
     name: "All Products",
     route: "/products",
     collapsible: false,
+  },
+  {
+    name: "Cupcakes",
+    route: "/category/cupcake",
+    collapsible: false,
+  },
+  {
+    name: "Jar Cakes",
+    route: "/category/jarcake",
+    collapsible: false,
     noBorder: true,
   },
   {
@@ -38,6 +48,18 @@ export const sideMenuList = [
           {
             name: "Strawberry",
             route: "/strawberry",
+          },
+          {
+            name: "Red Velvet",
+            route: "/redvelvet",
+          },
+          {
+            name: "Black Forest",
+            route: "/blackforest",
+          },
+          {
+            name: "Fruit",
+            route: "/fruit",
           },
         ],
       },
@@ -76,12 +98,16 @@ export const sideMenuList = [
             route: "/fondant",
           },
           {
-            name: "Drip Cakes",
-            route: "/drip",
-          },
-          {
             name: "Cake Rolls",
             route: "/cakeroll",
+          },
+          {
+            name: "Bento Cakes",
+            route: "/bento",
+          },
+          {
+            name: "Mousse Cakes",
+            route: "/mousse",
           },
         ],
       },

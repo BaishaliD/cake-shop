@@ -8,12 +8,12 @@ export default function Gallery({ products }) {
 
   useEffect(() => {
     setProductList(products);
-    const sliced = products.slice(0, 6);
+    const sliced = products.slice(0, 12);
     setProductList(sliced);
   }, []);
 
   const pageChanged = (p) => {
-    setProductList(products.slice((p - 1) * 6, p * 6));
+    setProductList(products.slice((p - 1) * 12, p * 12));
     window.scrollTo(0, 0);
   };
 

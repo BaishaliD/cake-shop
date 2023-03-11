@@ -18,6 +18,7 @@ import {
   fetchRandomList,
 } from "../../../firebase";
 import NoImage from "../../assets/no-image.jpeg";
+import { flavour as flavourName } from "../../database/StaticData";
 
 export default function Product() {
   const [data, setData] = useState(null);
@@ -178,7 +179,7 @@ export default function Product() {
                               getPrice(el, weight);
                             }}
                           >
-                            {el}
+                            {flavourName[el]}
                           </button>
                         ))}
                       </div>
