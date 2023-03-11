@@ -1,26 +1,25 @@
 import { Divider, Spin } from "antd";
 import { useParams } from "react-router-dom";
-import { TypesPage } from "../../database/StaticData";
+import { CategoryPage } from "../../database/StaticData";
 import Gallery from "../../components/Gallery";
 import Filter from "../../components/Filter";
 import { useEffect, useState } from "react";
 import { getProducts } from "../../../firebase";
 
-export default function Type() {
-  const { type } = useParams();
-  const data = TypesPage[type];
+export default function Category() {
+  const { cat } = useParams();
+  const data = CategoryPage[cat];
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
   useEffect(() => {
     window.scrollTo(0, 0);
-    getProducts("type", type).then((data) => {
+    console.log("CATEGORY : ", cat);
+    getProducts("category", cat).then((data) => {
       console.log("DATA IN COMPONENT :: ", data);
       setProducts(data);
       setIsLoading(false);
     });
-  }, [type]);
-
-  useEffect(() => {}, []);
+  }, [cat]);
   return (
     <div className="pt-24">
       {!isLoading && data ? (

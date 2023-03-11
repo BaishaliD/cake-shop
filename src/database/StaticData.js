@@ -2,6 +2,46 @@ import Fondant from "../assets/types/fondant.png";
 import Bento from "../assets/types/bento.jpeg";
 import CakeRoll from "../assets/types/cake-roll.jpeg";
 import Mousse from "../assets/types/mousse.webp";
+import Chocolate from "../assets/flavours/chocolate.webp";
+import Vanilla from "../assets/flavours/vanilla.webp";
+import Strawberry from "../assets/flavours/strawberry.jpeg";
+import RedVelvet from "../assets/flavours/redvelvet.jpeg";
+import BlackForest from "../assets/flavours/blackforest.jpeg";
+import Pineapple from "../assets/flavours/pineapple.jpeg";
+
+export const category = {
+  none: "None",
+  cake: "Cake",
+  cupcake: "Cupcake",
+  jarcake: "Jar Cake",
+};
+
+export const flavour = {
+  none: "None",
+  chocolate: "Chocolate",
+  vanilla: "Vanilla",
+  strawberry: "Strawberry",
+  redvelvet: "Red Velvet",
+  fruit: "Fruit",
+  blackforest: "Black Forest",
+};
+
+export const type = {
+  none: "None",
+  fondant: "Fondant",
+  cakeroll: "Cake Roll",
+  bento: "Bento",
+  mousse: "Mousse",
+};
+
+export const occasion = {
+  none: "None",
+  birthday: "Birthday",
+  wedding: "Wedding",
+  anniversary: "Anniversary",
+  christmas: "Christmas",
+  valentines: "Valentine's Day",
+};
 
 export const collectionList = [
   {
@@ -30,6 +70,45 @@ export const collectionList = [
     name: "Mousse Cakes",
     image: Mousse,
     route: "mousse",
+  },
+];
+
+export const flavourList = [
+  {
+    id: "01",
+    name: "Chocolate",
+    image: Chocolate,
+    route: "chocolate",
+  },
+  {
+    id: "02",
+    name: "Vanilla",
+    image: Vanilla,
+    route: "vanilla",
+  },
+  {
+    id: "03",
+    name: "Strawberry",
+    image: Strawberry,
+    route: "strawberry",
+  },
+  {
+    id: "04",
+    name: "Red Velvet",
+    image: RedVelvet,
+    route: "redvelvet",
+  },
+  {
+    id: "05",
+    name: "Black Forest",
+    image: BlackForest,
+    route: "blackforest",
+  },
+  {
+    id: "06",
+    name: "Fruit",
+    image: Pineapple,
+    route: "fruit",
   },
 ];
 
@@ -73,5 +152,38 @@ export const TypesPage = {
   },
   mousse: {
     title: "Mousse Cakes",
+  },
+};
+
+export const CategoryPage = {
+  cake: {
+    title: "Cakes",
+  },
+  cupcake: {
+    title: "Cupcakes",
+  },
+  jarcake: {
+    title: "Jar Cakes",
+  },
+};
+
+export const FlavourPage = {
+  chocolate: {
+    title: "Chocolate Cakes",
+  },
+  vanilla: {
+    title: "Vanilla Cakes",
+  },
+  strawberry: {
+    title: "Strawberry Cakes",
+  },
+  redvelvet: {
+    title: "Red Velvet Cakes",
+  },
+  fruit: {
+    title: "Fruit Cakes",
+  },
+  blackforest: {
+    title: "Black Forest Cakes",
   },
 };
