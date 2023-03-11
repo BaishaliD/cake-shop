@@ -80,8 +80,8 @@ export const sideMenuList = [
             route: "/drip",
           },
           {
-            name: "Pull-up Cakes",
-            route: "/pullUp",
+            name: "Cake Rolls",
+            route: "/cakeroll",
           },
         ],
       },

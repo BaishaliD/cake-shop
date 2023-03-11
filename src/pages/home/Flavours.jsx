@@ -67,12 +67,12 @@ export default function Categories() {
 }
 
 const Collection = ({ image, name, route }) => {
-  const navigateTo = useNavigate();
+  const navigate = useNavigate();
   return (
     <div
       className="h-60 w-60 overflow-hidden relative collection-wrapper rounded-full m-6 shadow-lg"
       onClick={() => {
-        navigateTo(`/collection/${route}`);
+        navigate(`/collection/${route}`);
       }}
     >
       <Image height="100%" width="100%" src={image} className="zoom cover" />

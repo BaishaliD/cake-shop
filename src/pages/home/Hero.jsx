@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { addCakes } from "../../../firebase";
 import HeroImage from "../../assets/hero-cutout-cropped.png";
 
 export default function Hero() {
@@ -25,6 +26,7 @@ export default function Hero() {
           className="my-4 py-2 px-8 text-center bg-accent2 shadow-lg hover:shadow-md text-primary1 uppercase rounded-md cursor-pointer"
           onClick={() => {
             navigate("/products");
+            // addCakes();
           }}
         >
           Order Now

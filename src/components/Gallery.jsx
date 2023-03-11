@@ -10,7 +10,7 @@ export default function Gallery({ products }) {
     setProductList(products);
     const sliced = products.slice(0, 6);
     setProductList(sliced);
-  }, []);
+  }, [products]);
 
   const pageChanged = (p) => {
     setProductList(products.slice((p - 1) * 6, p * 6));

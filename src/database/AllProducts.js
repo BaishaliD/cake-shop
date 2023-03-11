@@ -18,7 +18,7 @@ const flavour = {
 const type = {
   none: "None",
   fondant: "Fondant",
-  pullup: "Pull-Up",
+  cakeroll: "Cake Roll",
   bento: "Bento",
   mousse: "Mousse",
 };
@@ -1343,6 +1343,463 @@ export const cakes = [
       "Note: Please consume within 24 hours of receiving.",
     ],
     ratings: {},
+    reviews: [],
+  },
+];
+
+export const fondantCakes = [
+  {
+    id: "cake_fondant_death_note",
+    name: "Shinigami's Delight",
+    desc: "Death Note themed fondant cake",
+    minPrice: "Rs. 1,800",
+    discountedPrice: "Rs. 1,440",
+    discount: "20%",
+    rating: 3.5,
+    ratingNo: 8,
+    images: ["/cakes/death-note-1.jpeg", "/cakes/death-note-2.jpeg"],
+    flavour: ["chocolate", "vanilla", "strawberry"],
+    occasion: "birthday",
+    category: "cake",
+    type: "fondant",
+    sameDayDelivery: false,
+    bestSeller: true,
+    eggless: true,
+    priceList: [
+      {
+        flavour: "vanilla",
+        price: "Rs. 1,800",
+        discountedPrice: "Rs. 1,440",
+        discount: "20%",
+      },
+      {
+        flavour: "strawberry",
+        price: "Rs. 2,000",
+        discountedPrice: "Rs. 1,700",
+        discount: "15%",
+      },
+      {
+        flavour: "chocolate",
+        price: "Rs. 2,200",
+        discountedPrice: "Rs. 1,760",
+        discount: "20%",
+      },
+    ],
+    info: [
+      "Our Death Note-themed cake is the perfect dessert for fans of the iconic manga and anime series.",
+
+      "Made with fondant icing and meticulously decorated to resemble the famous notebook, this cake is a true work of art that is as delicious as it is visually stunning.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {
+      3: 3,
+      4: 5,
+    },
+    reviews: [],
+  },
+  {
+    id: "cake_fondant_star_wars",
+    name: "Darth Vader's Temptation",
+    desc: "Star Wars themed fondant cake",
+    minPrice: "Rs. 1,800",
+    discountedPrice: "Rs. 1,440",
+    discount: "20%",
+    rating: 3.5,
+    ratingNo: 8,
+    images: ["/cakes/star-wars-1.jpeg", "/cakes/star-wars-2.jpeg"],
+    flavour: ["chocolate", "vanilla", "strawberry"],
+    occasion: "birthday",
+    category: "cake",
+    type: "fondant",
+    sameDayDelivery: false,
+    bestSeller: true,
+    eggless: true,
+    priceList: [
+      {
+        flavour: "vanilla",
+        price: "Rs. 1,800",
+        discountedPrice: "Rs. 1,440",
+        discount: "20%",
+      },
+      {
+        flavour: "strawberry",
+        price: "Rs. 2,000",
+        discountedPrice: "Rs. 1,700",
+        discount: "15%",
+      },
+      {
+        flavour: "chocolate",
+        price: "Rs. 2,200",
+        discountedPrice: "Rs. 1,760",
+        discount: "20%",
+      },
+    ],
+    info: [
+      "Our Star Wars-themed cake is the perfect dessert for any fan of the iconic space opera.",
+
+      "Made with fondant icing and decorated with characters from the franchise, this cake is sure to bring balance to the Force of any celebration.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {
+      3: 3,
+      4: 5,
+    },
+    reviews: [],
+  },
+  {
+    id: "cake_fondant_harry_potter",
+    name: "Shinigami's Delight",
+    desc: "Harry Potter themed fondant cake",
+    minPrice: "Rs. 1,800",
+    discountedPrice: "Rs. 1,440",
+    discount: "20%",
+    rating: 3.5,
+    ratingNo: 8,
+    images: ["/cakes/harry-potter-1.jpeg", "/cakes/harry-potter-2.jpeg"],
+    flavour: ["chocolate", "vanilla", "strawberry"],
+    occasion: "birthday",
+    category: "cake",
+    type: "fondant",
+    sameDayDelivery: false,
+    bestSeller: true,
+    eggless: true,
+    priceList: [
+      {
+        flavour: "vanilla",
+        price: "Rs. 1,800",
+        discountedPrice: "Rs. 1,440",
+        discount: "20%",
+      },
+      {
+        flavour: "strawberry",
+        price: "Rs. 2,000",
+        discountedPrice: "Rs. 1,700",
+        discount: "15%",
+      },
+      {
+        flavour: "chocolate",
+        price: "Rs. 2,200",
+        discountedPrice: "Rs. 1,760",
+        discount: "20%",
+      },
+    ],
+    info: [
+      "Our Harry Potter-themed cake is the perfect dessert for any fan of the beloved wizarding world.",
+
+      "Made with fondant icing and decorated with iconic elements from the series, this cake is a magical addition to any celebration or party.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {
+      3: 3,
+      4: 5,
+    },
+    reviews: [],
+  },
+  {
+    id: "cake_fondant_got",
+    name: "Winter is Coming",
+    desc: "Game of Thrones themed fondant cake",
+    minPrice: "Rs. 1,800",
+    discountedPrice: "Rs. 1,440",
+    discount: "20%",
+    rating: 3.5,
+    ratingNo: 8,
+    images: ["/cakes/got-1.jpeg", "/cakes/got-2.jpeg", "/cakes/got-3.jpeg"],
+    flavour: ["chocolate", "vanilla", "strawberry"],
+    occasion: "birthday",
+    category: "cake",
+    type: "fondant",
+    sameDayDelivery: false,
+    bestSeller: true,
+    eggless: true,
+    priceList: [
+      {
+        flavour: "vanilla",
+        price: "Rs. 1,800",
+        discountedPrice: "Rs. 1,440",
+        discount: "20%",
+      },
+      {
+        flavour: "strawberry",
+        price: "Rs. 2,000",
+        discountedPrice: "Rs. 1,700",
+        discount: "15%",
+      },
+      {
+        flavour: "chocolate",
+        price: "Rs. 2,200",
+        discountedPrice: "Rs. 1,760",
+        discount: "20%",
+      },
+    ],
+    info: [
+      "Our Game of Thrones-themed cake is the perfect centerpiece for any fan of the epic fantasy series.",
+
+      "Made with fondant icing and decorated to look like the iconic Iron Throne, this cake is fit for a king or queen and is sure to impress even the most die-hard fans of the show.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {
+      3: 3,
+      4: 5,
+    },
+    reviews: [],
+  },
+  {
+    id: "cake_fondant_dream",
+    name: "Dream Child",
+    desc: "Icy Blue Fondant cake decorated with clouds and teddies",
+    minPrice: "Rs. 1,800",
+    discountedPrice: "Rs. 1,440",
+    discount: "20%",
+    rating: 3.5,
+    ratingNo: 8,
+    images: ["/cakes/dream-1.jpeg", "/cakes/dream-2.jpeg"],
+    flavour: ["chocolate", "vanilla", "strawberry"],
+    occasion: "birthday",
+    category: "cake",
+    type: "fondant",
+    sameDayDelivery: false,
+    bestSeller: true,
+    eggless: true,
+    priceList: [
+      {
+        flavour: "vanilla",
+        price: "Rs. 1,800",
+        discountedPrice: "Rs. 1,440",
+        discount: "20%",
+      },
+      {
+        flavour: "strawberry",
+        price: "Rs. 2,000",
+        discountedPrice: "Rs. 1,700",
+        discount: "15%",
+      },
+      {
+        flavour: "chocolate",
+        price: "Rs. 2,200",
+        discountedPrice: "Rs. 1,760",
+        discount: "20%",
+      },
+    ],
+    info: [
+      "OOur Icy Blue Fondant cake is the perfect dessert for any baby shower or child's birthday party. ",
+
+      "Made with fondant icing and decorated to look like a fluffy cloud, this cake is adorned with cute teddy bear figurines and delicate shades of blue, making it a sweet addition to any celebration.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {
+      3: 3,
+      4: 5,
+    },
+    reviews: [],
+  },
+];
+
+export const cakeRolls = [
+  {
+    id: "cake_roll_choco",
+    name: "Choco Cake Roll",
+    desc: "Chocolate flavoured sponge cake roll",
+    minPrice: "Rs. 200",
+    rating: 3.5,
+    ratingNo: 8,
+    images: [
+      "/cakes/roll-choco-1.jpg",
+      "/cakes/roll-choco-2.jpeg",
+      "/cakes/roll-choco-3.jpeg",
+    ],
+    flavour: ["chocolate"],
+    occasion: "none",
+    category: "cake",
+    type: "cakeroll",
+    sameDayDelivery: true,
+    bestSeller: true,
+    eggless: false,
+    info: [
+      "Indulge in our chocolate-flavored cake roll, made with rich cocoa powder and filled with a smooth chocolate ganache.",
+
+      "It will melt in your mouth, making it the perfect treat for any chocoholic or dessert lover.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {
+      3: 3,
+      4: 5,
+    },
+    reviews: [],
+  },
+  {
+    id: "cake_roll_strawberry",
+    name: "Strawberry Cake Roll",
+    desc: "Strawberry flavoured sponge cake roll",
+    minPrice: "Rs. 200",
+    rating: 3.5,
+    ratingNo: 8,
+    images: [
+      "/cakes/roll-strawberry-1.jpeg",
+      "/cakes/roll-strawberry-2.jpeg",
+      "/cakes/roll-strawberry-3.jpeg",
+    ],
+    flavour: ["chocolate"],
+    occasion: "valentines",
+    category: "cake",
+    type: "cakeroll",
+    sameDayDelivery: true,
+    bestSeller: true,
+    eggless: false,
+    info: [
+      "Our strawberry cake roll is a delicate and fruity delight, made with a light sponge cake and filled with a creamy strawberry cream that bursts with flavor, making it the perfect dessert for any occasion, from birthdays to afternoon tea parties.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {
+      3: 3,
+      4: 5,
+    },
+    reviews: [],
+  },
+  {
+    id: "cake_roll_coffee_matcha",
+    name: "Green & Brown",
+    desc: "Combo pack of Coffee and Matcha cake rolls",
+    minPrice: "Rs. 300",
+    discountedPrice: "Rs. 270",
+    discount: "10%",
+    rating: 3.5,
+    ratingNo: 8,
+    images: [
+      "/cakes/roll-coffee-matcha-1.jpg",
+      "/cakes/roll-coffee-matcha-2.jpg",
+    ],
+    flavour: ["coffee", "matcha"],
+    occasion: "none",
+    category: "cake",
+    type: "cakeroll",
+    sameDayDelivery: true,
+    bestSeller: true,
+    eggless: false,
+    info: [
+      "Experience the best of both worlds with our combo pack of 2 cake rolls: the rich and robust coffee-flavored cake roll and the delicate and earthy matcha-flavored cake roll.",
+
+      "Both cake rolls are made with high-quality ingredients and crafted with care to offer a unique and satisfying dessert experience.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {
+      3: 3,
+      4: 5,
+    },
+    reviews: [],
+  },
+  {
+    id: "cake_roll_matcha_fill",
+    name: "Matcha Burst",
+    desc: "Matcha cream filled cake roll",
+    price: "Rs. 200",
+    rating: 3.5,
+    ratingNo: 8,
+    images: ["/cakes/roll-matcha-fill-1.jpg", "/cakes/roll-matcha-fill-2.jpg"],
+    flavour: ["matcha"],
+    occasion: "none",
+    category: "cake",
+    type: "cakeroll",
+    sameDayDelivery: true,
+    bestSeller: false,
+    eggless: true,
+    info: [
+      "Our matcha cream filled cake roll is a beautiful and delicious dessert, made with a soft sponge cake and filled with a rich and velvety matcha-flavored cream that is both earthy and sweet, making it a perfect treat for any matcha lover or dessert enthusiast.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {
+      3: 3,
+      4: 5,
+    },
+    reviews: [],
+  },
+  {
+    id: "cake_roll_swirl",
+    name: "Sprinkled Swirls",
+    desc: "Confetti-covered vanilla cake roll with swirl patterns",
+    price: "Rs. 250",
+    rating: 3.5,
+    ratingNo: 8,
+    images: [
+      "/cakes/roll-swirl-1.jpg",
+      "/cakes/roll-swirl-2.jpg",
+      "/cakes/roll-swirl-3.jpg",
+      "/cakes/roll-swirl-4.jpg",
+    ],
+    flavour: ["vanilla"],
+    occasion: "none",
+    category: "cake",
+    type: "cakeroll",
+    sameDayDelivery: true,
+    bestSeller: true,
+    eggless: true,
+    info: [
+      "Our vanilla flavoured cake roll with bright vermillion swirl patterns, covered with colorful confetti, is a true visual and culinary delight.",
+      "Made with a fluffy sponge cake and decorated with a stunning and vibrant design that will impress any guest or brighten any celebration, making it the perfect dessert for your random sweet cravings.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {
+      3: 3,
+      4: 5,
+    },
+    reviews: [],
+  },
+  {
+    id: "cake_roll_marble",
+    name: "Choco Marble Cake Roll",
+    desc: "Cake roll marbled with milk and dark chocolate",
+    price: "Rs. 250",
+    rating: 3.5,
+    ratingNo: 8,
+    images: ["/cakes/roll-marble-1.jpg", "/cakes/roll-marble-2.jpg"],
+    flavour: ["chocolate"],
+    occasion: ["valentines"],
+    category: "cake",
+    type: "cakeroll",
+    sameDayDelivery: true,
+    bestSeller: true,
+    eggless: false,
+    info: [
+      "Our marble-patterned cake roll, made of milk and dark chocolate, is a decadent and beautiful dessert, crafted with two different flavors of chocolate swirled together to create a stunning and unique design that is both elegant and indulgent, making it the perfect treat for any chocolate lover or special occasion.",
+
+      "Since our cakes are baked and decorated by hand once you place your order, the actual product might differ slightly from the photos provided here.",
+
+      "Note: Please consume within 24 hours of receiving.",
+    ],
+    ratings: {
+      3: 3,
+      4: 5,
+    },
     reviews: [],
   },
 ];

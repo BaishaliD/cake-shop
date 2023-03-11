@@ -19,6 +19,14 @@ export default function ImageComponent({
       fallback={fallback}
       preview={preview}
       style={style}
+      placeholder={
+        <Image
+          preview={false}
+          src={Placeholder}
+          width={width}
+          height={height}
+        />
+      }
     />
   );
 }
