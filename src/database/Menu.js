@@ -46,6 +46,10 @@ export const sideMenuList = [
         route: "/occasion",
         panel: [
           {
+            name: "Birthday",
+            route: "/birthday",
+          },
+          {
             name: "Wedding",
             route: "/wedding",
           },
@@ -56,6 +60,10 @@ export const sideMenuList = [
           {
             name: "Christmas",
             route: "/christmas",
+          },
+          {
+            name: "Valentine's",
+            route: "/valentines",
           },
         ],
       },

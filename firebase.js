@@ -92,23 +92,40 @@ export const getAllProducts = () => {
   });
 };
 
-export const getProducts = async (key, value, n = null) => {
-  let q;
-  if (n === null) {
-    q = query(collection(db, "products"), where(key, "==", value));
-  } else {
-    q = query(
-      collection(db, "products"),
-      where("category", "==", category),
-      limit(n)
-    );
-  }
-  const querySnapshot = await getDocs(q);
-  let dataArray = [];
-  let promiseArr = [];
-  processData(querySnapshot, dataArray, promiseArr);
-  await Promise.all(promiseArr).catch((e) => reject(e));
-  resolve(dataArray);
+export const getProducts = async (key, value = "none", n = null) => {
+  return new Promise(async (resolve, reject) => {
+    let q1, q2;
+    if (n === null) {
+      q1 = query(collection(db, "products"), where(key, "==", value));
+      q2 = query(
+        collection(db, "products"),
+        where(key, "array-contains", value)
+      );
+    } else {
+      q1 = query(collection(db, "products"), where(key, "==", value), limit(n));
+      q2 = query(
+        collection(db, "products"),
+        where(key, "array-contains", value),
+        limit(n)
+      );
+    }
+    const _querySnapshot1 = await getDocs(q1);
+    const _querySnapshot2 = await getDocs(q2);
+
+    const querySnapshot1 = _querySnapshot1.docs;
+    const querySnapshot2 = _querySnapshot2.docs;
+
+    let dataArray = [];
+    let promiseArr = [];
+
+    let array = [...querySnapshot1, ...querySnapshot2];
+    if (n !== null) {
+      array = array.slice(0, n);
+    }
+    processData(array, dataArray, promiseArr);
+    await Promise.all(promiseArr).catch((e) => reject(e));
+    resolve(dataArray);
+  });
 };
 
 export const getProductsWithFlavour = () => {};

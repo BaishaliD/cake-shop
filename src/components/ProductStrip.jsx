@@ -2,6 +2,7 @@ import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DownOutlined } from "@ant-design/icons";
 import { Dropdown, message, Space } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const list = [
   {
@@ -21,9 +22,11 @@ const list = [
     label: "Occasions",
     route: "/occasion",
     dropdown: [
+      { label: "Birthday Cakes ", key: "/birthday" },
       { label: "Wedding Cakes ", key: "/wedding" },
       { label: "Anniversary Cakes", key: "/anniversary" },
       { label: "Christmas Cakes", key: "/christmas" },
+      { label: "Valentine's Day Cakes", key: "/valentines" },
     ],
   },
   {
@@ -67,8 +70,10 @@ export default function ProductStrip() {
 }
 
 const Item = ({ label, route, items }) => {
+  const navigate = useNavigate();
   const onClick = ({ key }) => {
     console.log("Click on item :: ", route, key);
+    navigate(`${route}${key}`);
   };
   return (
     <div className="roboto px-4 flex items-center">
