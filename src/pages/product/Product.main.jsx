@@ -308,7 +308,7 @@ export default function Product() {
   );
 }
 
-const servinfInfo = [
+const servingInfo = [
   { wt: "0.5 kg", serves: "4-6 persons" },
   { wt: "1 kg", serves: "10-12 persons" },
   { wt: "1.5 kg", serves: "14-16 persons" },
@@ -321,7 +321,7 @@ const servinfInfo = [
 const ServingInfo = () => {
   return (
     <div className="w-[250px] max-h-40 overflow-scroll bg-gray-200 rounded-xl">
-      {servinfInfo.map((item) => (
+      {servingInfo.map((item) => (
         <div
           className="flex justify-between items-center bg-white p-2 text-sm text-gray-500"
           style={{ borderBottom: "solid 0.5px lightgray" }}

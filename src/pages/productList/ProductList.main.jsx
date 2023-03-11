@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useEffect } from "react";
-import { getAllProducts, fetchAllProducts } from "../../../firebase";
+import { getAllProducts } from "../../../firebase";
 import Filter from "./Filter";
 import Gallery from "./Gallery";
+import { Spin } from "antd";
 
 export default function ProductList() {
   const [isLoading, setIsLoading] = useState(true);
@@ -16,18 +17,20 @@ export default function ProductList() {
   }, []);
   return (
     <div className="pt-24">
-      <div className="flex min-h-screen">
-        <div className="w-1/5 min-h-full bg-primary1">
-          <Filter />
+      {isLoading ? (
+        <div className="flex min-h-screen justify-center items-center">
+          <Spin size="large" />
         </div>
-        {isLoading ? (
-          <h1>Data is loading.....</h1>
-        ) : (
+      ) : (
+        <div className="flex min-h-screen">
+          <div className="w-1/5 min-h-full bg-primary1">
+            <Filter />
+          </div>
           <div className="w-4/5 min-h-full bg-secondary1">
             <Gallery products={products} />
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
