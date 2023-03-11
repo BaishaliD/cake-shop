@@ -18,7 +18,12 @@ import {
   getDownloadURL,
   uploadString,
 } from "firebase/storage";
-import { cupcakes, cakes } from "./src/database/AllProducts";
+import {
+  cupcakes,
+  cakes,
+  fondantCakes,
+  cakeRolls,
+} from "./src/database/AllProducts";
 import { addressBook, cartItems } from "./src/database/CartData";
 import { Orders } from "./src/database/ProfileData";
 
@@ -44,7 +49,7 @@ const storage = getStorage();
 
 export const addCakes = () => {
   try {
-    cakes.forEach((_doc) => {
+    cakeRolls.forEach((_doc) => {
       _doc = { ..._doc, createdAt: serverTimestamp() };
       console.log("Add cake :: ", _doc, _doc.id);
       // addDoc(collection(db, "products", doc.id), doc);

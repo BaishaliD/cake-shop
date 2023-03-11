@@ -20,6 +20,7 @@ import Profile from "./pages/profile/Profile.main";
 import Faq from "./pages/Faq";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Occasion from "./pages/occasion/Occasion.main";
+import Type from "./pages/type/Type.main";
 
 function App() {
   const [width] = useWindowSize();
@@ -43,6 +44,7 @@ function App() {
         <Route path="/products" element={<ProductList />} />
         <Route path="/product/:id" element={<Product />} />
         <Route path="/occasion/:occasion" element={<Occasion />} />
+        <Route path="/type/:type" element={<Type />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/address" element={<AddressPage />} />
         <Route path="/payment" element={<PaymentPage />} />
