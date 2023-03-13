@@ -44,7 +44,7 @@ export default function ReviewBoard(props) {
   const addReview = () => {};
 
   return (
-    <div className="mb-16 w-full flex flex-col items-center">
+    <div className="pb-16 w-full flex flex-col items-center">
       <h2 className="mt-4 mb-8">Customer Reviews</h2>
       <div className="w-3/4 flex items-center justify-end mb-8">
         <Button

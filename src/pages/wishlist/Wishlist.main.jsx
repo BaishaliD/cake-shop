@@ -34,8 +34,10 @@ export default function Wishlist() {
               name={item.name}
               image={item.images && item.images[0]}
               price={item.minPrice}
+              discountedPrice={item.discountedPrice}
               rating={item.rating}
               wishlist={true}
+              eggless={item.eggless}
               buttonText="Move to Cart"
               removeFromWishlist={removeFromWishlist}
             />

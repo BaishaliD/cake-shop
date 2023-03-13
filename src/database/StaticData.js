@@ -43,6 +43,27 @@ export const occasion = {
   valentines: "Valentine's Day",
 };
 
+export const suggestions = {
+  chocolate: "Chocolate cakes",
+  vanilla: "Vanilla cakes",
+  strawberry: "Strawberry cakes",
+  redvelvet: "Red Velvet cakes",
+  fruit: "Fruit cakes",
+  blackforest: "Black Forest cakes",
+  fondant: "Fondant cakes",
+  cakeroll: "Cake Rolls",
+  bento: "Bento cakes",
+  mousse: "Mousse cakes",
+  birthday: "Birthday cakes",
+  wedding: "Wedding cakes",
+  anniversary: "Anniversary cakes",
+  christmas: "Christmas cakes",
+  valentines: "Valentine's Day cakes",
+  cake: "Cakes",
+  cupcake: "Cupcakes",
+  jarcake: "Jar Cakes",
+};
+
 export const collectionList = [
   {
     id: "01",

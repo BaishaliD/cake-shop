@@ -1,6 +1,8 @@
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { StarFilled } from "@ant-design/icons";
 import Image from "../components/Image";
+import Veg from "../assets/icons/veg.png";
+import NonVeg from "../assets/icons/nonveg.jpeg";
 
 export default function ProductCard({
   id,
@@ -8,6 +10,7 @@ export default function ProductCard({
   image,
   price,
   discountedPrice,
+  eggless,
   rating,
   wishlist,
   buttonText,
@@ -20,6 +23,10 @@ export default function ProductCard({
     <Link to={`/product/${id}`} state={{ from: location.pathname }}>
       <div className="acme flex flex-col justify-center items-center w-64 min-w-[240px] m-4 lg:m-8 bg-white rounded-xl p-4 shadow-md hover:shadow-lg">
         <div className="w-full h-60 relative overflow-hidden product-wrapper rounded-xl shadow-md cursor-pointer">
+          <img
+            src={eggless ? Veg : NonVeg}
+            className="h-5 w-5 absolute right-2 top-2 z-50"
+          />
           <Image
             height="100%"
             width="100%"

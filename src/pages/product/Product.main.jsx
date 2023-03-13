@@ -16,14 +16,15 @@ import {
   getProductById,
   fetchProduct,
   fetchRandomList,
+  getRandomProducts,
+  getProducts,
 } from "../../../firebase";
 import NoImage from "../../assets/no-image.jpeg";
-import { flavour as flavourName } from "../../database/StaticData";
+import { suggestions, flavour as flavourName } from "../../database/StaticData";
 
 export default function Product() {
   const location = useLocation();
   const { from } = location.state || {};
-  console.log("from -> ", from); // logs the previous route, e.g. "chocolate-cakes"
 
   const [data, setData] = useState(null);
   const [discountedPrice, setDiscountedPrice] = useState(null);
@@ -32,9 +33,11 @@ export default function Product() {
   const [flavour, setFlavour] = useState(null);
   const [weight, setWeight] = useState(null);
 
-  const [suggested, setSuggested] = useState(null); //You Might Also Like sections
-  const [moreFlavour, setmoreFlavour] = useState(null); //More product from same flavour
+  const [suggested, setSuggested] = useState(null);
+  const [suggestedText, setSuggestedText] = useState("");
+  const [favourites, setFavourites] = useState(null);
   const [moreCategory, setmoreCategory] = useState(null); //More product from same category
+  const [moreCategoryText, setMoreCategoryText] = useState("");
   const [wishlisted, setWishlisted] = useState(true);
 
   const [open, setOpen] = useState(false);
@@ -74,9 +77,8 @@ export default function Product() {
           product.weight && product.weight.length > 0 ? product.weight[0] : null
         );
       }
+      fetchSuggestions(product.category);
     });
-
-    fetchSuggestions();
   }, [id]);
 
   const getPrice = (flavour, weight) => {
@@ -88,14 +90,46 @@ export default function Product() {
     setDiscount(obj.discount ? obj.discount : null);
   };
 
-  const fetchSuggestions = async () => {
-    const _suggested = await fetchRandomList(4, id);
-    setSuggested(_suggested);
+  const fetchSuggestions = async (category) => {
+    console.log("fetchSuggestions -> ", from);
+    const prevRoute = from ? from.split("/") : null;
+    console.log("prev route :: ", prevRoute);
+    if (prevRoute && Array.isArray(prevRoute)) {
+      if (
+        prevRoute[1] === "occasion" &&
+        suggestions.hasOwnProperty(prevRoute[2])
+      ) {
+        getProducts("occasion", prevRoute[2], 4, id).then((res) => {
+          setSuggestedText(`Check out more ${suggestions[prevRoute[2]]}`);
+          setSuggested(res);
+        });
+      } else if (
+        prevRoute[1] === "type" &&
+        suggestions.hasOwnProperty(prevRoute[2])
+      ) {
+        getProducts("type", prevRoute[2], 4, id).then((res) => {
+          setSuggestedText(`Check out more ${suggestions[prevRoute[2]]}`);
+          setSuggested(res);
+        });
+      } else if (
+        prevRoute[1] === "flavour" &&
+        suggestions.hasOwnProperty(prevRoute[2])
+      ) {
+        getProducts("flavour", prevRoute[2], 4, id).then((res) => {
+          setSuggestedText(`Check out more ${suggestions[prevRoute[2]]}`);
+          setSuggested(res);
+        });
+      } else {
+        setSuggestedText("");
+        setSuggested(null);
+      }
+    }
 
-    const _moreFlavour = await fetchRandomList(4, id);
-    setmoreFlavour(_moreFlavour);
+    const _favourites = await getRandomProducts(4);
+    setFavourites(_favourites);
 
-    const _moreCategory = await fetchRandomList(4, id);
+    const _moreCategory = await getProducts("category", category, 4, id);
+    setMoreCategoryText(`Check out more ${suggestions[category]}`);
     setmoreCategory(_moreCategory);
   };
 
@@ -287,23 +321,23 @@ export default function Product() {
 
       {suggested && (
         <ProductSuggestion
-          title="You May Also Like"
+          title={suggestedText}
           list={suggested}
           bgColor="bg-primary1"
           textColor="text-accent1"
         />
       )}
-      {moreFlavour && (
+      {favourites && (
         <ProductSuggestion
-          title="More Chocolate Cakes"
-          list={moreFlavour}
+          title="Here's what others are loving!"
+          list={favourites}
           bgColor="bg-accent2"
           textColor="text-primary2"
         />
       )}
       {moreCategory && (
         <ProductSuggestion
-          title="More Cupcakes"
+          title={moreCategoryText}
           list={moreCategory}
           bgColor="bg-secondary2"
           textColor="text-accent1"

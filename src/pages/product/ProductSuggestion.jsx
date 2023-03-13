@@ -13,7 +13,9 @@ export default function ProductSuggestion({ title, list, bgColor, textColor }) {
             name={item.name}
             image={item.images && item.images[0]}
             price={item.minPrice}
+            discountedPrice={item.discountedPrice}
             rating={item.rating}
+            eggless={item.eggless}
             buttonText="Add To Cart"
           />
         ))}
