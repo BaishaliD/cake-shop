@@ -50,7 +50,7 @@ export default function ProductCard({
             )}
             {rating && rating > 0 ? (
               <span>
-                <StarFilled /> {rating.toFixed(1)}
+                <StarFilled /> {parseInt(rating).toFixed(1)}
               </span>
             ) : null}
           </div>

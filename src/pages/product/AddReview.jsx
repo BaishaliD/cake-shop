@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import { Button, Carousel, Divider, Input, Rate } from "antd";
 const { TextArea } = Input;
 import UploadImages from "./UploadImages";
-import { uploadReviewImages } from "../../../firebase";
+import { uploadReview, uploadReviewImages } from "../../../firebase";
 import Image from "../../components/Image";
 import Success from "../../assets/undraw/review-success.svg";
 import Fail from "../../assets/undraw/review-error.svg";
@@ -16,7 +16,7 @@ const ratingList = [
   { rating: 1, desc: "It was terrible" },
 ];
 
-export default function AddReview({ setOpenModal }) {
+export default function AddReview({ id, setOpenModal, updateReviewData }) {
   const ref = useRef(null);
   const slideRef = useRef(0);
 
@@ -75,18 +75,26 @@ export default function AddReview({ setOpenModal }) {
   };
 
   const saveReview = () => {
-    console.log(
-      "SAVE REVIEW :::: ",
-      ref.current,
-      rating,
-      title,
-      review,
-      fileList,
-      userinfo
-    );
-    setTimeout(() => {
-      setStatus("FAIL");
-    }, 5000);
+    console.log("SAVE REVIEW :::: ", rating, title, review, fileList, userinfo);
+    let images;
+    if (fileList && fileList.length > 0) {
+      images = fileList.map((file) => `/reviews/${file.name}`);
+    }
+    let name = `${userinfo.firstName} ${userinfo.lastName}`;
+    uploadReview(id, {
+      name: name ? name : "Anonymous",
+      email: userinfo.email ? userinfo.email : "",
+      rating: rating ? rating : 0,
+      title: title ? title : null,
+      text: review ? review : null,
+      images: images ? images : null,
+      location: "Gurgaon, Haryana",
+    })
+      .then((res) => {
+        setStatus("SUCCESS");
+        updateReviewData(res);
+      })
+      .catch(() => setStatus("FAIL"));
   };
 
   const btnPressed = () => {
@@ -236,6 +244,7 @@ const Slide3 = ({ userinfo, setUserinfo }) => {
         onChange={(e) => {
           setUserinfo({ ...userinfo, firstName: e.target.value });
         }}
+        required
       />
       <Input
         placeholder="Last name"

@@ -6,9 +6,9 @@ export default function ProductSuggestion({ title, list, bgColor, textColor }) {
     <div className={`py-8 w-full text-center ${bgColor} ${textColor}`}>
       <div className="w-full acme text-4xl mx-auto mb-2">{title}</div>
       <div className="flex lg:justify-center overflow-scroll">
-        {list.map((item) => (
+        {list.map((item, i) => (
           <ProductCard
-            key={item.id}
+            key={i + item.id}
             id={item.id}
             name={item.name}
             image={item.images && item.images[0]}
