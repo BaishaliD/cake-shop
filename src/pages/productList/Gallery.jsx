@@ -31,6 +31,7 @@ export default function Gallery({ products }) {
               price={item.minPrice}
               discountedPrice={item.discountedPrice}
               rating={item.rating}
+              eggless={item.eggless}
               buttonText="Add To Cart"
             />
           ))}
