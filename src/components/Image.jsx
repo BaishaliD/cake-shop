@@ -1,4 +1,4 @@
-import { Image } from "antd";
+import { Image, Skeleton } from "antd";
 import Placeholder from "../assets/placeholder.jpeg";
 
 export default function ImageComponent({
@@ -20,12 +20,13 @@ export default function ImageComponent({
       preview={preview}
       style={style}
       placeholder={
-        <Image
-          preview={false}
-          src={Placeholder}
-          width={width}
-          height={height}
-        />
+        // <Image
+        //   preview={false}
+        //   src={Placeholder}
+        //   width={width}
+        //   height={height}
+        // />
+        <Skeleton.Image active={true} height={height} width={width} />
       }
     />
   );

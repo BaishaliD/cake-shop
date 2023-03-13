@@ -164,7 +164,7 @@ const CardItem = ({ data }) => {
           style={{ color: "#815B5B", fontSize: "14px" }}
           allowHalf
           disabled
-          defaultValue={data.rating}
+          value={data.rating}
         />
         <Divider />
         <div className="text-md">{data.text}</div>
@@ -212,7 +212,7 @@ const ReviewDetailsRow = ({ stars, perc, n }) => {
         style={{ color: "#815B5B", fontSize: "12px" }}
         allowHalf
         disabled
-        defaultValue={stars}
+        value={stars}
       />
       <div className="w-1/2">
         <Progress

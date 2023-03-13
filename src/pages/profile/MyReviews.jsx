@@ -55,7 +55,7 @@ export default function MyReviews() {
                         style={{ color: "#815B5B", fontSize: "12px" }}
                         allowHalf
                         disabled
-                        defaultValue={data.rating}
+                        value={data.rating}
                       />
                       <div className="my-2 font-bold">{data.title}</div>
                       <div className="text-md mb-2">{data.text}</div>

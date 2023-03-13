@@ -168,7 +168,7 @@ const Slide1 = ({ rating, ratingList, rateProduct }) => {
           <Rate
             style={{ color: "#815B5B", fontSize: "14px" }}
             disabled
-            defaultValue={item.rating}
+            value={item.rating}
           />
           <div className="pl-8 ">{item.desc}</div>
         </div>

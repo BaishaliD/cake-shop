@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useLocation } from "react-router-dom";
 import { Button, Rate, Segmented, Divider, Popover } from "antd";
 import {
   HeartFilled,
@@ -21,6 +21,10 @@ import NoImage from "../../assets/no-image.jpeg";
 import { flavour as flavourName } from "../../database/StaticData";
 
 export default function Product() {
+  const location = useLocation();
+  const { from } = location.state || {};
+  console.log("from -> ", from); // logs the previous route, e.g. "chocolate-cakes"
+
   const [data, setData] = useState(null);
   const [discountedPrice, setDiscountedPrice] = useState(null);
   const [price, setPrice] = useState(null);
@@ -145,7 +149,7 @@ export default function Product() {
                     style={{ color: "#815B5B", fontSize: "14px" }}
                     allowHalf
                     disabled
-                    defaultValue={data.rating}
+                    value={data.rating}
                   />
                   <div className="px-2">({data.ratingNo})</div>
                 </div>
