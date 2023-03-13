@@ -40,3 +40,14 @@ a:-webkit-any-link {
 .border-accent2 {
   border-color: #251a1a;
 }
+
+a,
+a:hover,
+a:visited,
+a:focus,
+a:active {
+  text-decoration: none;
+  color: inherit;
+  outline: 0;
+  cursor: auto;
+}
