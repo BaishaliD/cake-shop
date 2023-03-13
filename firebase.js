@@ -11,6 +11,8 @@ import {
   where,
   limit,
   serverTimestamp,
+  orderBy,
+  startAt,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -26,6 +28,8 @@ import {
 } from "./src/database/AllProducts";
 import { addressBook, cartItems } from "./src/database/CartData";
 import { Orders } from "./src/database/ProfileData";
+import { QueryDocumentSnapshot, DocumentSnapshot } from "firebase/firestore";
+import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -37,7 +41,6 @@ const firebaseConfig = {
   appId: "1:860337102509:web:a5dc270bbc77a683ee3024",
 };
 
-console.log("Firebase file loaded!");
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 
@@ -51,7 +54,6 @@ export const addCakes = () => {
   try {
     cakeRolls.forEach((_doc) => {
       _doc = { ..._doc, createdAt: serverTimestamp() };
-      console.log("Add cake :: ", _doc, _doc.id);
       // addDoc(collection(db, "products", doc.id), doc);
       setDoc(doc(db, "products", _doc.id), _doc);
     });
@@ -62,7 +64,6 @@ export const addCakes = () => {
 
 export const getProductById = (id) => {
   return new Promise(async (resolve, reject) => {
-    console.log("getProductById called! ", id);
     const q = query(
       collection(db, "products"),
       where("id", "==", id),
@@ -76,15 +77,20 @@ export const getProductById = (id) => {
 
     await Promise.all(promiseArr).catch((e) => reject(e));
 
-    console.log("getProductById Data : ", dataArray[0]);
     resolve(dataArray[0]);
   });
 };
 
-export const getAllProducts = () => {
+export const getAllProducts = (n = null) => {
   return new Promise(async (resolve, reject) => {
-    console.log("getAllProducts called !!!!");
-    const querySnapshot = await getDocs(collection(db, "products"));
+    let querySnapshot;
+    if (n !== null) {
+      querySnapshot = await getDocs(
+        query(collection(db, "products"), limit(3))
+      );
+    } else {
+      querySnapshot = await getDocs(collection(db, "products"));
+    }
     let dataArray = [];
     let promiseArr = [];
 
@@ -92,7 +98,37 @@ export const getAllProducts = () => {
 
     await Promise.all(promiseArr).catch((e) => reject(e));
 
-    console.log("getAllProducts Data : ", dataArray);
+    resolve(dataArray);
+  });
+};
+
+export const getRandomProducts = (n = null) => {
+  return new Promise(async (resolve, reject) => {
+    // get the number of documents in your collection
+
+    let _allDocuments = await getDocs(collection(db, "products"));
+
+    const docCount = _allDocuments.size;
+
+    // generate n random numbers
+    const randomNumbers = [];
+    for (let i = 0; i < n; i++) {
+      randomNumbers.push(Math.floor(Math.random() * docCount));
+    }
+
+    let _docArray = [];
+    _allDocuments.forEach((doc) => {
+      _docArray.push(doc);
+    });
+
+    const _randomArray = randomNumbers.map((randomNum) => _docArray[randomNum]);
+    let dataArray = [];
+    let promiseArr = [];
+
+    processData(_randomArray, dataArray, promiseArr);
+
+    await Promise.all(promiseArr).catch((e) => reject(e));
+
     resolve(dataArray);
   });
 };
@@ -132,12 +168,6 @@ export const getProducts = async (key, value = "none", n = null) => {
     resolve(dataArray);
   });
 };
-
-export const getProductsWithFlavour = () => {};
-
-export const getProductsWithType = () => {};
-
-export const getProductsWithOccassion = () => {};
 
 const processData = (querySnapshot, dataArray, promiseArr) => {
   querySnapshot.forEach(async (doc) => {

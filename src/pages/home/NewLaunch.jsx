@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef } from "react";
 import { Carousel, Rate } from "antd";
-import { fetchRandomList } from "../../../firebase";
+import {
+  fetchRandomList,
+  getAllProducts,
+  getRandomProducts,
+} from "../../../firebase";
 import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
 import Image from "../../components/Image";
 import { useWindowSize } from "../../Hooks";
@@ -10,7 +14,10 @@ export default function NewLaunch() {
   const ref = useRef(null);
   const [list, setList] = useState(null);
   useEffect(() => {
-    fetchRandomList(3).then((list) => setList(list));
+    getRandomProducts(3).then((res) => {
+      console.log("getRandomProducts response :: ", res);
+      setList(res);
+    });
   }, []);
 
   return (
@@ -49,9 +56,9 @@ export default function NewLaunch() {
                       <div className="text-primary1 sm:text-accent1 text-base items-end hidden sm:flex">
                         <Rate
                           style={{ color: "#815B5B", fontSize: "14px" }}
-                          allowHalf
+                          allowHalf={true}
                           disabled
-                          defaultValue={item.rating}
+                          value={item.rating}
                         />
                         <div className="px-2">({item.ratingNo})</div>
                       </div>
