@@ -17,14 +17,10 @@ import Image from "../../components/Image";
 let breakpointColumnsObj = {};
 
 export default function ReviewBoard(props) {
-  const [rating, setRating] = useState();
-  const [ratingNo, setRatingNo] = useState();
   const [reviews, setReviews] = useState([]);
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    setRating(props.rating > 0 ? props.rating : null);
-    setRatingNo(props.ratingNo > 0 ? props.ratingNo : 0);
     setReviews(props.reviews && props.reviews.length > 0 ? props.reviews : []);
     if (props.reviews && props.reviews.length > 0) {
       breakpointColumnsObj = {
@@ -34,14 +30,12 @@ export default function ReviewBoard(props) {
         540: 1,
       };
     }
-  }, []);
+  }, [props.reviews]);
 
   const showMore = () => {
     let newList = [...reviews, ...reviews];
     setReviews(newList);
   };
-
-  const addReview = () => {};
 
   return (
     <div className="pb-16 w-full flex flex-col items-center">
@@ -61,14 +55,18 @@ export default function ReviewBoard(props) {
           open={openModal}
           onCancel={() => setOpenModal(false)}
         >
-          <AddReview setOpenModal={setOpenModal} />
+          <AddReview
+            id={props.id}
+            setOpenModal={setOpenModal}
+            updateReviewData={props.updateReviewData}
+          />
         </Modal>
-        <div
+        {/* <div
           className="bg-white rounded p-2 ml-2"
           style={{ border: "1px solid #d1d1d1" }}
         >
           <FontAwesomeIcon icon={faArrowUpWideShort} />
-        </div>
+        </div> */}
       </div>
       <div className="w-full flex flex-col items-center lg:items-start lg:flex-row ">
         <div className="w-[300px] flex justify-center mb-8">

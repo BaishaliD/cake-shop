@@ -20,13 +20,12 @@ export default function ImageComponent({
       preview={preview}
       style={style}
       placeholder={
-        // <Image
-        //   preview={false}
-        //   src={Placeholder}
-        //   width={width}
-        //   height={height}
-        // />
-        <Skeleton.Image active={true} height={height} width={width} />
+        <Image
+          preview={false}
+          src={Placeholder}
+          width={width}
+          height={height}
+        />
       }
     />
   );

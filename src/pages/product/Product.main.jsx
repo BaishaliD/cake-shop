@@ -27,6 +27,7 @@ export default function Product() {
   const { from } = location.state || {};
 
   const [data, setData] = useState(null);
+  const [reviewData, setReviewData] = useState(null);
   const [discountedPrice, setDiscountedPrice] = useState(null);
   const [price, setPrice] = useState(null);
   const [discount, setDiscount] = useState(null);
@@ -49,6 +50,16 @@ export default function Product() {
     setOpen(newOpen);
   };
 
+  const updateReviewData = (data) => {
+    console.log("updateReviewData called :: ", data);
+    setReviewData({
+      ratings: data.ratings,
+      rating: data.rating,
+      ratingNo: data.ratingNo,
+      reviews: data.reviews,
+    });
+  };
+
   let { id } = useParams();
 
   useEffect(() => {
@@ -58,6 +69,12 @@ export default function Product() {
     getProductById(id).then((product) => {
       console.log("GET DATA IN PRODUCT PAGE :: ", product);
       setData(product);
+      setReviewData({
+        ratings: product.ratings,
+        rating: product.rating,
+        ratingNo: product.ratingNo,
+        reviews: product.reviews,
+      });
       if (product.priceList && product.priceList.length > 0) {
         setPrice(product.priceList[0].price);
         setDiscountedPrice(product.priceList[0].discountedPrice);
@@ -183,7 +200,7 @@ export default function Product() {
                     style={{ color: "#815B5B", fontSize: "14px" }}
                     allowHalf
                     disabled
-                    value={data.rating}
+                    value={Math.round(data.rating * 2) / 2}
                   />
                   <div className="px-2">({data.ratingNo})</div>
                 </div>
@@ -310,12 +327,16 @@ export default function Product() {
             </div>
           </div>
           <Divider />
-          <ReviewBoard
-            ratings={data.ratings}
-            rating={data.rating}
-            ratingNo={data.ratingNo}
-            reviews={data.reviews}
-          />
+          {reviewData && (
+            <ReviewBoard
+              ratings={reviewData.ratings}
+              rating={reviewData.rating}
+              ratingNo={reviewData.ratingNo}
+              reviews={reviewData.reviews}
+              id={data.id}
+              updateReviewData={updateReviewData}
+            />
+          )}
         </>
       )}
 

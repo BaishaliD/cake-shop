@@ -11,8 +11,10 @@ import {
   where,
   limit,
   serverTimestamp,
-  orderBy,
-  startAt,
+  updateDoc,
+  arrayUnion,
+  runTransaction,
+  increment,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -179,8 +181,24 @@ const processData = (querySnapshot, dataArray, promiseArr) => {
           const url = await getDownloadURL(spaceRef);
           return url;
         })
-      ).catch((e) => resolve());
+      );
       data.images = imageArr;
+
+      if (data.reviews && data.reviews.length > 0) {
+        data.reviews.forEach(async (review, i) => {
+          if (review.images && review.images.length > 0) {
+            let reviewImageArr = await Promise.all(
+              review.images.map(async (image) => {
+                const spaceRef = ref(storage, image);
+                const url = await getDownloadURL(spaceRef);
+                return url;
+              })
+            );
+            data.reviews[i].images = reviewImageArr;
+          }
+        });
+      }
+
       dataArray.push(data);
       resolve();
     });
@@ -198,6 +216,86 @@ export const uploadReviewImages = (url, filename) => {
         resolve();
       })
       .catch((err) => reject(err));
+  });
+};
+
+export const uploadReview = (id, review) => {
+  return new Promise(async (resolve, reject) => {
+    const docRef = doc(db, "products", id);
+
+    console.log("uploadReview function :: ", id, review);
+
+    const currentDate = new Date().toLocaleDateString("en-US", {
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+    try {
+      await runTransaction(db, async (transaction) => {
+        const sfDoc = await transaction.get(docRef);
+        if (!sfDoc.exists()) {
+          throw "Document does not exist!";
+        }
+        const oldRating = sfDoc.data().rating ? sfDoc.data().rating : 0;
+        const oldRatingNo = sfDoc.data().ratingNo ? sfDoc.data().ratingNo : 0;
+        const newRating = (
+          (oldRating * oldRatingNo + review.rating) /
+          (oldRatingNo + 1)
+        ).toFixed(1);
+
+        console.log(
+          "RATINGS : oldRating : ",
+          oldRating,
+          " oldRatingNo : ",
+          oldRatingNo,
+          " newRating : ",
+          newRating
+        );
+        let ratings = sfDoc.data().ratings ? sfDoc.data().ratings : {};
+
+        ratings[review.rating] = ratings[review.rating]
+          ? ratings[review.rating] + 1
+          : 1;
+
+        console.log("sfDoc.data().reviews -> ", sfDoc.data().reviews);
+
+        if (review.text || review.title || review.images) {
+          transaction.update(docRef, {
+            rating: newRating,
+            ratings: ratings,
+            ratingNo: increment(1),
+            reviews: arrayUnion({
+              date: currentDate,
+              ...review,
+            }),
+          });
+        } else {
+          transaction.update(docRef, {
+            rating: newRating,
+            ratings: ratings,
+            ratingNo: increment(1),
+          });
+        }
+      });
+      console.log("Transaction successfully committed!");
+      getProductById(id).then((res) => {
+        resolve(res);
+      });
+    } catch (e) {
+      console.log("Transaction failed: ", e);
+      reject(e);
+    }
+    // console.log("Current date : ", currentDate);
+    // updateDoc(docRef, {
+    //   rating: increment(review.rating),
+    //   ratingNo: increment(1),
+    //   reviews: arrayUnion({
+    //     date: currentDate,
+    //     ...review,
+    //   }),
+    // })
+    //   .then(() => resolve())
+    //   .catch((e) => reject(e));
   });
 };
 
