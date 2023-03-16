@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import Image from "../../components/Image";
 import { useWindowSize } from "../../Hooks";
 import { collectionList } from "../../database/StaticData";
+import { motion } from "framer-motion";
 
 export default function Types() {
   return (
@@ -37,7 +38,13 @@ const Collection = ({ index, image, name, desc, route }) => {
 
   const navigate = useNavigate();
   return (
-    <div className="w-full sm:w-1/2 flex h-60 p-4 text-primary1">
+    <motion.div
+      initial={index % 2 === 0 ? { x: -500 } : { x: 500 }}
+      whileInView={{ x: 0 }}
+      transition={{ duration: 1 }}
+      viewport={{ once: true }}
+      className="w-full sm:w-1/2 flex h-60 p-4 text-primary1"
+    >
       {alignment === "LEFT" ? (
         <>
           <div
@@ -90,6 +97,6 @@ const Collection = ({ index, image, name, desc, route }) => {
           </div>
         </>
       )}
-    </div>
+    </motion.div>
   );
 };

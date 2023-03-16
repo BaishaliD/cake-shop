@@ -89,6 +89,7 @@ export const collectionList = [
   {
     id: "04",
     name: "Mousse Cakes",
+    desc: "Indulge in our heavenly mousse cakes with their light and airy texture that melts in your mouth.",
     image: Mousse,
     route: "mousse",
   },

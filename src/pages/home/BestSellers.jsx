@@ -5,6 +5,7 @@ import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
 import Image from "../../components/Image";
 import { useWindowSize } from "../../Hooks";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 export default function BestSellers() {
   const [width] = useWindowSize();
@@ -18,7 +19,15 @@ export default function BestSellers() {
   }, []);
 
   return (
-    <div className="mb-8">
+    <motion.div
+      initial={{ x: 250 }}
+      whileInView={{ x: 0 }}
+      transition={{
+        type: "spring",
+      }}
+      viewport={{ once: true }}
+      className="mb-8"
+    >
       <div className="acme text-4xl text-accent1 text-center mb-4">
         See what our customers love!
       </div>
@@ -83,6 +92,6 @@ export default function BestSellers() {
           />
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
