@@ -17,6 +17,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "antd": "^5.2.3",
     "firebase": "^9.15.0",
+    "framer-motion": "^10.4.0",
     "rc-util": "^5.28.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
