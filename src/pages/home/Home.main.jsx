@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Categories from "./Categories";
 import Hero from "./Hero";
-import NewLaunch from "./NewLaunch";
+import BestSellers from "./BestSellers";
 import Occasions from "./Occasions";
 import Flavours from "./Flavours";
 import Types from "./Types";
@@ -15,7 +15,7 @@ export default function Home() {
   return (
     <div className="pt-24 bg-hero">
       <Hero />
-      <NewLaunch />
+      <BestSellers />
       <Occasions />
       <Categories />
       <Types />
