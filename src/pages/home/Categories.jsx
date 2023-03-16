@@ -4,6 +4,7 @@ import JarCake from "../../assets/category/jarcake.webp";
 import Cupcake from "../../assets/category/cupcake.jpeg";
 import Macaron from "../../assets/category/macaron.webp";
 import Image from "../../components/Image";
+import { motion } from "framer-motion";
 
 const collectionList = [
   {
@@ -47,7 +48,16 @@ export default function Categories() {
 const Collection = ({ image, name, route }) => {
   const navigate = useNavigate();
   return (
-    <div
+    <motion.div
+      initial={{ y: 50 }}
+      whileInView={{ y: 0 }}
+      transition={{
+        type: "spring",
+        damping: 3,
+        stiffness: 50,
+        restDelta: 0.001,
+      }}
+      viewport={{ once: true }}
       className="h-96 w-[350px] overflow-hidden relative collection-wrapper rounded-xl m-6 border-8 border-white cursor-pointer"
       onClick={() => {
         navigate(`/category/${route}`);
@@ -59,6 +69,6 @@ const Collection = ({ image, name, route }) => {
           {name}
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };

@@ -1,13 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import Image from "../../components/Image";
 import { flavourList } from "../../database/StaticData";
+import { motion } from "framer-motion";
 
 export default function Flavours() {
   return (
     <div className="w-full flex flex-wrap justify-center cursor-pointer bg-accent1 py-16">
-      <div className="w-full acme text-4xl mx-auto mb-8 text-primary1  text-center">
+      <motion.div
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 1.5 }}
+        viewport={{ once: true }}
+        className="w-full acme text-4xl mx-auto mb-8 text-primary1  text-center"
+      >
         Choose from your favourite flavours!
-      </div>
+      </motion.div>
       <div className="w-full xl:w-2/3 flex flex-wrap justify-center">
         {flavourList.map((flavour) => (
           <Item
@@ -25,7 +32,11 @@ export default function Flavours() {
 const Item = ({ image, name, route }) => {
   const navigate = useNavigate();
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 1.5 }}
+      viewport={{ once: true }}
       className="h-60 w-60 overflow-hidden relative collection-wrapper rounded-full m-6 shadow-lg"
       onClick={() => {
         navigate(`/flavour/${route}`);
@@ -41,6 +52,6 @@ const Item = ({ image, name, route }) => {
       >
         {name}
       </div>
-    </div>
+    </motion.div>
   );
 };

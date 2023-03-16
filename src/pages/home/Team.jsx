@@ -3,6 +3,7 @@ import Man2 from "../../assets/team/man-2.png";
 import Woman from "../../assets/team/woman.png";
 import Image from "../../components/Image";
 import { useWindowSize } from "../../Hooks";
+import { motion } from "framer-motion";
 
 const bakersList = [
   {
@@ -51,7 +52,18 @@ export default function Team() {
 
 const Item = ({ name, image, des, width }) => {
   return (
-    <div className="flex flex-col justify-center items-center mx-2 sm:mx-8">
+    <motion.div
+      initial={{ y: 50 }}
+      whileInView={{ y: 0 }}
+      transition={{
+        type: "spring",
+        damping: 3,
+        stiffness: 50,
+        restDelta: 0.001,
+      }}
+      viewport={{ once: true }}
+      className="flex flex-col justify-center items-center mx-2 sm:mx-8"
+    >
       <Image
         height={width > 640 ? "160px" : "100px"}
         width={width > 640 ? "160px" : "100px"}
@@ -61,6 +73,6 @@ const Item = ({ name, image, des, width }) => {
       />
       <h3 className="my-2 text-center">{name}</h3>
       <p>{des}</p>
-    </div>
+    </motion.div>
   );
 };
