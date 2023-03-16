@@ -11,7 +11,7 @@ import {
   where,
   limit,
   serverTimestamp,
-  updateDoc,
+  orderBy,
   arrayUnion,
   runTransaction,
   increment,
@@ -30,8 +30,6 @@ import {
 } from "./src/database/AllProducts";
 import { addressBook, cartItems } from "./src/database/CartData";
 import { Orders } from "./src/database/ProfileData";
-import { QueryDocumentSnapshot, DocumentSnapshot } from "firebase/firestore";
-import { ConsoleSqlOutlined } from "@ant-design/icons";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -93,6 +91,25 @@ export const getAllProducts = (n = null) => {
     } else {
       querySnapshot = await getDocs(collection(db, "products"));
     }
+    let dataArray = [];
+    let promiseArr = [];
+
+    processData(querySnapshot, dataArray, promiseArr);
+
+    await Promise.all(promiseArr).catch((e) => reject(e));
+
+    resolve(dataArray);
+  });
+};
+
+export const getBestSellers = () => {
+  return new Promise(async (resolve, reject) => {
+    const q = query(
+      collection(db, "products"),
+      orderBy("ratingNo", "desc"),
+      limit(3)
+    );
+    const querySnapshot = await getDocs(q);
     let dataArray = [];
     let promiseArr = [];
 

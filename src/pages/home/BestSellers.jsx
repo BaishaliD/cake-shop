@@ -1,21 +1,17 @@
 import { useState, useEffect, useRef } from "react";
 import { Carousel, Rate } from "antd";
-import {
-  fetchRandomList,
-  getAllProducts,
-  getRandomProducts,
-} from "../../../firebase";
+import { getBestSellers } from "../../../firebase";
 import { LeftCircleOutlined, RightCircleOutlined } from "@ant-design/icons";
 import Image from "../../components/Image";
 import { useWindowSize } from "../../Hooks";
 import { Link } from "react-router-dom";
 
-export default function NewLaunch() {
+export default function BestSellers() {
   const [width] = useWindowSize();
   const ref = useRef(null);
   const [list, setList] = useState(null);
   useEffect(() => {
-    getRandomProducts(3).then((res) => {
+    getBestSellers().then((res) => {
       console.log("getRandomProducts response :: ", res);
       setList(res);
     });

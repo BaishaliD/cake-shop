@@ -5,10 +5,16 @@ import Google from "../../assets/icons/google.png";
 import Facebook from "../../assets/icons/facebook.png";
 import Logo from "../../assets/cake-shop-logo.png";
 import "./LoginForm.css";
+import { signUp } from "../../../firebaseAuth";
 
 export default function Login() {
   const onFinish = (values) => {
     console.log("Success:", values);
+    signUp(values.email, values.password)
+      .then((res) => {
+        console.log("User registered : ", res);
+      })
+      .catch((e) => console.log("Error in sign up : ", e));
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
