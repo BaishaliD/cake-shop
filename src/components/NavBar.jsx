@@ -5,6 +5,7 @@ import { MenuOutlined } from "@ant-design/icons";
 import { faSearch, faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { faUser, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { useWindowSize } from "../Hooks";
+import { Badge } from "antd";
 
 export default function NavBar({ setSideMenu }) {
   const [width] = useWindowSize();
@@ -27,11 +28,11 @@ export default function NavBar({ setSideMenu }) {
           >
             The Cake Bar & Co.
           </div>
-          <div className="flex items-center">
+          <div className="flex items-center pr-4">
             <Icon icon={faSearch} />
             <Icon icon={faUser} link="/profile" />
             <Icon icon={faHeart} link="/wishlist" />
-            <Icon icon={faCartShopping} link="/cart" />
+            <Icon icon={faCartShopping} link="/cart" showBadge={true} />
           </div>
         </>
       ) : (
@@ -69,15 +70,19 @@ const NavItem = ({ name, link }) => {
   );
 };
 
-const Icon = ({ icon, link }) => {
+const Icon = ({ icon, link, showBadge = false }) => {
   const navigate = useNavigate();
   return (
-    <FontAwesomeIcon
-      icon={icon}
-      className="px-4 hover:opacity-75 cursor-pointer"
-      onClick={() => {
-        navigate(link);
-      }}
-    />
+    <div className="px-4">
+      <Badge count={showBadge ? 5 : 0} offset={[5, -5]} color={"#815B5B"}>
+        <FontAwesomeIcon
+          icon={icon}
+          className="hover:opacity-75 cursor-pointer"
+          onClick={() => {
+            navigate(link);
+          }}
+        />
+      </Badge>
+    </div>
   );
 };

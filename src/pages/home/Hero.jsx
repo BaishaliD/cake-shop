@@ -9,7 +9,7 @@ export default function Hero() {
       <motion.div
         initial={{ x: -1000, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 1 }}
+        transition={{ type: "spring", duration: 1 }}
         viewport={{ once: true }}
         className="mt-8 h-[75vh] w-full md:w-1/2 flex justify-center"
       >
@@ -20,7 +20,7 @@ export default function Hero() {
       <motion.div
         initial={{ x: 1000, opacity: 0 }}
         animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 1 }}
+        transition={{ type: "spring", duration: 1 }}
         viewport={{ once: true }}
         className="w-full md:w-1/2 h-full flex flex-col justify-center items-center px-12 md:px-20 my-20 text-center md:h-[75vh]"
       >
@@ -35,19 +35,18 @@ export default function Hero() {
         </h2>
         <motion.div
           role="button"
-          className="my-4 py-2 px-8 text-center bg-accent2 shadow-lg hover:shadow-md text-primary1 uppercase rounded-md cursor-pointer"
+          className="my-4 py-2 px-8 text-center bg-accent2 shadow-none hover:shadow-md text-primary1 uppercase rounded-md cursor-pointer tracking-widest"
           onClick={() => {
             navigate("/products");
           }}
-          // whileHover={{
-          //   // translateY: 5,
-          //   transition: {
-          //     type: "spring",
-          //     damping: 1,
-          //     stiffness: 50,
-          //     restDelta: 0.001,
-          //   },
-          // }}
+          whileHover={{
+            scale: 1.05,
+            textShadow: "0 0 3px rgb(255, 255 ,255, 0.7)",
+            transition: {
+              type: "spring",
+              stiffness: 300,
+            },
+          }}
         >
           Order Now
         </motion.div>

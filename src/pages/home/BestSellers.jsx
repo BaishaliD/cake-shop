@@ -73,9 +73,19 @@ export default function BestSellers() {
                           {item.minPrice}
                         </div>
                         <div className="text-center">{item.desc}</div>
-                        <div className="my-4 py-2 px-8 text-center bg-accent1 text-primary1 rounded-md cursor-pointer">
+                        <motion.div
+                          whileHover={{
+                            scale: 1.05,
+                            textShadow: "0 0 3px rgb(255, 255 ,255, 0.5)",
+                            transition: {
+                              type: "spring",
+                              stiffness: 300,
+                            },
+                          }}
+                          className="my-4 py-2 px-8 text-center bg-accent1 text-primary1 rounded-md cursor-pointer tracking-widest hover:shadow-md"
+                        >
                           Buy Now
-                        </div>
+                        </motion.div>
                       </div>
                     </div>
                   </div>

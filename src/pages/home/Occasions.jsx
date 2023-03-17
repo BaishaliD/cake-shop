@@ -35,13 +35,21 @@ export default function Occasions() {
 const Tab = ({ name, route }) => {
   const navigate = useNavigate();
   return (
-    <div
-      className="bg-primary1 rounded-md py-2 px-4 my-2 text-center mx-2 text-accent2"
+    <motion.div
+      whileHover={{
+        scale: 1.05,
+        textShadow: "0 0 3px rgb(255, 255 ,255, 0.5)",
+        transition: {
+          type: "spring",
+          stiffness: 300,
+        },
+      }}
+      className="bg-primary1 rounded-md py-2 px-4 my-2 text-center mx-2 text-accent2 cursor-pointer hover:shadow-md"
       onClick={() => {
         navigate(`/occasion/${route}`);
       }}
     >
       {name}
-    </div>
+    </motion.div>
   );
 };
