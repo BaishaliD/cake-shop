@@ -225,7 +225,6 @@ const processData = (querySnapshot, dataArray, promiseArr) => {
 
 export const uploadReviewImages = (url, filename) => {
   return new Promise((resolve, reject) => {
-    console.log("uploadReviewImages called : ", url, filename);
     const imageRef = ref(storage, `reviews/${filename}`);
     uploadString(imageRef, url, "data_url")
       .then((snapshot) => {
