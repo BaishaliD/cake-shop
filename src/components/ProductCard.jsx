@@ -60,7 +60,6 @@ export default function ProductCard({
           className="w-full mb-2 py-2 text-center bg-accent1 font-normal text-base text-secondary1 uppercase rounded-md cursor-pointer"
           onClick={(e) => {
             e.preventDefault();
-            console.log("ADD TO CART");
           }}
         >
           {buttonText}
