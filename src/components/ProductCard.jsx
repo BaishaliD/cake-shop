@@ -3,6 +3,7 @@ import { StarFilled } from "@ant-design/icons";
 import Image from "../components/Image";
 import Veg from "../assets/icons/veg.png";
 import NonVeg from "../assets/icons/nonveg.jpeg";
+import { Tag } from "antd";
 
 export default function ProductCard({
   id,
@@ -27,6 +28,11 @@ export default function ProductCard({
             src={eggless ? Veg : NonVeg}
             className="h-5 w-5 absolute right-2 top-2 z-50"
           />
+          {rating && rating > 0 ? (
+            <span className="p-1 absolute left-2 top-2 z-50 flex items-center bg-green-100 text-green-700 rounded">
+              <StarFilled className="mr-1" /> {parseInt(rating).toFixed(1)}
+            </span>
+          ) : null}
           <Image
             height="100%"
             width="100%"
@@ -48,11 +54,6 @@ export default function ProductCard({
             ) : (
               <span>{price}</span>
             )}
-            {rating && rating > 0 ? (
-              <span>
-                <StarFilled /> {parseInt(rating).toFixed(1)}
-              </span>
-            ) : null}
           </div>
         </div>
 
