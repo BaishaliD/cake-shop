@@ -54,6 +54,7 @@ function App() {
         <Route path="/payment" element={<PaymentPage />} />
         <Route path="/wishlist" element={<Wishlist />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:selectedTab" element={<Profile />} />
         <Route path="/faq" element={<Faq />} />
         <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
       </Routes>
