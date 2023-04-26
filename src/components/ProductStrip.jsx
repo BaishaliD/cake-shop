@@ -1,7 +1,5 @@
-import { faAngleDown } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { DownOutlined } from "@ant-design/icons";
-import { Dropdown, message, Space } from "antd";
+import { Dropdown, Space } from "antd";
 import { useNavigate } from "react-router-dom";
 
 const list = [

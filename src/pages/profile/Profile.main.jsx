@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import MyOrders from "./MyOrders";
 import AddressBook from "./AddressBook";
 import MyReviews from "./MyReviews";
@@ -11,7 +12,11 @@ const tabs = [
   { id: "profile", label: "My Profile" },
 ];
 export default function Profile() {
-  const [selectedTab, setSelectedTab] = useState("profile");
+  // const [selectedTab, setSelectedTab] = useState("profile");
+  const navigate = useNavigate();
+  let { selectedTab } = useParams();
+
+  // useEffect(() => {}, [tab]);
   return (
     <div className="pt-24 bg-secondary2 flex flex-row ">
       <div
@@ -24,7 +29,10 @@ export default function Profile() {
             className={`${
               selectedTab === item.id ? "bg-primary1" : "hover:shadow-lg"
             } p-4 text-lg my-4 cursor-pointer shadow-md`}
-            onClick={() => setSelectedTab(item.id)}
+            onClick={() => {
+              navigate(`/profile${item.id === "profile" ? "" : "/" + item.id}`);
+              // setSelectedTab(item.id)
+            }}
           >
             {item.label}
           </div>

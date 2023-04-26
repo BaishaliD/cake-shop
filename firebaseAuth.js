@@ -92,7 +92,7 @@ export const signInWithGooglePopup = () => {
         const user = result.user;
         // IdP data available using getAdditionalUserInfo(result)
         // ...
-        localStorage.set("user", JSON.stringify(user));
+        localStorage.setItem("user", JSON.stringify(user));
         resolve(user);
       })
       .catch((error) => {
