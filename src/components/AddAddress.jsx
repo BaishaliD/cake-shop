@@ -52,6 +52,15 @@ export default function AddAddress({
               }
             : {
                 layout: "vertical",
+                address: "",
+                city: "",
+                default: false,
+                id: "",
+                locality: "",
+                name: "",
+                phone: "",
+                pincode: "",
+                state: "",
               }
         }
         onFinish={onFinish}
