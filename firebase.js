@@ -1,12 +1,13 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, updateDoc } from "firebase/firestore";
 import {
   doc,
   collection,
   addDoc,
   setDoc,
   getDocs,
+  getDoc,
   query,
   where,
   limit,
@@ -22,6 +23,7 @@ import {
   getDownloadURL,
   uploadString,
 } from "firebase/storage";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import {
   cupcakes,
   cakes,
@@ -43,6 +45,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
+
+// Initialize Firebase Authentication and get a reference to the service
+const auth = getAuth(app);
 
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
@@ -359,17 +364,49 @@ export const removeAddress = (id) => {
 };
 
 export const updateAddress = (address) => {
-  return new Promise((resolve, reject) => {
-    let index = addressBook.findIndex((item) => item.id === address.id);
-    addressBook[index] = address;
-    resolve(addressBook);
+  return new Promise(async (resolve, reject) => {
+    const userId = auth.currentUser?.uid;
+    if (userId) {
+      const userRef = doc(db, "users", userId);
+      console.log("addressss ", typeof address, address);
+      await updateDoc(userRef, {
+        addresses: arrayUnion(address),
+      });
+      const userDoc = await getDoc(userRef);
+      const updatedAddresses = userDoc.data()?.addresses;
+      if (updatedAddresses) {
+        resolve(updatedAddresses);
+      } else {
+        reject("ADDRESS_NOT_ADDED");
+      }
+    } else {
+      reject("NO_LOGGED_IN_USER");
+    }
   });
 };
 
 export const addAddress = (address) => {
-  return new Promise((resolve, reject) => {
-    addressBook.push(address);
-    resolve(addressBook);
+  return new Promise(async (resolve, reject) => {
+    const userId = auth.currentUser?.uid;
+    if (userId) {
+      const userRef = doc(db, "users", userId);
+      console.log("addressss ", typeof address, address);
+      // await updateDoc(userRef, {
+      //   addresses: arrayUnion(address),
+      // });
+      await updateDoc(userRef, {
+        addresses: { [address.id]: address },
+      });
+      const userDoc = await getDoc(userRef);
+      const updatedAddresses = userDoc.data()?.addresses;
+      if (updatedAddresses) {
+        resolve(updatedAddresses);
+      } else {
+        reject("ADDRESS_NOT_ADDED");
+      }
+    } else {
+      reject("NO_LOGGED_IN_USER");
+    }
   });
 };
 
@@ -380,7 +417,23 @@ export const fetchOrders = () => {
 };
 
 export const fetchAddressBook = () => {
-  return new Promise((resolve, reject) => {
-    resolve(addressBook);
+  return new Promise(async (resolve, reject) => {
+    onAuthStateChanged(auth, async (user) => {
+      console.log("fetchAddressBook called ", user);
+      // const userId = auth.currentUser?.uid;
+      const userId = user?.uid;
+      if (userId) {
+        const userRef = doc(db, "users", userId);
+        const userDoc = await getDoc(userRef);
+        const addresses = userDoc.data()?.addresses;
+        if (addresses) {
+          resolve(addresses);
+        } else {
+          resolve([]);
+        }
+      } else {
+        reject("NO_LOGGED_IN_USER");
+      }
+    });
   });
 };

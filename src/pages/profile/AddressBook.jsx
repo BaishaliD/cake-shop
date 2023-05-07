@@ -2,25 +2,39 @@ import { useState, useEffect } from "react";
 import { Modal } from "antd";
 import AddAddress from "../../components/AddAddress";
 import AddressCard from "../../components/AddressCard";
-import { fetchCartData, removeAddress } from "../../../firebase";
+import { fetchAddressBook, removeAddress } from "../../../firebase";
 
 export default function AddressBook() {
-  const [defaultAddress, setDefaultAddress] = useState({});
+  const [error, setError] = useState(null);
+  const [defaultAddress, setDefaultAddress] = useState(null);
   const [addressBook, setAddressBook] = useState([]);
   const [addAdressModal, setAddAdressModal] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchCartData().then((res) => {
-      const defaultAdd = res.addressBook.find(
-        (address) => address.default === true
-      );
-      const otherAdd = res.addressBook.filter(
-        (address) => address.default === false
-      );
-      setDefaultAddress(defaultAdd);
-      setAddressBook(otherAdd);
-    });
+    fetchAddressBook()
+      .then((addressBook) => {
+        if (addressBook && addressBook.length > 0) {
+          const defaultAdd = addressBook.find(
+            (address) => address.default === true
+          );
+          const otherAdd = addressBook.filter(
+            (address) => address.default === false
+          );
+          setError(null);
+          setDefaultAddress(defaultAdd ? defaultAdd : null);
+          setAddressBook(otherAdd);
+        } else {
+          setError("NO_ADDRESS_ADDED");
+        }
+      })
+      .catch((err) => {
+        if (err === "NO_LOGGED_IN_USER") {
+          setError(err);
+        } else {
+          setError("SOMETHING_WENT_WRONG");
+        }
+      });
   }, []);
 
   const updateAddressBook = (addressBook) => {
@@ -60,6 +74,15 @@ export default function AddressBook() {
           Add new address
         </div>
       </div>
+
+      {error === "NO_ADDRESS_ADDED" ? (
+        <h1>No Address Added</h1>
+      ) : error === "NO_LOGGED_IN_USER" ? (
+        <h1>No Logged In User</h1>
+      ) : error === "SOMETHING_WENT_WRONG" ? (
+        <h1>Something Went Wrong</h1>
+      ) : null}
+
       {defaultAddress && (
         <>
           <div className="text-lg mb-4 w-500 text-address-2">
@@ -73,10 +96,11 @@ export default function AddressBook() {
           />
         </>
       )}
+
       {addressBook && addressBook.length > 0 && (
         <>
           <div className="text-lg mt-12 mb-4 w-500 text-accent2">
-            Other Addresses
+            All Addresses
           </div>
           {addressBook.map((address) => (
             <AddressCard

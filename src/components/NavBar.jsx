@@ -128,7 +128,7 @@ const ProfileDropdown = ({ username, loggedIn }) => {
             </div>
           </div>
 
-          <a href="/login">
+          <a href={loggedIn ? "#" : "/login"}>
             <Button className="bg-accent1 text-secondary1 hover:bg-white">
               {loggedIn ? "Sign Out" : "Login/Register"}
             </Button>

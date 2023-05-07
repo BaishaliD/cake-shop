@@ -7,9 +7,9 @@ import Facebook from "../../assets/icons/facebook.png";
 import Logo from "../../assets/cake-shop-logo.png";
 import "./LoginForm.css";
 import {
-  signUp,
-  signIn,
-  signInWithGooglePopup,
+  handleSignUpWithEmailAndPassword,
+  handleSignInWithEmailAndPassword,
+  handleSignInWithGooglePopup,
   signInWithFacebookPopup,
 } from "../../../firebaseAuth";
 
@@ -18,11 +18,19 @@ export default function Login() {
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    setErrorMessage("");
+  }, [isSignUp]);
+
   const onFinish = (values) => {
     console.log("Success:", values);
     if (isSignUp) {
       //register user
-      signUp(values.name, values.email, values.password)
+      handleSignUpWithEmailAndPassword(
+        values.name,
+        values.email,
+        values.password
+      )
         .then((res) => {
           console.log("User registered with email : ", res);
           navigate("/");
@@ -30,7 +38,7 @@ export default function Login() {
         .catch((error) => setErrorMessage(error));
     } else {
       //login user
-      signIn(values.email, values.password)
+      handleSignInWithEmailAndPassword(values.email, values.password)
         .then((res) => {
           console.log("User logged in  with email: ", res);
           navigate("/");
@@ -55,7 +63,7 @@ export default function Login() {
             src={Google}
             className="h-8 w-8 mx-2 cursor-pointer"
             onClick={() =>
-              signInWithGooglePopup()
+              handleSignInWithGooglePopup()
                 .then((res) => {
                   console.log("User logged in via Google : ", res);
                   navigate("/");
