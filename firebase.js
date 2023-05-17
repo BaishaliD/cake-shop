@@ -425,6 +425,7 @@ export const fetchAddressBook = () => {
       if (userId) {
         const userRef = doc(db, "users", userId);
         const userDoc = await getDoc(userRef);
+        console.log("USER DOC : ", userDoc.data());
         const addresses = userDoc.data()?.addresses;
         if (addresses) {
           resolve(addresses);

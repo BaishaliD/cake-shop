@@ -18,7 +18,7 @@ export default function Profile() {
 
   // useEffect(() => {}, [tab]);
   return (
-    <div className="pt-24 bg-secondary2 flex flex-row ">
+    <div className="pt-24 bg-secondary2 flex flex-row min-h-[100vh]">
       <div
         className="w-1/3 p-4 pl-16"
         style={{ borderRight: "solid 1px #0505050f" }}

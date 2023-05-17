@@ -75,13 +75,13 @@ export default function AddressBook() {
         </div>
       </div>
 
-      {error === "NO_ADDRESS_ADDED" ? (
-        <h1>No Address Added</h1>
-      ) : error === "NO_LOGGED_IN_USER" ? (
-        <h1>No Logged In User</h1>
-      ) : error === "SOMETHING_WENT_WRONG" ? (
-        <h1>Something Went Wrong</h1>
-      ) : null}
+      <div className="w-full text-center pt-4 text-2xl px-16 text-gray-500">
+        {error === "NO_ADDRESS_ADDED"
+          ? "You have not added any address yet."
+          : error === "NO_LOGGED_IN_USER"
+          ? "Log In to view the saved addresses."
+          : "Oops, seems like something is not right. We are working on fixing it."}
+      </div>
 
       {defaultAddress && (
         <>
