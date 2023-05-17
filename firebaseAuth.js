@@ -186,11 +186,11 @@ export const logOut = () => {
   return new Promise((resolve, reject) => {
     signOut(auth)
       .then(() => {
-        // Sign-out successful.
+        console.log("Sign-out successful.");
         resolve();
       })
       .catch((error) => {
-        // An error happened.
+        console.log("Sign-out unsuccessful.");
         reject(error);
       });
   });

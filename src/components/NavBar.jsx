@@ -9,7 +9,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faUser, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { useWindowSize } from "../Hooks";
+import { message } from "antd";
 import { Badge, Button, Avatar, Dropdown } from "antd";
+import { logOut } from "../../firebaseAuth";
 
 export default function NavBar({ setSideMenu }) {
   const [width] = useWindowSize();
@@ -113,6 +115,8 @@ const Icon = ({ icon, link, showBadge = false }) => {
 };
 
 const ProfileDropdown = ({ username, loggedIn }) => {
+  const navigate = useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
   const items = [
     {
       label: (
@@ -120,6 +124,7 @@ const ProfileDropdown = ({ username, loggedIn }) => {
           className="w-[200px] py-2"
           style={{ borderBottom: "solid 1px #0505050f" }}
         >
+          {contextHolder}
           <div className="flex items-center mb-2">
             <Avatar size="large" icon={<UserOutlined />} />
             <div>
@@ -128,11 +133,30 @@ const ProfileDropdown = ({ username, loggedIn }) => {
             </div>
           </div>
 
-          <a href={loggedIn ? "#" : "/login"}>
-            <Button className="bg-accent1 text-secondary1 hover:bg-white">
-              {loggedIn ? "Sign Out" : "Login/Register"}
-            </Button>
-          </a>
+          <Button
+            className="bg-accent1 text-secondary1 hover:bg-white"
+            onClick={() => {
+              if (loggedIn) {
+                logOut()
+                  .then(() => {
+                    localStorage.removeItem("user");
+                    message.success("You are signed out", 1, () => {
+                      window.location.reload();
+                    });
+                  })
+                  .catch(() => {
+                    messageApi.error(
+                      "Sorry, your Sign Out request could not be completed.",
+                      1
+                    );
+                  });
+              } else {
+                navigate("/login");
+              }
+            }}
+          >
+            {loggedIn ? "Sign Out" : "Login/Register"}
+          </Button>
         </div>
       ),
       key: "login",
