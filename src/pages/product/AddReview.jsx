@@ -1,12 +1,13 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Button, Carousel, Divider, Input, Rate } from "antd";
 const { TextArea } = Input;
 import UploadImages from "./UploadImages";
-import { uploadReview, uploadReviewImages } from "../../../firebase";
+import { uploadReview } from "../../../firebase";
 import Image from "../../components/Image";
 import Success from "../../assets/undraw/review-success.svg";
 import Fail from "../../assets/undraw/review-error.svg";
 import Pending from "../../assets/undraw/review-pending.svg";
+import { getSignedInUser } from "../../../firebaseAuth";
 
 const ratingList = [
   { rating: 5, desc: "It was extrordinary" },
@@ -20,7 +21,6 @@ export default function AddReview({ id, setOpenModal, updateReviewData }) {
   const ref = useRef(null);
   const slideRef = useRef(0);
 
-  const [currentSlide, setCurrentSlide] = useState(0);
   const [status, setStatus] = useState("PENDING");
   const [rating, setRating] = useState(null);
   const [title, setTitle] = useState(null);
@@ -31,10 +31,21 @@ export default function AddReview({ id, setOpenModal, updateReviewData }) {
   const [disablePrev, setDisablePrev] = useState(true);
   const [fileList, setFileList] = useState([]);
   const [userinfo, setUserinfo] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
     email: "",
   });
+  const [signedInUser, setSignedInUser] = useState(false);
+  useEffect(() => {
+    getSignedInUser().then((user) => {
+      if (user) {
+        setSignedInUser(true);
+        setUserinfo({
+          name: user.displayName,
+          email: user.email,
+        });
+      }
+    });
+  }, []);
 
   const rateProduct = (res) => {
     setRating(res.rating);
@@ -42,7 +53,6 @@ export default function AddReview({ id, setOpenModal, updateReviewData }) {
   };
 
   const beforeChange = (from, to) => {
-    setCurrentSlide(to);
     slideRef.current = to;
     if (to === 0) {
       setBtnText("Next");
@@ -80,7 +90,7 @@ export default function AddReview({ id, setOpenModal, updateReviewData }) {
     if (fileList && fileList.length > 0) {
       images = fileList.map((file) => `/reviews/${file.name}`);
     }
-    let name = `${userinfo.firstName} ${userinfo.lastName}`;
+    let name = userinfo.name;
     uploadReview(id, {
       name: name ? name : "Anonymous",
       email: userinfo.email ? userinfo.email : "",
@@ -88,17 +98,12 @@ export default function AddReview({ id, setOpenModal, updateReviewData }) {
       title: title ? title : null,
       text: review ? review : null,
       images: images ? images : null,
-      location: "Gurgaon, Haryana",
     })
       .then((res) => {
         setStatus("SUCCESS");
         updateReviewData(res);
       })
       .catch(() => setStatus("FAIL"));
-  };
-
-  const btnPressed = () => {
-    console.log("BTN PRESSED!! ", slideRef.current);
   };
 
   return (
@@ -127,7 +132,12 @@ export default function AddReview({ id, setOpenModal, updateReviewData }) {
           fileList={fileList}
           setFileList={setFileList}
         />
-        <Slide3 slideNo={2} userinfo={userinfo} setUserinfo={setUserinfo} />
+        <Slide3
+          slideNo={2}
+          userinfo={userinfo}
+          setUserinfo={setUserinfo}
+          signedInUser={signedInUser}
+        />
         <Slide4 slideNo={3} status={status} />
       </Carousel>
       <div className="w-full flex justify-between">
@@ -226,33 +236,29 @@ const Slide2 = ({
   );
 };
 
-const Slide3 = ({ userinfo, setUserinfo }) => {
+const Slide3 = ({ userinfo, setUserinfo, signedInUser }) => {
   return (
     <div className="my-8">
       <h3 className="mb-8">About you</h3>
-      <div className="w-full text-center">
-        <Button type="primary m-auto">Login to your account</Button>
-      </div>
-      <Divider />
-      <div className="w-full text-center text-gray-500 font-thin mb-4">
-        Or continue as a guest
-      </div>
+      {!signedInUser && (
+        <>
+          <div className="w-full text-center">
+            <Button type="primary m-auto">Login to your account</Button>
+          </div>
+          <Divider />
+          <div className="w-full text-center text-gray-500 font-thin mb-4">
+            Or continue as a guest
+          </div>
+        </>
+      )}
       <Input
-        placeholder="First name*"
+        placeholder="Name*"
         className="mb-4"
-        value={userinfo.firstName}
+        value={userinfo.name}
         onChange={(e) => {
-          setUserinfo({ ...userinfo, firstName: e.target.value });
+          setUserinfo({ ...userinfo, name: e.target.value });
         }}
         required
-      />
-      <Input
-        placeholder="Last name"
-        className="mb-4"
-        value={userinfo.lastName}
-        onChange={(e) => {
-          setUserinfo({ ...userinfo, lastName: e.target.value });
-        }}
       />
       <Input
         placeholder="Email"

@@ -18,6 +18,7 @@ import {
   fetchRandomList,
   getRandomProducts,
   getProducts,
+  getReviewsOfProduct,
 } from "../../../firebase";
 import NoImage from "../../assets/no-image.jpeg";
 import { suggestions, flavour as flavourName } from "../../database/StaticData";
@@ -27,6 +28,7 @@ export default function Product() {
   const { from } = location.state || {};
 
   const [data, setData] = useState(null);
+  const [reviewList, setReviewList] = useState([]);
   const [reviewData, setReviewData] = useState(null);
   const [discountedPrice, setDiscountedPrice] = useState(null);
   const [price, setPrice] = useState(null);
@@ -73,7 +75,7 @@ export default function Product() {
         ratings: product.ratings,
         rating: product.rating,
         ratingNo: product.ratingNo,
-        reviews: product.reviews,
+        // reviews: product.reviews,
       });
       if (product.priceList && product.priceList.length > 0) {
         setPrice(product.priceList[0].price);
@@ -95,6 +97,10 @@ export default function Product() {
         );
       }
       fetchSuggestions(product.category);
+    });
+    getReviewsOfProduct(id).then((reviews) => {
+      console.log("GET REVIEW DATA IN PRODUCT PAGE :: ", reviews);
+      setReviewList(reviews);
     });
   }, [id]);
 
@@ -332,7 +338,7 @@ export default function Product() {
               ratings={reviewData.ratings}
               rating={reviewData.rating}
               ratingNo={reviewData.ratingNo}
-              reviews={reviewData.reviews}
+              reviews={reviewList}
               id={data.id}
               updateReviewData={updateReviewData}
             />

@@ -173,7 +173,7 @@ const ProfileDropdown = ({ username, loggedIn }) => {
     },
     {
       label: (
-        <a href="/profile/orders">
+        <a href="/profile/address">
           <div className="py-2" style={{ borderBottom: "solid 1px #0505050f" }}>
             My Addresses
           </div>
@@ -183,7 +183,7 @@ const ProfileDropdown = ({ username, loggedIn }) => {
     },
     {
       label: (
-        <a href="/profile/orders">
+        <a href="/profile/reviews">
           <div className="py-2" style={{ borderBottom: "solid 1px #0505050f" }}>
             My Reviews
           </div>
@@ -193,7 +193,7 @@ const ProfileDropdown = ({ username, loggedIn }) => {
     },
     {
       label: (
-        <a href="/profile/orders">
+        <a href="/profile">
           <div className="py-2" style={{ borderBottom: "solid 1px #0505050f" }}>
             My Profile
           </div>

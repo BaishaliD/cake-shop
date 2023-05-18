@@ -13,7 +13,22 @@ import {
   getRedirectResult,
   onAuthStateChanged,
 } from "firebase/auth";
-import { collection, doc, setDoc } from "firebase/firestore";
+import {
+  collectionGroup,
+  doc,
+  setDoc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "firebase/firestore";
+import { processData } from "./firebase";
+import {
+  getStorage,
+  ref,
+  getDownloadURL,
+  uploadString,
+} from "firebase/storage";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -33,6 +48,9 @@ const auth = getAuth(app);
 
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
+
+// Get a reference to the storage service, which is used to create references in your storage bucket
+const storage = getStorage();
 
 const googleProvider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
@@ -196,18 +214,93 @@ export const logOut = () => {
   });
 };
 
-// onAuthStateChanged(auth, (user) => {
-//   console.log("AuthStateChanged");
-//   if (user) {
-//     // User is signed in, see docs for a list of available properties
-//     // https://firebase.google.com/docs/reference/js/firebase.User
-//     const uid = user.uid;
-//     localStorage.setItem("user", JSON.stringify(user));
-//     console.log("onAuthStateChanged ", uid);
-//     // ...
-//   } else {
-//     // User is signed out
-//     // ...
-//     console.log("onAuthStateChanged - user is signed out");
-//   }
-// });
+// Get current signed in user
+export const getSignedInUser = () => {
+  return new Promise((resolve) => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // User Signed In
+        console.log("User Signed In!!");
+        resolve(user);
+      } else {
+        // User is signed out
+        console.log("User Signed out!!");
+        resolve(null);
+      }
+    });
+  });
+};
+
+export const getReviewsByUser = () => {
+  return new Promise(async (resolve, reject) => {
+    const user = await getSignedInUser();
+    if (user && user.uid) {
+      const productDetails = query();
+      const reviewsByUser = query(
+        collectionGroup(db, "reviews"),
+        where("author.id", "==", user.uid)
+      );
+      const querySnapshot = await getDocs(reviewsByUser);
+      let dataArray = [];
+      let promiseArr = [];
+
+      processUploadedReviewImages(querySnapshot, dataArray, promiseArr);
+
+      await Promise.all(promiseArr).catch((e) => reject(e));
+      console.log("GetReviewsByUser promise : ", dataArray);
+      resolve(dataArray);
+    } else {
+      reject("NO_LOGGED_IN_USER");
+    }
+  });
+};
+
+export const processUploadedReviewImages = (
+  querySnapshot,
+  dataArray,
+  promiseArr
+) => {
+  querySnapshot.forEach(async (doc) => {
+    let promise = new Promise(async (resolve, reject) => {
+      const product = await getDoc(doc.ref.parent.parent);
+      const productData = product.data();
+      console.log("productData ", productData);
+      const data = doc.data();
+      let uploadedImagesArr = await Promise.all(
+        data.uploadedImages && data.uploadedImages.length > 0
+          ? data.uploadedImages.map(async (image) => {
+              const spaceRef = ref(storage, image);
+              const url = await getDownloadURL(spaceRef);
+              return url;
+            })
+          : []
+      );
+      data.uploadedImages = uploadedImagesArr;
+
+      let productImageArr = await Promise.all(
+        productData.images && productData.images.length > 0
+          ? productData.images.map(async (image) => {
+              const spaceRef = ref(storage, image);
+              const url = await getDownloadURL(spaceRef);
+              return url;
+            })
+          : []
+      );
+
+      dataArray.push({
+        id: doc.id,
+        product: {
+          id: product.id,
+          name: productData.name,
+          image:
+            productImageArr && productImageArr.length > 0
+              ? productImageArr[0]
+              : null,
+        },
+        ...data,
+      });
+      resolve();
+    });
+    promiseArr.push(promise);
+  });
+};

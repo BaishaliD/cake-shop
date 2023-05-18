@@ -32,6 +32,7 @@ import {
 } from "./src/database/AllProducts";
 import { addressBook, cartItems } from "./src/database/CartData";
 import { Orders } from "./src/database/ProfileData";
+import { getSignedInUser } from "./firebaseAuth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -102,7 +103,21 @@ export const getAllProducts = (n = null) => {
     processData(querySnapshot, dataArray, promiseArr);
 
     await Promise.all(promiseArr).catch((e) => reject(e));
+    resolve(dataArray);
+  });
+};
 
+export const getReviewsOfProduct = (id) => {
+  return new Promise(async (resolve, reject) => {
+    const querySnapshot = await getDocs(
+      collection(db, `products/${id}/reviews`)
+    );
+    let dataArray = [];
+    let promiseArr = [];
+
+    processData(querySnapshot, dataArray, promiseArr);
+
+    await Promise.all(promiseArr).catch((e) => reject(e));
     resolve(dataArray);
   });
 };
@@ -193,34 +208,20 @@ export const getProducts = async (key, value = "none", n = null) => {
   });
 };
 
-const processData = (querySnapshot, dataArray, promiseArr) => {
+export const processData = (querySnapshot, dataArray, promiseArr) => {
   querySnapshot.forEach(async (doc) => {
     let promise = new Promise(async (resolve, reject) => {
       const data = doc.data();
       let imageArr = await Promise.all(
-        data.images.map(async (image) => {
-          const spaceRef = ref(storage, image);
-          const url = await getDownloadURL(spaceRef);
-          return url;
-        })
+        data.images && data.images.length > 0
+          ? data.images.map(async (image) => {
+              const spaceRef = ref(storage, image);
+              const url = await getDownloadURL(spaceRef);
+              return url;
+            })
+          : []
       );
       data.images = imageArr;
-
-      if (data.reviews && data.reviews.length > 0) {
-        data.reviews.forEach(async (review, i) => {
-          if (review.images && review.images.length > 0) {
-            let reviewImageArr = await Promise.all(
-              review.images.map(async (image) => {
-                const spaceRef = ref(storage, image);
-                const url = await getDownloadURL(spaceRef);
-                return url;
-              })
-            );
-            data.reviews[i].images = reviewImageArr;
-          }
-        });
-      }
-
       dataArray.push(data);
       resolve();
     });
@@ -240,25 +241,39 @@ export const uploadReviewImages = (url, filename) => {
   });
 };
 
-export const uploadReview = (id, review) => {
+export const uploadReview = async (id, review) => {
   return new Promise(async (resolve, reject) => {
-    const docRef = doc(db, "products", id);
-
-    console.log("uploadReview function :: ", id, review);
-
+    const user = await getSignedInUser();
     const currentDate = new Date().toLocaleDateString("en-US", {
       day: "numeric",
       month: "long",
       year: "numeric",
     });
+    const reviewDoc = {
+      rating: review.rating,
+      title: review.title,
+      text: review.text,
+      uploadedImages: review.images,
+      author: {
+        id: user && user.uid ? user.uid : null,
+        name: review.name,
+        email: review.email,
+      },
+      date: currentDate,
+    };
+    addDoc(collection(db, `products/${id}/reviews`), reviewDoc);
+
+    console.log("uploadReview function :: ", id, review);
+
     try {
+      const docRef = doc(db, "products", id);
       await runTransaction(db, async (transaction) => {
-        const sfDoc = await transaction.get(docRef);
-        if (!sfDoc.exists()) {
+        const _doc = await transaction.get(docRef);
+        if (!_doc.exists()) {
           throw "Document does not exist!";
         }
-        const oldRating = sfDoc.data().rating ? sfDoc.data().rating : 0;
-        const oldRatingNo = sfDoc.data().ratingNo ? sfDoc.data().ratingNo : 0;
+        const oldRating = _doc.data().rating ? _doc.data().rating : 0;
+        const oldRatingNo = _doc.data().ratingNo ? _doc.data().ratingNo : 0;
         const newRating = (
           (oldRating * oldRatingNo + review.rating) /
           (oldRatingNo + 1)
@@ -272,23 +287,19 @@ export const uploadReview = (id, review) => {
           " newRating : ",
           newRating
         );
-        let ratings = sfDoc.data().ratings ? sfDoc.data().ratings : {};
+        let ratings = _doc.data().ratings ? _doc.data().ratings : {};
 
         ratings[review.rating] = ratings[review.rating]
           ? ratings[review.rating] + 1
           : 1;
 
-        console.log("sfDoc.data().reviews -> ", sfDoc.data().reviews);
+        console.log("_doc.data().reviews -> ", _doc.data().reviews);
 
         if (review.text || review.title || review.images) {
           transaction.update(docRef, {
             rating: newRating,
             ratings: ratings,
             ratingNo: increment(1),
-            reviews: arrayUnion({
-              date: currentDate,
-              ...review,
-            }),
           });
         } else {
           transaction.update(docRef, {
@@ -306,17 +317,6 @@ export const uploadReview = (id, review) => {
       console.log("Transaction failed: ", e);
       reject(e);
     }
-    // console.log("Current date : ", currentDate);
-    // updateDoc(docRef, {
-    //   rating: increment(review.rating),
-    //   ratingNo: increment(1),
-    //   reviews: arrayUnion({
-    //     date: currentDate,
-    //     ...review,
-    //   }),
-    // })
-    //   .then(() => resolve())
-    //   .catch((e) => reject(e));
   });
 };
 

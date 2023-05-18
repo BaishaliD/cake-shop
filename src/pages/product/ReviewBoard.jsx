@@ -166,8 +166,8 @@ const CardItem = ({ data }) => {
         />
         <Divider />
         <div className="text-md">{data.text}</div>
-        <div className="mt-4 text-sm">{data.name}</div>
-        <div className="text-sm text-gray-500">{data.location}</div>
+        <div className="mt-4 text-sm">{data.author.name}</div>
+        {/* <div className="text-sm text-gray-500">{data.location}</div> */}
         <div className="text-sm text-gray-500">{data.date}</div>
       </div>
     </div>

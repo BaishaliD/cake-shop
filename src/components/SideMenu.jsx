@@ -20,6 +20,7 @@ export default function SideMenu({ sideMenu, setSideMenu }) {
       {sideMenuList.map((item) =>
         item.collapsible === false ? (
           <div
+            key={item.route}
             className="w-full text-gray-600 p-4 hover:bg-primary1 cursor-pointer"
             style={{
               borderBottom: item.noBorder === true ? "" : "1px solid #0505050f",
@@ -49,7 +50,7 @@ const CollapseItem = ({ items, setSideMenu }) => {
       {items.map((item) => (
         <Panel
           header={item.name}
-          key={item.route}
+          key={item.name + item.route}
           className="bg-secondary2 hover:bg-primary1"
         >
           {item &&
@@ -57,6 +58,7 @@ const CollapseItem = ({ items, setSideMenu }) => {
             item.panel.length > 0 &&
             item.panel.map((i) => (
               <div
+                key={i.route}
                 className="w-full text-gray-600 p-2 hover:bg-primary1 cursor-pointer"
                 onClick={() => {
                   setSideMenu(false);
