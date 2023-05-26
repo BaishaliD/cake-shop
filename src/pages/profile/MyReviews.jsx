@@ -45,7 +45,9 @@ export default function MyReviews() {
           ? "You have not added any review yet."
           : error === "NO_LOGGED_IN_USER"
           ? "Log In to view your reviews."
-          : "Oops, seems like something is not right. We are working on fixing it."}
+          : error === "SOMETHING_WENT_WRONG"
+          ? "Oops, seems like something is not right. We are working on fixing it."
+          : null}
       </div>
     );
   }
