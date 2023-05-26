@@ -12,21 +12,13 @@ export default function Cart() {
   const [width] = useWindowSize();
   const [cartItems, setCartItems] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
-  const [defaultAddress, setDefaultAddress] = useState({});
   const [addressBook, setAddressBook] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchCartData().then((res) => {
       setCartItems(res.cartItems);
-      const defaultAdd = res.addressBook.find(
-        (address) => address.default === true
-      );
-      const otherAdd = res.addressBook.filter(
-        (address) => address.default === false
-      );
-      setDefaultAddress(defaultAdd);
-      setAddressBook(otherAdd);
+      setAddressBook(res.addressBook);
     });
   }, []);
 
@@ -44,10 +36,7 @@ export default function Cart() {
   };
 
   const updateAddressBook = (addressBook) => {
-    const defaultAdd = addressBook.find((address) => address.default === true);
-    const otherAdd = addressBook.filter((address) => address.default === false);
-    setDefaultAddress(defaultAdd);
-    setAddressBook(otherAdd);
+    setAddressBook(addressBook);
   };
 
   return (
@@ -85,7 +74,6 @@ export default function Cart() {
             )}
             {currentStep === 1 && (
               <Address
-                defaultAddress={defaultAddress}
                 addressBook={addressBook}
                 removeAddress={removeAddress}
                 updateAddressBook={updateAddressBook}

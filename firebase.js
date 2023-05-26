@@ -320,6 +320,59 @@ export const uploadReview = async (id, review) => {
   });
 };
 
+export const addAddress = async (address) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await getSignedInUser();
+      if (user && user.uid) {
+        addDoc(collection(db, `users/${user.uid}/addresses`), address);
+
+        const querySnapshot = await getDocs(
+          collection(db, `users/${user.uid}/addresses`)
+        );
+        let addressBook = [];
+        querySnapshot.forEach((doc) => {
+          addressBook.push(doc.data());
+        });
+        if (addressBook.length > 0) {
+          resolve(addressBook);
+        } else {
+          reject("NO_ADDRESS_ADDED");
+        }
+      } else {
+        reject("NO_LOGGED_IN_USER");
+      }
+    } catch {
+      reject();
+    }
+  });
+};
+
+export const fetchAddressBook = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await getSignedInUser();
+      if (user && user.uid) {
+        const querySnapshot = await getDocs(
+          collection(db, `users/${user.uid}/addresses`)
+        );
+        let addressBook = [];
+        console.log("fetchAddressBook querySnapshot ", querySnapshot);
+        querySnapshot.forEach((doc) => {
+          addressBook.push(doc.data());
+        });
+
+        resolve(addressBook);
+      } else {
+        reject("NO_LOGGED_IN_USER");
+      }
+    } catch (err) {
+      console.log("fetchAddressBook catch block ", err);
+      reject();
+    }
+  });
+};
+
 /** ********* FETCH FROM LOCAL DATABASE *************** */
 
 export const fetchProduct = (id) => {
@@ -385,38 +438,13 @@ export const updateAddress = (address) => {
   });
 };
 
-export const addAddress = (address) => {
-  return new Promise(async (resolve, reject) => {
-    const userId = auth.currentUser?.uid;
-    if (userId) {
-      const userRef = doc(db, "users", userId);
-      console.log("addressss ", typeof address, address);
-      // await updateDoc(userRef, {
-      //   addresses: arrayUnion(address),
-      // });
-      await updateDoc(userRef, {
-        addresses: { [address.id]: address },
-      });
-      const userDoc = await getDoc(userRef);
-      const updatedAddresses = userDoc.data()?.addresses;
-      if (updatedAddresses) {
-        resolve(updatedAddresses);
-      } else {
-        reject("ADDRESS_NOT_ADDED");
-      }
-    } else {
-      reject("NO_LOGGED_IN_USER");
-    }
-  });
-};
-
 export const fetchOrders = () => {
   return new Promise((resolve, reject) => {
     resolve(Orders);
   });
 };
 
-export const fetchAddressBook = () => {
+export const _fetchAddressBook = () => {
   return new Promise(async (resolve, reject) => {
     onAuthStateChanged(auth, async (user) => {
       console.log("fetchAddressBook called ", user);

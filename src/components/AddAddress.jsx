@@ -7,7 +7,9 @@ export default function AddAddress({
   data,
   setShowModal,
   updateAddressBook,
+  form,
 }) {
+  // const [form] = Form.useForm();
   const onFinish = (values) => {
     console.log("Success:", edit, values);
     values.id = data && data.id ? data.id : `add_${Date.now()}`;
@@ -29,6 +31,10 @@ export default function AddAddress({
     console.log("Failed:", errorInfo);
   };
 
+  // const onReset = () => {
+  //   form.resetFields();
+  // };
+
   const required = [
     {
       required: true,
@@ -39,6 +45,7 @@ export default function AddAddress({
   return (
     <div className="my-4 w-full">
       <Form
+        form={form}
         name="address"
         wrapperCol={{
           offset: 0,
@@ -54,7 +61,6 @@ export default function AddAddress({
                 layout: "vertical",
                 address: "",
                 city: "",
-                default: false,
                 id: "",
                 locality: "",
                 name: "",
@@ -122,9 +128,9 @@ export default function AddAddress({
           </Form.Item>
         </div>
 
-        <Form.Item name="default" valuePropName="checked">
+        {/* <Form.Item name="default" valuePropName="checked">
           <Checkbox>Make this my default address</Checkbox>
-        </Form.Item>
+        </Form.Item> */}
 
         <div className="w-full flex justify-center">
           <Form.Item>

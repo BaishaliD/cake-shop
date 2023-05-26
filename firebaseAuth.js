@@ -72,21 +72,14 @@ export const handleSignUpWithEmailAndPassword = (name, email, password) => {
       .then(async (userCredential) => {
         // Create a new document in the "users" collection with the user's unique ID
         const userId = userCredential.user.uid;
-        const task1 = setDoc(doc(db, "users", userId), {
-          favorites: [],
-          addresses: [],
-          orders: [],
-          reviews: [],
-        });
+
         //Add displayName, mobile and birthday fields to the user
         const user = userCredential.user;
-        const task2 = updateProfile(user, {
+        await updateProfile(user, {
           displayName: name,
           mobile: "",
           birthday: "",
         });
-        await task1;
-        await task2;
         console.log("createUserWithEmailAndPassword : ", user);
         localStorage.setItem("user", JSON.stringify(user));
         resolve(user);
@@ -123,16 +116,16 @@ export const handleSignInWithEmailAndPassword = (email, password) => {
 export const handleSignInWithGooglePopup = () => {
   return new Promise((resolve, reject) => {
     signInWithPopup(auth, googleProvider)
-      .then((result) => {
-        const additionalUserInfo = result.getAdditionalUserInfo();
-        console.log("signInWithGooglePopup : ", result, additionalUserInfo);
+      .then(async (result) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         // The signed-in user info.
         const user = result.user;
-        // IdP data available using getAdditionalUserInfo(result)
-        // ...
+        await updateProfile(user, {
+          displayName: user.displayName,
+        });
+        console.log("signInWithGooglePopup user ", user);
         localStorage.setItem("user", JSON.stringify(user));
         resolve(user);
       })

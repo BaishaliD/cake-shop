@@ -7,25 +7,18 @@ import { fetchCartData, removeAddress } from "../../../firebase";
 import Address from "./Address";
 import CartSummary from "./CartSummary";
 import { useNavigate } from "react-router-dom";
+import { fetchAddressBook } from "../../../firebase";
 
 export default function AddressPage() {
   const navigate = useNavigate();
   const { cartState, updateCartState } = useContext(Context);
   const [width] = useWindowSize();
-  const [defaultAddress, setDefaultAddress] = useState({});
   const [addressBook, setAddressBook] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchCartData().then((res) => {
-      const defaultAdd = res.addressBook.find(
-        (address) => address.default === true
-      );
-      const otherAdd = res.addressBook.filter(
-        (address) => address.default === false
-      );
-      setDefaultAddress(defaultAdd);
-      setAddressBook(otherAdd);
+    fetchAddressBook().then((res) => {
+      setAddressBook(res);
     });
   }, []);
 
@@ -47,10 +40,7 @@ export default function AddressPage() {
   };
 
   const updateAddressBook = (addressBook) => {
-    const defaultAdd = addressBook.find((address) => address.default === true);
-    const otherAdd = addressBook.filter((address) => address.default === false);
-    setDefaultAddress(defaultAdd);
-    setAddressBook(otherAdd);
+    setAddressBook(addressBook);
   };
 
   return (
@@ -69,14 +59,13 @@ export default function AddressPage() {
           Step {cartState + 1}/3
         </div>
       </div>
-      {defaultAddress || (addressBook && addressBook.length > 0) ? (
+      {addressBook && addressBook.length > 0 ? (
         <div className="flex flex-col lg:flex-row justify-center">
           <div
             className="h-full w-full lg:w-2/3 flex flex-col px-2 sm:px-8"
             style={{ borderRight: width > 1023 ? "solid 1px #0505050f" : "" }}
           >
             <Address
-              defaultAddress={defaultAddress}
               addressBook={addressBook}
               removeAddress={removeAddressHandler}
               updateAddressBook={updateAddressBook}
