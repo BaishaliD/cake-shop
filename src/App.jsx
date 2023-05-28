@@ -29,7 +29,7 @@ function App() {
   const [sideMenu, setSideMenu] = useState(false);
 
   return (
-    <div className="App h-content">
+    <div className="App">
       {location.pathname !== "/login" && (
         <SideMenu sideMenu={sideMenu} setSideMenu={setSideMenu} />
       )}
