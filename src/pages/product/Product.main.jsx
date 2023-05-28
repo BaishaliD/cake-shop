@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { Button, Rate, Segmented, Divider, Popover } from "antd";
+import { Spin, Rate, Segmented, Divider, Popover } from "antd";
 import {
   HeartFilled,
   HeartOutlined,
@@ -28,6 +28,7 @@ export default function Product() {
   const { from } = location.state || {};
 
   const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [reviewList, setReviewList] = useState([]);
   const [reviewData, setReviewData] = useState(null);
   const [discountedPrice, setDiscountedPrice] = useState(null);
@@ -97,6 +98,7 @@ export default function Product() {
         );
       }
       fetchSuggestions(product.category);
+      setIsLoading(false);
     });
     getReviewsOfProduct(id).then((reviews) => {
       console.log("GET REVIEW DATA IN PRODUCT PAGE :: ", reviews);
@@ -155,6 +157,14 @@ export default function Product() {
     setMoreCategoryText(`Check out more ${suggestions[category]}`);
     setmoreCategory(_moreCategory);
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex min-h-screen justify-center items-center">
+        <Spin size="large" />
+      </div>
+    );
+  }
 
   return (
     <div className="pt-24 bg-secondary2">
