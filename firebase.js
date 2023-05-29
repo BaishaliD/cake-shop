@@ -8,6 +8,7 @@ import {
   setDoc,
   getDocs,
   getDoc,
+  deleteDoc,
   query,
   where,
   limit,
@@ -16,6 +17,7 @@ import {
   arrayUnion,
   runTransaction,
   increment,
+  collectionGroup,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -266,9 +268,9 @@ export const uploadReview = async (id, review) => {
     console.log("uploadReview function :: ", id, review);
 
     try {
-      const docRef = doc(db, "products", id);
+      const productDocRef = doc(db, "products", id);
       await runTransaction(db, async (transaction) => {
-        const _doc = await transaction.get(docRef);
+        const _doc = await transaction.get(productDocRef);
         if (!_doc.exists()) {
           throw "Document does not exist!";
         }
@@ -279,36 +281,43 @@ export const uploadReview = async (id, review) => {
           (oldRatingNo + 1)
         ).toFixed(1);
 
-        console.log(
-          "RATINGS : oldRating : ",
-          oldRating,
-          " oldRatingNo : ",
-          oldRatingNo,
-          " newRating : ",
-          newRating
-        );
         let ratings = _doc.data().ratings ? _doc.data().ratings : {};
 
         ratings[review.rating] = ratings[review.rating]
           ? ratings[review.rating] + 1
           : 1;
 
-        console.log("_doc.data().reviews -> ", _doc.data().reviews);
-
-        if (review.text || review.title || review.images) {
-          transaction.update(docRef, {
-            rating: newRating,
-            ratings: ratings,
-            ratingNo: increment(1),
-          });
-        } else {
-          transaction.update(docRef, {
-            rating: newRating,
-            ratings: ratings,
-            ratingNo: increment(1),
-          });
-        }
+        transaction.update(productDocRef, {
+          rating: newRating,
+          ratings: ratings,
+          ratingNo: increment(1),
+        });
       });
+
+      const wishlistedProduct = query(
+        collectionGroup(db, "wishlist"),
+        where("id", "==", id)
+      );
+      const querySnapshot = await getDocs(wishlistedProduct);
+      querySnapshot.forEach(async (wishlistDocRef) => {
+        await runTransaction(db, async (transaction) => {
+          const _doc = await transaction.get(wishlistDocRef);
+          if (!_doc.exists()) {
+            throw "Document does not exist!";
+          }
+          const oldRating = _doc.data().rating ? _doc.data().rating : 0;
+          const oldRatingNo = _doc.data().ratingNo ? _doc.data().ratingNo : 0;
+          const newRating = (
+            (oldRating * oldRatingNo + review.rating) /
+            (oldRatingNo + 1)
+          ).toFixed(1);
+
+          transaction.update(wishlistDocRef, {
+            rating: newRating,
+          });
+        });
+      });
+
       console.log("Transaction successfully committed!");
       getProductById(id).then((res) => {
         resolve(res);
@@ -368,6 +377,73 @@ export const fetchAddressBook = () => {
       }
     } catch (err) {
       console.log("fetchAddressBook catch block ", err);
+      reject();
+    }
+  });
+};
+
+export const addToWishlist = async (product) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await getSignedInUser();
+      if (user && user.uid) {
+        try {
+          await setDoc(
+            doc(db, `users/${user.uid}/wishlist`, product.id),
+            product
+          );
+          resolve();
+        } catch (err) {
+          console.log("addToWishlist error : ", err);
+          reject();
+        }
+      } else {
+        reject("NO_LOGGED_IN_USER");
+      }
+    } catch {
+      reject();
+    }
+  });
+};
+
+export const fetchWishlist = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await getSignedInUser();
+      if (user && user.uid) {
+        const querySnapshot = await getDocs(
+          collection(db, `users/${user.uid}/wishlist`)
+        );
+        let dataArray = [];
+        querySnapshot.forEach((doc) => dataArray.push(doc.data()));
+        resolve(dataArray);
+      } else {
+        reject("NO_LOGGED_IN_USER");
+      }
+    } catch (err) {
+      console.log("fetchWishlist catch block ", err);
+      reject();
+    }
+  });
+};
+
+export const removeFromWishlist = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await getSignedInUser();
+      if (user && user.uid) {
+        try {
+          await deleteDoc(doc(db, `users/${user.uid}/wishlist`, id));
+          fetchWishlist()
+            .then((res) => resolve(res))
+            .catch((err) => reject(err));
+        } catch (err) {
+          reject();
+        }
+      } else {
+        reject("NO_LOGGED_IN_USER");
+      }
+    } catch {
       reject();
     }
   });

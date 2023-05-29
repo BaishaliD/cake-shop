@@ -16,6 +16,7 @@ export default function ProductCard({
   eggless,
   rating,
   wishlist,
+  handleRemoveFromWishlist = () => {},
 }) {
   const navigate = useNavigate();
   const location = useLocation();
@@ -38,7 +39,7 @@ export default function ProductCard({
               style={{ border: "1px solid #815B5B" }}
               onClick={(e) => {
                 e.preventDefault();
-                removeFromWishlist(id);
+                handleRemoveFromWishlist(id);
               }}
             >
               Remove
@@ -91,9 +92,9 @@ export default function ProductCard({
                   name,
                   image,
                   price,
-                  discountedPrice,
+                  discountedPrice: discountedPrice ? discountedPrice : null,
                   eggless,
-                  rating,
+                  rating: rating ? rating : null,
                 })
                   .then(() => {
                     setWishlisted(true);

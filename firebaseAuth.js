@@ -228,7 +228,6 @@ export const getReviewsByUser = () => {
   return new Promise(async (resolve, reject) => {
     const user = await getSignedInUser();
     if (user && user.uid) {
-      const productDetails = query();
       const reviewsByUser = query(
         collectionGroup(db, "reviews"),
         where("author.id", "==", user.uid)
