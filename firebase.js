@@ -35,6 +35,7 @@ import {
 import { addressBook, cartItems } from "./src/database/CartData";
 import { Orders } from "./src/database/ProfileData";
 import { getSignedInUser } from "./firebaseAuth";
+import CartProductCard from "./src/pages/cart/CartProductCard";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -537,6 +538,63 @@ export const removeFromWishlist = (id) => {
 };
 
 /************** WISHLIST *************** */
+
+/**************** CART ***************** */
+export const addToCart = ({ id, weight, flavour, qty, deliveryDate }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await getSignedInUser();
+      if (user && user.uid) {
+        //TODO Add to Firebase
+      } else {
+        //TODO Save in local storage
+        let cartArray = [];
+        const cart = localStorage.getItem("cart");
+        if (cart) {
+          cartArray = JSON.parse(cart);
+        }
+        const cartItem = { id, weight, flavour, qty, deliveryDate };
+        console.log("cartItem ", cartItem);
+        cartArray.push(cartItem);
+        localStorage.setItem("cart", JSON.stringify(cartArray));
+      }
+    } catch {
+      reject();
+    }
+  });
+};
+
+export const getCartData = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await getSignedInUser();
+      if (user && user.uid) {
+        //TODO Fetch from Firebase
+      } else {
+        //TODO etch from local storage
+        let cartArray = [];
+        const cart = localStorage.getItem("cart");
+        if (cart) {
+          cartArray = JSON.parse(cart);
+        }
+
+        const cartDataPromise = cartArray.map((item) =>
+          getProductById(item.id).then((product) => {
+            console.log("product ", product, item);
+            return { product: { ...product }, info: { ...item } };
+          })
+        );
+
+        await Promise.all(cartDataPromise).then((cartData) => {
+          resolve(cartData);
+        });
+      }
+    } catch {
+      reject();
+    }
+  });
+};
+/**************** CART ***************** */
 
 /** ********* FETCH FROM LOCAL DATABASE *************** */
 

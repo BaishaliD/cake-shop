@@ -19,6 +19,7 @@ import {
   getRandomProducts,
   getProducts,
   getReviewsOfProduct,
+  addToCart,
 } from "../../../firebase";
 import NoImage from "../../assets/no-image.jpeg";
 import { suggestions, flavour as flavourName } from "../../database/StaticData";
@@ -37,6 +38,7 @@ export default function Product() {
   const [discount, setDiscount] = useState(null);
   const [flavour, setFlavour] = useState(null);
   const [weight, setWeight] = useState(null);
+  const [qty, setQty] = useState(1);
 
   const [suggested, setSuggested] = useState(null);
   const [suggestedText, setSuggestedText] = useState("");
@@ -147,6 +149,24 @@ export default function Product() {
     const _moreCategory = await getProducts("category", category, 4, id);
     setMoreCategoryText(`Check out more ${suggestions[category]}`);
     setmoreCategory(_moreCategory);
+  };
+
+  const handleAddToCart = () => {
+    addToCart({
+      id,
+      weight: weight
+        ? weight
+        : data.weight && data.weight.length > 0
+        ? data.weight[0]
+        : data.weight,
+      flavour: flavour
+        ? flavour
+        : data.flavour && data.flavour.length > 0
+        ? data.flavour[0]
+        : data.flavour,
+      qty,
+      deliveryDate: "19/03/2023",
+    });
   };
 
   if (isLoading) {
@@ -299,7 +319,7 @@ export default function Product() {
               {/* SELECT WEIGHT END */}
 
               <div className="my-8 flex justify-between items-center">
-                <Quantity />
+                <Quantity qty={qty} setQty={setQty} />
                 <div
                   className="pr-2"
                   onClick={() => {
@@ -321,7 +341,10 @@ export default function Product() {
                   )}
                 </div>
               </div>
-              <div className="w-full my-2 py-2 text-center bg-accent2 roboto text-secondary1 uppercase rounded-md">
+              <div
+                className="w-full my-2 py-2 text-center bg-accent2 roboto text-secondary1 uppercase rounded-md"
+                onClick={handleAddToCart}
+              >
                 Add To Cart
               </div>
               <div className="my-12">

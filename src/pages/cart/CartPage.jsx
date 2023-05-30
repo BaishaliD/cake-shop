@@ -3,7 +3,7 @@ import { Context } from "../../Context";
 import Step from "./Step";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { useWindowSize } from "../../Hooks";
-import { fetchCartData } from "../../../firebase";
+import { getCartData } from "../../../firebase";
 import CartProductCard from "./CartProductCard";
 import CartSummary from "./CartSummary";
 import { useNavigate } from "react-router-dom";
@@ -16,8 +16,9 @@ export default function CartPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchCartData().then((res) => {
-      setCartItems(res.cartItems);
+    getCartData().then((res) => {
+      console.log("getCartData  response ", res);
+      setCartItems(res);
     });
   }, []);
 
@@ -55,7 +56,7 @@ export default function CartPage() {
             style={{ borderRight: width > 1023 ? "solid 1px #0505050f" : "" }}
           >
             {cartItems.map((item) => (
-              <CartProductCard key={item.id} data={item} width={width} />
+              <CartProductCard key={item.info.id} data={item} width={width} />
             ))}
           </div>
           <CartSummary />

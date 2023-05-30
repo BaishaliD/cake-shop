@@ -4,11 +4,15 @@ import Quantity from "../../components/Quantity";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import Veg from "../../assets/icons/veg.png";
 import NonVeg from "../../assets/icons/nonveg.jpeg";
+import { useState } from "react";
 
 export default function CartProductCard({ data, width }) {
   const navigate = useNavigate();
+  const { product, info } = data;
+  const [qty, setQty] = useState(info.qty);
+
   return (
-    <Link to={`/product/${data.id}`}>
+    <Link to={`/product/${info.id}`}>
       <div
         className="w-full min-h-52 flex flex-col md:flex-row my-2 p-4 shadow-sm hover:shadow-md cursor-pointer"
         style={{ border: "#0505050f solid 1px" }}
@@ -16,41 +20,41 @@ export default function CartProductCard({ data, width }) {
         <div className="w-full md:w-4/5 flex">
           <Image
             height="200px"
-            src={data.image}
+            src={product.image}
             className="cover w-1/4 min-w-[150px]"
           />
           <div className="pl-4 pr-2 sm:px-8 py-2 w-3/4">
             <div className="text-accent2 mb-2 flex flex-col items-start sm:items-center sm:flex-row text-lg font-bold">
-              <span>{data.name}</span>
+              <span>{product.name}</span>
               <img
-                src={data.eggless ? Veg : NonVeg}
+                src={product.eggless ? Veg : NonVeg}
                 className="h-5 w-5 sm:ml-2"
               />
             </div>
             <div className="flex flex-col xs:flex-row text-accent2 mb-6 text-sm">
-              <span className="mr-4">Weight: {data.weight}</span>
-              <span>Flavour: {data.flavour}</span>
+              <span className="mr-4">Weight: {info.weight}</span>
+              <span>Flavour: {info.flavour}</span>
             </div>
             {width > 480 && (
               <>
                 <div className="flex w-full items-center my-2 text-sm">
                   <div className="w-1/4 sm:w-1/3">Price</div>
                   <Price
-                    price={data.price}
-                    discountedPrice={data.discountedPrice}
-                    discount={data.discount}
+                    price={product.price}
+                    discountedPrice={product.discountedPrice}
+                    discount={product.discount}
                   />
                 </div>
                 <div className="flex w-full items-center my-2 text-sm">
                   <div className="w-1/4 sm:w-1/3">Quantity</div>
-                  <Quantity size="small" initialState={data.qty} />
+                  <Quantity size="small" qty={qty} setQty={setQty} />
                 </div>
                 <div className="flex w-full items-center my-2 text-sm">
                   <div className="w-1/4 sm:w-1/3">Total</div>
                   <Price
-                    price={data.price}
-                    discountedPrice={data.discountedPrice}
-                    discount={data.discount}
+                    price={product.price}
+                    discountedPrice={product.discountedPrice}
+                    discount={product.discount}
                   />
                 </div>
               </>
@@ -68,20 +72,20 @@ export default function CartProductCard({ data, width }) {
           >
             <div className="w-1/3 flex flex-col items-center">
               <Price
-                price={data.price}
-                discountedPrice={data.discountedPrice}
-                discount={data.discount}
+                price={product.price}
+                discountedPrice={product.discountedPrice}
+                discount={product.discount}
                 col={true}
               />
             </div>
             <div className="w-1/3 flex justify-center">
-              <Quantity size="small" initialState={data.qty} />
+              <Quantity size="small" qty={qty} setQty={setQty} />
             </div>
             <div className="w-1/3 flex flex-col items-center">
               <Price
-                price={data.price}
-                discountedPrice={data.discountedPrice}
-                discount={data.discount}
+                price={product.price}
+                discountedPrice={product.discountedPrice}
+                discount={product.discount}
                 col={true}
                 bold={true}
               />
@@ -94,7 +98,7 @@ export default function CartProductCard({ data, width }) {
             <div>
               <CheckCircleOutlined className="text-green-500" /> Delivery by
             </div>
-            <h4>{data.delivery}</h4>
+            <h4>{info.deliveryDate}</h4>
           </div>
           <div className="text-sm text-gray-500 underline">
             <div className="my-2">Remove from Cart</div>

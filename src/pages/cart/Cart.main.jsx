@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import CartProductCard from "./CartProductCard";
-import { fetchCartData, removeAddress } from "../../../firebase";
+import { fetchCartData, getCartData } from "../../../firebase";
 import { Button, Divider } from "antd";
 import { TagOutlined, UserOutlined } from "@ant-design/icons";
 import Step from "./Step";
