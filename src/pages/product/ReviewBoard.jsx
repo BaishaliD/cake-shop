@@ -58,7 +58,7 @@ export default function ReviewBoard(props) {
           <AddReview
             id={props.id}
             setOpenModal={setOpenModal}
-            updateReviewData={props.updateReviewData}
+            setReviewSubmitted={props.setReviewSubmitted}
           />
         </Modal>
         {/* <div

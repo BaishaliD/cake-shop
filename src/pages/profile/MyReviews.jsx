@@ -11,7 +11,7 @@ import {
 } from "@ant-design/icons";
 import Image from "../../components/Image";
 import { Reviews } from "../../database/ProfileData";
-import { getReviewsByUser } from "../../../firebaseAuth";
+import { getReviewsByUser } from "../../../firebase";
 import Placeholder from "../../assets/placeholder.jpeg";
 
 export default function MyReviews() {

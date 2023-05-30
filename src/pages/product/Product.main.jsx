@@ -29,6 +29,7 @@ export default function Product() {
 
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [reviewSubmitted, setReviewSubmitted] = useState(false);
   const [reviewList, setReviewList] = useState([]);
   const [reviewData, setReviewData] = useState(null);
   const [discountedPrice, setDiscountedPrice] = useState(null);
@@ -51,16 +52,6 @@ export default function Product() {
   };
   const handleOpenChange = (newOpen) => {
     setOpen(newOpen);
-  };
-
-  const updateReviewData = (data) => {
-    console.log("updateReviewData called :: ", data);
-    setReviewData({
-      ratings: data.ratings,
-      rating: data.rating,
-      ratingNo: data.ratingNo,
-      reviews: data.reviews,
-    });
   };
 
   let { id } = useParams();
@@ -104,7 +95,7 @@ export default function Product() {
       console.log("GET REVIEW DATA IN PRODUCT PAGE :: ", reviews);
       setReviewList(reviews);
     });
-  }, [id]);
+  }, [id, reviewSubmitted]);
 
   const getPrice = (flavour, weight) => {
     const obj = data.priceList.find(
@@ -350,7 +341,7 @@ export default function Product() {
               ratingNo={reviewData.ratingNo}
               reviews={reviewList}
               id={data.id}
-              updateReviewData={updateReviewData}
+              setReviewSubmitted={setReviewSubmitted}
             />
           )}
         </>

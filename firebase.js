@@ -70,6 +70,8 @@ export const addCakes = () => {
   }
 };
 
+/************** PRODUCT *************** */
+
 export const getProductById = (id) => {
   return new Promise(async (resolve, reject) => {
     const q = query(
@@ -210,6 +212,10 @@ export const getProducts = async (key, value = "none", n = null) => {
   });
 };
 
+/************** PRODUCT *************** */
+
+/************** IMAGE PROCESSING *************** */
+
 export const processData = (querySnapshot, dataArray, promiseArr) => {
   querySnapshot.forEach(async (doc) => {
     let promise = new Promise(async (resolve, reject) => {
@@ -231,39 +237,88 @@ export const processData = (querySnapshot, dataArray, promiseArr) => {
   });
 };
 
-export const uploadReviewImages = (url, filename) => {
-  return new Promise((resolve, reject) => {
-    const imageRef = ref(storage, `reviews/${filename}`);
-    uploadString(imageRef, url, "data_url")
-      .then((snapshot) => {
-        console.log("Uploaded a data_url string!");
-        resolve();
-      })
-      .catch((err) => reject(err));
+export const processUploadedReviewImages = (
+  querySnapshot,
+  dataArray,
+  promiseArr
+) => {
+  querySnapshot.forEach(async (doc) => {
+    let promise = new Promise(async (resolve, reject) => {
+      const product = await getDoc(doc.ref.parent.parent);
+      const productData = product.data();
+      console.log("productData ", productData);
+      const data = doc.data();
+      let uploadedImagesArr = await Promise.all(
+        data.uploadedImages && data.uploadedImages.length > 0
+          ? data.uploadedImages.map(async (image) => {
+              const spaceRef = ref(storage, image);
+              const url = await getDownloadURL(spaceRef);
+              return url;
+            })
+          : []
+      );
+      data.uploadedImages = uploadedImagesArr;
+
+      let productImageArr = await Promise.all(
+        productData.images && productData.images.length > 0
+          ? productData.images.map(async (image) => {
+              const spaceRef = ref(storage, image);
+              const url = await getDownloadURL(spaceRef);
+              return url;
+            })
+          : []
+      );
+
+      dataArray.push({
+        id: doc.id,
+        product: {
+          id: product.id,
+          name: productData.name,
+          image:
+            productImageArr && productImageArr.length > 0
+              ? productImageArr[0]
+              : null,
+        },
+        ...data,
+      });
+      resolve();
+    });
+    promiseArr.push(promise);
   });
 };
+
+/************** IMAGE PROCESSING *************** */
+
+/************** REVIEWS *************** */
 
 export const uploadReview = async (id, review) => {
   return new Promise(async (resolve, reject) => {
     const user = await getSignedInUser();
-    const currentDate = new Date().toLocaleDateString("en-US", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-    const reviewDoc = {
-      rating: review.rating,
-      title: review.title,
-      text: review.text,
-      uploadedImages: review.images,
-      author: {
-        id: user && user.uid ? user.uid : null,
-        name: review.name,
-        email: review.email,
-      },
-      date: currentDate,
-    };
-    addDoc(collection(db, `products/${id}/reviews`), reviewDoc);
+
+    if (
+      review.title ||
+      review.text ||
+      (review.images && review.images.length > 0)
+    ) {
+      const currentDate = new Date().toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+      const reviewDoc = {
+        rating: review.rating,
+        title: review.title,
+        text: review.text,
+        uploadedImages: review.images,
+        author: {
+          id: user && user.uid ? user.uid : null,
+          name: review.name,
+          email: review.email,
+        },
+        date: currentDate,
+      };
+      addDoc(collection(db, `products/${id}/reviews`), reviewDoc);
+    }
 
     console.log("uploadReview function :: ", id, review);
 
@@ -292,34 +347,23 @@ export const uploadReview = async (id, review) => {
           ratings: ratings,
           ratingNo: increment(1),
         });
-      });
 
-      const wishlistedProduct = query(
-        collectionGroup(db, "wishlist"),
-        where("id", "==", id)
-      );
-      const querySnapshot = await getDocs(wishlistedProduct);
-      querySnapshot.forEach(async (wishlistDocRef) => {
-        await runTransaction(db, async (transaction) => {
-          const _doc = await transaction.get(wishlistDocRef);
-          if (!_doc.exists()) {
-            throw "Document does not exist!";
-          }
-          const oldRating = _doc.data().rating ? _doc.data().rating : 0;
-          const oldRatingNo = _doc.data().ratingNo ? _doc.data().ratingNo : 0;
-          const newRating = (
-            (oldRating * oldRatingNo + review.rating) /
-            (oldRatingNo + 1)
-          ).toFixed(1);
-
-          transaction.update(wishlistDocRef, {
+        const wishlistedProduct = query(
+          collectionGroup(db, "wishlist"),
+          where("id", "==", id)
+        );
+        console.log("wishlistedProducts ", wishlistedProduct);
+        const querySnapshot = await getDocs(wishlistedProduct);
+        querySnapshot.forEach(async (wishlistDoc) => {
+          console.log("wishlistDocRef ", wishlistDoc.data());
+          await updateDoc(wishlistDoc.ref, {
             rating: newRating,
           });
         });
       });
 
       console.log("Transaction successfully committed!");
-      getProductById(id).then((res) => {
+      getReviewsOfProduct(id).then((res) => {
         resolve(res);
       });
     } catch (e) {
@@ -328,6 +372,45 @@ export const uploadReview = async (id, review) => {
     }
   });
 };
+
+export const uploadReviewImages = (url, filename) => {
+  return new Promise((resolve, reject) => {
+    const imageRef = ref(storage, `reviews/${filename}`);
+    uploadString(imageRef, url, "data_url")
+      .then((snapshot) => {
+        console.log("Uploaded a data_url string!");
+        resolve();
+      })
+      .catch((err) => reject(err));
+  });
+};
+
+export const getReviewsByUser = () => {
+  return new Promise(async (resolve, reject) => {
+    const user = await getSignedInUser();
+    if (user && user.uid) {
+      const reviewsByUser = query(
+        collectionGroup(db, "reviews"),
+        where("author.id", "==", user.uid)
+      );
+      const querySnapshot = await getDocs(reviewsByUser);
+      let dataArray = [];
+      let promiseArr = [];
+
+      processUploadedReviewImages(querySnapshot, dataArray, promiseArr);
+
+      await Promise.all(promiseArr).catch((e) => reject(e));
+      console.log("GetReviewsByUser promise : ", dataArray);
+      resolve(dataArray);
+    } else {
+      reject("NO_LOGGED_IN_USER");
+    }
+  });
+};
+
+/************** REVIEWS *************** */
+
+/************** ADDRESS *************** */
 
 export const addAddress = async (address) => {
   return new Promise(async (resolve, reject) => {
@@ -381,6 +464,10 @@ export const fetchAddressBook = () => {
     }
   });
 };
+
+/************** ADDRESS *************** */
+
+/************** WISHLIST *************** */
 
 export const addToWishlist = async (product) => {
   return new Promise(async (resolve, reject) => {
@@ -448,6 +535,8 @@ export const removeFromWishlist = (id) => {
     }
   });
 };
+
+/************** WISHLIST *************** */
 
 /** ********* FETCH FROM LOCAL DATABASE *************** */
 

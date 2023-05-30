@@ -17,7 +17,7 @@ const ratingList = [
   { rating: 1, desc: "It was terrible" },
 ];
 
-export default function AddReview({ id, setOpenModal, updateReviewData }) {
+export default function AddReview({ id, setOpenModal, setReviewSubmitted }) {
   const ref = useRef(null);
   const slideRef = useRef(0);
 
@@ -36,6 +36,7 @@ export default function AddReview({ id, setOpenModal, updateReviewData }) {
   });
   const [signedInUser, setSignedInUser] = useState(false);
   useEffect(() => {
+    console.log("Add review modal opened");
     getSignedInUser().then((user) => {
       if (user) {
         setSignedInUser(true);
@@ -85,7 +86,6 @@ export default function AddReview({ id, setOpenModal, updateReviewData }) {
   };
 
   const saveReview = () => {
-    console.log("SAVE REVIEW :::: ", rating, title, review, fileList, userinfo);
     let images;
     if (fileList && fileList.length > 0) {
       images = fileList.map((file) => `/reviews/${file.name}`);
@@ -101,7 +101,7 @@ export default function AddReview({ id, setOpenModal, updateReviewData }) {
     })
       .then((res) => {
         setStatus("SUCCESS");
-        updateReviewData(res);
+        setReviewSubmitted((prev) => !prev);
       })
       .catch(() => setStatus("FAIL"));
   };

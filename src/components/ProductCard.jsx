@@ -53,7 +53,7 @@ export default function ProductCard({
           />
           {rating && rating > 0 ? (
             <span className="p-1 absolute left-2 top-2 z-50 flex items-center bg-green-100 text-green-700 rounded">
-              <StarFilled className="mr-1" /> {parseInt(rating).toFixed(1)}
+              <StarFilled className="mr-1" /> {parseFloat(rating).toFixed(1)}
             </span>
           ) : null}
           <Image
