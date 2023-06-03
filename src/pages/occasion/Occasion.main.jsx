@@ -1,10 +1,10 @@
-import { Spin } from "antd";
 import { useParams } from "react-router-dom";
 import { OccassionsPage } from "../../database/StaticData";
 import Gallery from "../../components/Gallery";
 import Filter from "../../components/Filter";
 import { useEffect, useState } from "react";
 import { getProducts } from "../../../firebase";
+import PageLoader from "../../components/PageLoader";
 
 export default function Occasion() {
   const { occasion } = useParams();
@@ -50,9 +50,7 @@ export default function Occasion() {
           </div>
         </>
       ) : (
-        <div className="min-h-screen flex justify-center items-center">
-          <Spin size="large" />
-        </div>
+        <PageLoader />
       )}
     </div>
   );

@@ -1,10 +1,11 @@
-import { Divider, Spin } from "antd";
+import { Divider } from "antd";
 import { useParams } from "react-router-dom";
 import { CategoryPage } from "../../database/StaticData";
 import Gallery from "../../components/Gallery";
 import Filter from "../../components/Filter";
 import { useEffect, useState } from "react";
 import { getProducts } from "../../../firebase";
+import PageLoader from "../../components/PageLoader";
 
 export default function Category() {
   const { cat } = useParams();
@@ -38,9 +39,7 @@ export default function Category() {
           </div>
         </>
       ) : (
-        <div className="min-h-screen flex justify-center items-center">
-          <Spin size="large" />
-        </div>
+        <PageLoader />
       )}
     </div>
   );

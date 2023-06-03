@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { getAllProducts } from "../../../firebase";
 import Filter from "./Filter";
 import Gallery from "./Gallery";
-import { Spin } from "antd";
+import PageLoader from "../../components/PageLoader";
 
 export default function ProductList() {
   const [isLoading, setIsLoading] = useState(true);
@@ -18,9 +18,7 @@ export default function ProductList() {
   return (
     <div className="pt-24">
       {isLoading ? (
-        <div className="flex min-h-screen justify-center items-center">
-          <Spin size="large" />
-        </div>
+        <PageLoader />
       ) : (
         <div className="flex min-h-screen">
           <div className="w-1/5 min-h-full bg-primary1">

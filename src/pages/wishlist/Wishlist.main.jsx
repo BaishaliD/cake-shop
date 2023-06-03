@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useState } from "react";
 import ProductCard from "../../components/ProductCard";
 import { fetchWishlist, removeFromWishlist } from "../../../firebase";
-import { Spin } from "antd";
+import PageLoader from "../../components/PageLoader";
 
 export default function Wishlist() {
   const [list, setList] = useState([]);
@@ -74,11 +74,7 @@ export default function Wishlist() {
   }
 
   if (loading) {
-    return (
-      <div className="min-h-screen flex justify-center items-center">
-        <Spin size="large" />
-      </div>
-    );
+    return <PageLoader />;
   }
 
   return (

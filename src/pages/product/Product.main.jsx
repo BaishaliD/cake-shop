@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { Spin, Rate, Segmented, Divider, Popover } from "antd";
+import { Rate, Divider, Popover } from "antd";
 import {
   HeartFilled,
   HeartOutlined,
@@ -14,8 +14,6 @@ import Veg from "../../assets/icons/veg.png";
 import NonVeg from "../../assets/icons/nonveg.jpeg";
 import {
   getProductById,
-  fetchProduct,
-  fetchRandomList,
   getRandomProducts,
   getProducts,
   getReviewsOfProduct,
@@ -23,6 +21,7 @@ import {
 } from "../../../firebase";
 import NoImage from "../../assets/no-image.jpeg";
 import { suggestions, flavour as flavourName } from "../../database/StaticData";
+import PageLoader from "../../components/PageLoader";
 
 export default function Product() {
   const location = useLocation();
@@ -170,11 +169,7 @@ export default function Product() {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex min-h-screen justify-center items-center">
-        <Spin size="large" />
-      </div>
-    );
+    return <PageLoader />;
   }
 
   return (
