@@ -3,7 +3,7 @@ import { Context } from "../../Context";
 import Step from "./Step";
 import { TransactionOutlined } from "@ant-design/icons";
 import { useWindowSize } from "../../Hooks";
-import { fetchCartData } from "../../../firebase";
+import { getCartData } from "../../../firebase";
 import { useNavigate } from "react-router-dom";
 import ComingSoon from "../../components/ComingSoon";
 import CartSummary from "./CartSummary";
@@ -16,8 +16,8 @@ export default function CartPage() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchCartData().then((res) => {
-      setCartItems(res.cartItems);
+    getCartData().then((res) => {
+      setCartItems(res);
     });
   }, []);
 

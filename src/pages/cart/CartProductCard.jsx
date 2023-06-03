@@ -5,8 +5,10 @@ import { CheckCircleOutlined } from "@ant-design/icons";
 import Veg from "../../assets/icons/veg.png";
 import NonVeg from "../../assets/icons/nonveg.jpeg";
 import { useState } from "react";
+import { flavour } from "../../database/StaticData";
+import { removeFromCart } from "../../../firebase";
 
-export default function CartProductCard({ data, width }) {
+export default function CartProductCard({ data, width, handleRemoveFromCart }) {
   const navigate = useNavigate();
   const { product, info } = data;
   const [qty, setQty] = useState(info.qty);
@@ -33,14 +35,14 @@ export default function CartProductCard({ data, width }) {
             </div>
             <div className="flex flex-col xs:flex-row text-accent2 mb-6 text-sm">
               <span className="mr-4">Weight: {info.weight}</span>
-              <span>Flavour: {info.flavour}</span>
+              <span>Flavour: {flavour[info.flavour]}</span>
             </div>
             {width > 480 && (
               <>
                 <div className="flex w-full items-center my-2 text-sm">
                   <div className="w-1/4 sm:w-1/3">Price</div>
                   <Price
-                    price={product.price}
+                    price={product.minPrice}
                     discountedPrice={product.discountedPrice}
                     discount={product.discount}
                   />
@@ -52,8 +54,8 @@ export default function CartProductCard({ data, width }) {
                 <div className="flex w-full items-center my-2 text-sm">
                   <div className="w-1/4 sm:w-1/3">Total</div>
                   <Price
-                    price={product.price}
-                    discountedPrice={product.discountedPrice}
+                    price={product.minPrice * qty}
+                    discountedPrice={product.discountedPrice * qty}
                     discount={product.discount}
                   />
                 </div>
@@ -72,7 +74,7 @@ export default function CartProductCard({ data, width }) {
           >
             <div className="w-1/3 flex flex-col items-center">
               <Price
-                price={product.price}
+                price={product.minPrice}
                 discountedPrice={product.discountedPrice}
                 discount={product.discount}
                 col={true}
@@ -83,8 +85,8 @@ export default function CartProductCard({ data, width }) {
             </div>
             <div className="w-1/3 flex flex-col items-center">
               <Price
-                price={product.price}
-                discountedPrice={product.discountedPrice}
+                price={product.minPrice * qty}
+                discountedPrice={product.discountedPrice * qty}
                 discount={product.discount}
                 col={true}
                 bold={true}
@@ -101,7 +103,12 @@ export default function CartProductCard({ data, width }) {
             <h4>{info.deliveryDate}</h4>
           </div>
           <div className="text-sm text-gray-500 underline">
-            <div className="my-2">Remove from Cart</div>
+            <div
+              className="my-2"
+              onClick={(e) => handleRemoveFromCart(e, info.orderId)}
+            >
+              Remove from Cart
+            </div>
             <div className="my-2">Move to Wishlist</div>
           </div>
         </div>
@@ -122,10 +129,10 @@ const Price = ({
       {discountedPrice ? (
         <>
           <span className={`text-accent2 mr-2 ${bold && "font-bold"}`}>
-            {discountedPrice}
+            Rs. {discountedPrice}
           </span>
           <span className="text-gray-500 line-through font-normal mr-2">
-            {price}
+            Rs. {price}
           </span>
           {discount && (
             <div
@@ -138,7 +145,7 @@ const Price = ({
         </>
       ) : (
         <span className={`text-accent2 mr-2 ${bold && "font-bold"}`}>
-          {price}
+          Rs. {price}
         </span>
       )}
     </div>

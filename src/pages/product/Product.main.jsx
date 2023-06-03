@@ -199,10 +199,10 @@ export default function Product() {
                 {discountedPrice ? (
                   <>
                     <span className="text-accent2 text-2xl font-bold mr-2">
-                      {discountedPrice}
+                      Rs. {discountedPrice}
                     </span>
                     <span className="text-gray-500 line-through text-xl font-normal mr-2">
-                      {price}
+                      Rs. {price}
                     </span>
                     {discount && (
                       <div className="bg-green-300 rounded px-2 text-green-800 text-sm mr-2">
@@ -212,7 +212,7 @@ export default function Product() {
                   </>
                 ) : (
                   <span className="text-accent2 text-2xl font-bold mr-2">
-                    {price}
+                    Rs. {price}
                   </span>
                 )}
 

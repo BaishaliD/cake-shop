@@ -41,13 +41,18 @@ export default function MyReviews() {
   if (error) {
     return (
       <div className="w-full text-center pt-4 text-2xl px-16 text-gray-500">
-        {error === "NO_REVIEW_ADDED"
-          ? "You have not added any review yet."
-          : error === "NO_LOGGED_IN_USER"
-          ? "Log In to view your reviews."
-          : error === "SOMETHING_WENT_WRONG"
-          ? "Oops, seems like something is not right. We are working on fixing it."
-          : null}
+        {error === "NO_REVIEW_ADDED" ? (
+          "You have not added any review yet."
+        ) : error === "NO_LOGGED_IN_USER" ? (
+          <span>
+            <a href="/login" className="underline text-accent1">
+              Log In
+            </a>
+            to view your reviews.
+          </span>
+        ) : error === "SOMETHING_WENT_WRONG" ? (
+          "Oops, seems like something is not right. We are working on fixing it."
+        ) : null}
       </div>
     );
   }

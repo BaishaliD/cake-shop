@@ -3,7 +3,7 @@ import { Context } from "../../Context";
 import Step from "./Step";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import { useWindowSize } from "../../Hooks";
-import { getCartData } from "../../../firebase";
+import { getCartData, removeFromCart } from "../../../firebase";
 import CartProductCard from "./CartProductCard";
 import CartSummary from "./CartSummary";
 import { useNavigate } from "react-router-dom";
@@ -33,8 +33,13 @@ export default function CartPage() {
     }
   };
 
+  const handleRemoveFromCart = (e, orderId) => {
+    e.preventDefault();
+    removeFromCart(orderId).then((res) => setCartItems(res));
+  };
+
   return (
-    <div className="pt-24 bg-secondary2 pb-16">
+    <div className="pt-24 bg-secondary2 pb-16 min-h-screen">
       <div className="hidden sm:block w-full lg:w-2/3 m-auto p-8">
         <Step currentStep={cartState} goToStep={goToStep} />
       </div>
@@ -56,13 +61,25 @@ export default function CartPage() {
             style={{ borderRight: width > 1023 ? "solid 1px #0505050f" : "" }}
           >
             {cartItems.map((item) => (
-              <CartProductCard key={item.info.id} data={item} width={width} />
+              <CartProductCard
+                key={item.info.id}
+                data={item}
+                width={width}
+                handleRemoveFromCart={handleRemoveFromCart}
+              />
             ))}
           </div>
           <CartSummary />
         </div>
       ) : (
-        <h1>No items in cart!</h1>
+        <div className="w-full text-center pt-4 text-2xl px-16 text-gray-500">
+          <div>You have not added any items to the Cart.</div>
+          <a href="/products">
+            <span className="underline text-accent1 cursor-pointer">
+              Continue Shopping
+            </span>
+          </a>
+        </div>
       )}
     </div>
   );

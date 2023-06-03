@@ -553,7 +553,14 @@ export const addToCart = ({ id, weight, flavour, qty, deliveryDate }) => {
         if (cart) {
           cartArray = JSON.parse(cart);
         }
-        const cartItem = { id, weight, flavour, qty, deliveryDate };
+        const cartItem = {
+          orderId: id + "_" + Date.now(),
+          id,
+          weight,
+          flavour,
+          qty,
+          deliveryDate,
+        };
         console.log("cartItem ", cartItem);
         cartArray.push(cartItem);
         localStorage.setItem("cart", JSON.stringify(cartArray));
@@ -587,6 +594,34 @@ export const getCartData = () => {
 
         await Promise.all(cartDataPromise).then((cartData) => {
           resolve(cartData);
+        });
+      }
+    } catch {
+      reject();
+    }
+  });
+};
+
+export const removeFromCart = (orderId) => {
+  console.log("removeFromCart orderId ", orderId);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await getSignedInUser();
+      if (user && user.uid) {
+        //TODO Add to Firebase
+      } else {
+        //TODO Save in local storage
+        const cart = localStorage.getItem("cart");
+        if (cart) {
+          cartArray = JSON.parse(cart);
+        }
+        const ind = cartArray.findIndex((el) => el.orderId === orderId);
+        cartArray.splice(ind, 1);
+        const cartItem = { id, weight, flavour, qty, deliveryDate };
+        console.log("cartItem ", cartItem);
+        localStorage.setItem("cart", JSON.stringify(cartArray));
+        getCartData().then((res) => {
+          resolve(res);
         });
       }
     } catch {

@@ -69,13 +69,13 @@ export default function ProductCard({
           <div className="w-full flex justify-between text-lg">
             {discountedPrice ? (
               <div className="flex items-center">
-                <span>{discountedPrice}</span>
+                <span>Rs. {discountedPrice}</span>
                 <span className="text-gray-400 line-through ml-2 text-base">
-                  {price}
+                  Rs. {price}
                 </span>
               </div>
             ) : (
-              <span>{price}</span>
+              <span>Rs. {price}</span>
             )}
           </div>
         </div>
