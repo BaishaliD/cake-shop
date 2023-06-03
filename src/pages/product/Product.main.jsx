@@ -59,16 +59,12 @@ export default function Product() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
-
-    // fetchProduct(id).then((product) => {
     getProductById(id).then((product) => {
-      console.log("GET DATA IN PRODUCT PAGE :: ", product);
       setData(product);
       setReviewData({
         ratings: product.ratings,
         rating: product.rating,
         ratingNo: product.ratingNo,
-        // reviews: product.reviews,
       });
       if (product.priceList && product.priceList.length > 0) {
         setPrice(product.priceList[0].price);
@@ -93,7 +89,6 @@ export default function Product() {
       setIsLoading(false);
     });
     getReviewsOfProduct(id).then((reviews) => {
-      console.log("GET REVIEW DATA IN PRODUCT PAGE :: ", reviews);
       setReviewList(reviews);
     });
   }, [id, reviewSubmitted]);
@@ -108,9 +103,7 @@ export default function Product() {
   };
 
   const fetchSuggestions = async (category) => {
-    console.log("fetchSuggestions -> ", from);
     const prevRoute = from ? from.split("/") : null;
-    console.log("prev route :: ", prevRoute);
     if (prevRoute && Array.isArray(prevRoute)) {
       if (
         prevRoute[1] === "occasion" &&

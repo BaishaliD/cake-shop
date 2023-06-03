@@ -36,7 +36,6 @@ export default function AddReview({ id, setOpenModal, setReviewSubmitted }) {
   });
   const [signedInUser, setSignedInUser] = useState(false);
   useEffect(() => {
-    console.log("Add review modal opened");
     getSignedInUser().then((user) => {
       if (user) {
         setSignedInUser(true);
@@ -103,7 +102,10 @@ export default function AddReview({ id, setOpenModal, setReviewSubmitted }) {
         setStatus("SUCCESS");
         setReviewSubmitted((prev) => !prev);
       })
-      .catch(() => setStatus("FAIL"));
+      .catch((err) => {
+        console.error("uploadReview ", err);
+        setStatus("FAIL");
+      });
   };
 
   return (

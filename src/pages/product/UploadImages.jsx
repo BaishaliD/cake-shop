@@ -27,8 +27,6 @@ export default function UploadImages({ imageUploaded, fileList, setFileList }) {
     );
   };
   const handleChange = ({ fileList: newFileList }) => {
-    console.log("Handle change called!");
-    console.log("newFileList :: ", newFileList);
     setFileList(newFileList);
     if (newFileList && newFileList.length > 0) {
       imageUploaded(true);
@@ -45,11 +43,9 @@ export default function UploadImages({ imageUploaded, fileList, setFileList }) {
 
   const handleUpload = async ({ onError, onSuccess, file }) => {
     //TODO Upload all images to Firebase after DONE button is clicked
-    console.log("customRequest :: ", file);
     const dataUrl = await getBase64(file);
     uploadReviewImages(dataUrl, file.name)
       .then((res) => {
-        console.log("filelist :::: ", fileList, file);
         file.status = "done";
         onSuccess(null, file);
       })

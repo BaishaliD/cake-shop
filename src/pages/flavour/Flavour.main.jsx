@@ -15,7 +15,6 @@ export default function Flavour() {
   useEffect(() => {
     window.scrollTo(0, 0);
     getProducts("flavour", flavour).then((data) => {
-      console.log("DATA IN COMPONENT :: ", data);
       setProducts(data);
       setIsLoading(false);
     });

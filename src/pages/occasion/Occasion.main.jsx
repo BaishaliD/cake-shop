@@ -12,10 +12,8 @@ export default function Occasion() {
   const [isLoading, setIsLoading] = useState(true);
   const [products, setProducts] = useState([]);
   useEffect(() => {
-    console.log("pp : ", occasion);
     window.scrollTo(0, 0);
     getProducts("occasion", occasion).then((data) => {
-      console.log("DATA IN COMPONENT :: ", data);
       setProducts(data);
       setIsLoading(false);
     });

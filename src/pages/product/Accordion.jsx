@@ -30,9 +30,6 @@ const ingredients = [
 ];
 
 export default function Accordion() {
-  const onChange = (key) => {
-    console.log(key);
-  };
   return (
     <Collapse
       bordered={false}

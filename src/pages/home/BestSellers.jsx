@@ -13,7 +13,6 @@ export default function BestSellers() {
   const [list, setList] = useState(null);
   useEffect(() => {
     getBestSellers().then((res) => {
-      console.log("getRandomProducts response :: ", res);
       setList(res);
     });
   }, []);

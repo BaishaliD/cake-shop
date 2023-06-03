@@ -30,7 +30,6 @@ export default function Quantity({ qty, setQty, size }) {
         className={`${size === "small" ? "p-1 text-sm" : "p-2"}`}
         onClick={(e) => {
           e.preventDefault();
-          console.log("Plus");
           setQty((qty) => qty + 1);
         }}
       >

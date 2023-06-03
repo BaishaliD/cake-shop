@@ -14,7 +14,6 @@ export default function Address({
   const [addAdressModal, setAddAdressModal] = useState(false);
 
   const onChange = (e) => {
-    console.log("Address changed! ", e.target.value);
     setValue(e.target.value);
   };
 

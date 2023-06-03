@@ -100,7 +100,7 @@ export default function ProductCard({
                     setWishlisted(true);
                   })
                   .catch((err) => {
-                    console.log("addToWishlist error ", err);
+                    console.error("addToWishlist ", err);
                   });
               }}
             >

@@ -22,7 +22,6 @@ export default function MyReviews() {
     getReviewsByUser()
       .then((reviews) => {
         if (reviews && reviews.length > 0) {
-          console.log("GetReviewsByUser response : ", reviews);
           setReviews(reviews);
           setError(null);
         } else {
@@ -30,6 +29,7 @@ export default function MyReviews() {
         }
       })
       .catch((err) => {
+        console.error("getReviewsByUser ", err);
         if (err === "NO_LOGGED_IN_USER") {
           setError(err);
         } else {

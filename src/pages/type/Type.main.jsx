@@ -15,7 +15,6 @@ export default function Type() {
   useEffect(() => {
     window.scrollTo(0, 0);
     getProducts("type", type).then((data) => {
-      console.log("DATA IN COMPONENT :: ", data);
       setProducts(data);
       setIsLoading(false);
     });

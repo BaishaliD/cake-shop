@@ -21,7 +21,6 @@ export default function NavBar({ setSideMenu }) {
 
   useEffect(() => {
     isLoggedIn().then((res) => {
-      console.log("is logged in? ", res);
       setLoggedIn(res);
     });
   }, []);
@@ -144,7 +143,8 @@ const ProfileDropdown = ({ username, loggedIn }) => {
                       window.location.reload();
                     });
                   })
-                  .catch(() => {
+                  .catch((err) => {
+                    console.error("logOut", err);
                     messageApi.error(
                       "Sorry, your Sign Out request could not be completed.",
                       1

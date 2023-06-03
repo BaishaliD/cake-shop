@@ -68,7 +68,6 @@ export default function ProductStrip() {
 const Item = ({ label, route, items }) => {
   const navigate = useNavigate();
   const onClick = ({ key }) => {
-    console.log("Click on item :: ", route, key);
     navigate(`${route}${key}`);
   };
   return (

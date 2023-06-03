@@ -14,9 +14,7 @@ export default function Category() {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     window.scrollTo(0, 0);
-    console.log("CATEGORY : ", cat);
     getProducts("category", cat).then((data) => {
-      console.log("DATA IN COMPONENT :: ", data);
       setProducts(data);
       setIsLoading(false);
     });

@@ -11,16 +11,13 @@ export default function AddAddress({
 }) {
   // const [form] = Form.useForm();
   const onFinish = (values) => {
-    console.log("Success:", edit, values);
     values.id = data && data.id ? data.id : `add_${Date.now()}`;
     if (edit === true) {
       updateAddress(values).then((res) => {
-        console.log("Address updated!");
         updateAddressBook(res);
       });
     } else {
       addAddress(values).then((res) => {
-        console.log("New address added!", res);
         updateAddressBook(res);
       });
     }
@@ -28,7 +25,7 @@ export default function AddAddress({
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    console.log("AddAddress onFinishFailed:", errorInfo);
   };
 
   // const onReset = () => {

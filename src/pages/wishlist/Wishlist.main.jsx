@@ -21,6 +21,7 @@ export default function Wishlist() {
         setLoading(false);
       })
       .catch((err) => {
+        console.error("fetchWishlist ", err);
         if (err === "NO_LOGGED_IN_USER") {
           setError("NO_LOGGED_IN_USER");
         } else {
@@ -41,6 +42,7 @@ export default function Wishlist() {
         setLoading(false);
       })
       .catch((err) => {
+        console.error("removeFromWishlist ", err);
         if (err === "NO_LOGGED_IN_USER") {
           setError("NO_LOGGED_IN_USER");
         } else {

@@ -5,7 +5,6 @@ const Context = createContext();
 function ContextProvider(props) {
   const [cartState, setCartState] = useState(0);
   const updateCartState = (state) => {
-    console.log("updateCartState called : ", state);
     setCartState(state);
   };
 

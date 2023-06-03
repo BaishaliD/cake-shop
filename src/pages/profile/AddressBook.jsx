@@ -22,6 +22,7 @@ export default function AddressBook() {
         }
       })
       .catch((err) => {
+        console.error("fetchAddressBook ", err);
         if (err === "NO_LOGGED_IN_USER") {
           setError(err);
         } else {
