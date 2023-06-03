@@ -69,7 +69,7 @@ export default function Login() {
                   navigate("/");
                 })
                 .catch((error) => {
-                  console.error("handleSignInWithEmailAndPassword ", error);
+                  console.error("handleSignInWithGooglePopup ", error);
                   setErrorMessage(error);
                 })
             }

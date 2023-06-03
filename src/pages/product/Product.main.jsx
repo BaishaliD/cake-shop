@@ -58,6 +58,7 @@ export default function Product() {
   let { id } = useParams();
 
   useEffect(() => {
+    setQty(1);
     window.scrollTo(0, 0);
     getProductById(id).then((product) => {
       setData(product);

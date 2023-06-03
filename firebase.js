@@ -585,16 +585,19 @@ export const getCartData = () => {
           cartArray = JSON.parse(cart);
         }
 
-        const cartDataPromise = cartArray.map((item) =>
-          getProductById(item.id).then((product) => {
-            console.log("product ", product, item);
-            return { product: { ...product }, info: { ...item } };
-          })
-        );
-
-        await Promise.all(cartDataPromise).then((cartData) => {
-          resolve(cartData);
-        });
+        if (cartArray.length > 0) {
+          const cartDataPromise = cartArray.map((item) =>
+            getProductById(item.id).then((product) => {
+              console.log("product ", product, item);
+              return { product: { ...product }, info: { ...item } };
+            })
+          );
+          await Promise.all(cartDataPromise).then((cartData) => {
+            resolve(cartData);
+          });
+        } else {
+          resolve(cartArray);
+        }
       }
     } catch {
       reject();
@@ -609,23 +612,25 @@ export const removeFromCart = (orderId) => {
       const user = await getSignedInUser();
       if (user && user.uid) {
         //TODO Add to Firebase
+        console.log("if block");
       } else {
+        console.log("else block");
         //TODO Save in local storage
         const cart = localStorage.getItem("cart");
-        if (cart) {
-          cartArray = JSON.parse(cart);
-        }
+
+        const cartArray = cart ? JSON.parse(cart) : [];
+
         const ind = cartArray.findIndex((el) => el.orderId === orderId);
+        console.log("cartArray remove index ", ind);
         cartArray.splice(ind, 1);
-        const cartItem = { id, weight, flavour, qty, deliveryDate };
-        console.log("cartItem ", cartItem);
+        console.log("cartArray after splice ", cartArray);
         localStorage.setItem("cart", JSON.stringify(cartArray));
         getCartData().then((res) => {
           resolve(res);
         });
       }
-    } catch {
-      reject();
+    } catch (err) {
+      reject(err);
     }
   });
 };
