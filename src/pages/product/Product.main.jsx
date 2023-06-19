@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { Rate, Divider, Popover } from "antd";
+import { Rate, Divider, Popover, notification } from "antd";
 import {
   HeartFilled,
   HeartOutlined,
@@ -22,10 +22,12 @@ import {
 import NoImage from "../../assets/no-image.jpeg";
 import { suggestions, flavour as flavourName } from "../../database/StaticData";
 import PageLoader from "../../components/PageLoader";
+import { Context } from "../../Context";
 
 export default function Product() {
   const location = useLocation();
   const { from } = location.state || {};
+  const [api, contextHolder] = notification.useNotification();
 
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -47,6 +49,16 @@ export default function Product() {
   const [wishlisted, setWishlisted] = useState(true);
 
   const [open, setOpen] = useState(false);
+  const { setCartCount } = useContext(Context);
+
+  const openNotification = (productName, placement) => {
+    api.open({
+      message: `${productName} added to cart!`,
+      // description: <Context.Consumer>{({ name }) => `Hello, ${name}!`}</Context.Consumer>,
+      placement,
+      duration: 1.5,
+    });
+  };
 
   const hide = () => {
     setOpen(false);
@@ -151,15 +163,24 @@ export default function Product() {
         ? weight
         : data.weight && data.weight.length > 0
         ? data.weight[0]
-        : data.weight,
+        : data.weight
+        ? data.weight
+        : null,
       flavour: flavour
         ? flavour
         : data.flavour && data.flavour.length > 0
         ? data.flavour[0]
-        : data.flavour,
+        : data.flavour
+        ? data.flavour
+        : null,
       qty,
-      deliveryDate: "19/03/2023",
-    });
+    })
+      .then((res) => {
+        console.log("Add to cart res ", res);
+        openNotification(data.name, "topRight");
+        setCartCount((prev) => prev + 1);
+      })
+      .catch((err) => console.log("Add to cart error ", err));
   };
 
   if (isLoading) {
@@ -168,6 +189,7 @@ export default function Product() {
 
   return (
     <div className="pt-24 bg-secondary2">
+      {contextHolder}
       {data && (
         <>
           <div className="flex flex-col md:flex-row">

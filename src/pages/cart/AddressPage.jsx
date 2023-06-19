@@ -8,18 +8,30 @@ import Address from "./Address";
 import CartSummary from "./CartSummary";
 import { useNavigate } from "react-router-dom";
 import { fetchAddressBook } from "../../../firebase";
+import Error from "./Error";
+import PageLoader from "../../components/PageLoader";
 
 export default function AddressPage() {
   const navigate = useNavigate();
   const { cartState, updateCartState } = useContext(Context);
   const [width] = useWindowSize();
   const [addressBook, setAddressBook] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchAddressBook().then((res) => {
-      setAddressBook(res);
-    });
+    setLoading(true);
+    fetchAddressBook()
+      .then((res) => {
+        setError(false);
+        setAddressBook(res);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(true);
+        setLoading(false);
+      });
   }, []);
 
   const goToStep = (step) => {
@@ -42,6 +54,14 @@ export default function AddressPage() {
   const updateAddressBook = (addressBook) => {
     setAddressBook(addressBook);
   };
+
+  if (loading) {
+    return <PageLoader />;
+  }
+
+  if (error) {
+    return <Error />;
+  }
 
   return (
     <div className="pt-24 bg-secondary2 pb-16">
@@ -74,7 +94,14 @@ export default function AddressPage() {
           <CartSummary />
         </div>
       ) : (
-        <h1>No address added!</h1>
+        <div className="w-full text-center pt-4 text-2xl px-16 text-gray-500">
+          <div>You have not added any items to the Cart.</div>
+          <a href="/products">
+            <span className="underline text-accent1 cursor-pointer">
+              Continue Shopping
+            </span>
+          </a>
+        </div>
       )}
     </div>
   );

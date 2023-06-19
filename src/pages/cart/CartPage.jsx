@@ -8,20 +8,23 @@ import CartProductCard from "./CartProductCard";
 import CartSummary from "./CartSummary";
 import { useNavigate } from "react-router-dom";
 import PageLoader from "../../components/PageLoader";
+import Error from "./Error";
 
 export default function CartPage() {
   const navigate = useNavigate();
-  const { cartState, updateCartState } = useContext(Context);
+  const { cartState, updateCartState, setCartCount, setCartSummary } =
+    useContext(Context);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [width] = useWindowSize();
   const [cartItems, setCartItems] = useState([]);
-  const [cartSummary, setCartSummary] = useState();
+  // const [cartSummary, setCartSummary] = useState();
 
   useEffect(() => {
     window.scrollTo(0, 0);
     getCartData()
       .then((res) => {
+        console.log("get cart data from DB ", res);
         res.forEach((item) => {
           const { price, discountedPrice, discount } =
             getPriceAndDiscountedPrice(item.product, item.info);
@@ -125,6 +128,7 @@ export default function CartPage() {
         });
         updateCartSummary(res);
         setCartItems(res);
+        setCartCount((prev) => prev - 1);
       })
       .catch((err) => {
         console.error("removeFromCart ", err);
@@ -136,16 +140,7 @@ export default function CartPage() {
   }
 
   if (error) {
-    <div className="w-full text-center pt-4 text-2xl px-16 text-gray-500">
-      <div>
-        Oops, seems like something is not right. We are working on fixing it.
-      </div>
-      <a href="/products">
-        <span className="underline text-accent1 cursor-pointer">
-          Till then, explore our collection.
-        </span>
-      </a>
-    </div>;
+    return <Error />;
   }
 
   return (
@@ -182,7 +177,7 @@ export default function CartPage() {
               />
             ))}
           </div>
-          <CartSummary cartSummary={cartSummary} />
+          <CartSummary />
         </div>
       ) : (
         <div className="w-full text-center pt-4 text-2xl px-16 text-gray-500">

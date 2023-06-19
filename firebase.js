@@ -540,33 +540,35 @@ export const removeFromWishlist = (id) => {
 /************** WISHLIST *************** */
 
 /**************** CART ***************** */
-export const addToCart = ({ id, weight, flavour, qty, deliveryDate }) => {
+export const addToCart = ({ id, weight, flavour, qty }) => {
   return new Promise(async (resolve, reject) => {
     try {
+      const cartItem = {
+        orderId: id + "_" + Date.now(),
+        id,
+        weight,
+        flavour,
+        qty,
+      };
       const user = await getSignedInUser();
       if (user && user.uid) {
-        //TODO Add to Firebase
+        // Add to Firebase
+        await addDoc(collection(db, `users/${user.uid}/cart`), cartItem);
+        resolve("added to cart");
       } else {
-        //TODO Save in local storage
+        //Save in local storage
         let cartArray = [];
         const cart = localStorage.getItem("cart");
         if (cart) {
           cartArray = JSON.parse(cart);
         }
-        const cartItem = {
-          orderId: id + "_" + Date.now(),
-          id,
-          weight,
-          flavour,
-          qty,
-          deliveryDate,
-        };
         console.log("cartItem ", cartItem);
         cartArray.push(cartItem);
         localStorage.setItem("cart", JSON.stringify(cartArray));
+        resolve();
       }
-    } catch {
-      reject();
+    } catch (err) {
+      reject(err);
     }
   });
 };
@@ -576,9 +578,32 @@ export const getCartData = () => {
     try {
       const user = await getSignedInUser();
       if (user && user.uid) {
-        //TODO Fetch from Firebase
+        //Fetch from Firebase
+        const querySnapshot = await getDocs(
+          collection(db, `users/${user.uid}/cart`)
+        );
+
+        let promiseArr = [];
+        querySnapshot.forEach(async (doc) => {
+          const info = doc.data();
+          let promise = new Promise((resolve) => {
+            getProductById(info.id).then((product) => {
+              console.log("nnn PRODUCT ", product);
+              resolve({
+                product: { ...product },
+                info: { ...info },
+              });
+            });
+          });
+          promiseArr.push(promise);
+        });
+        console.log("nnn getCartData promiseArr ", promiseArr);
+        await Promise.all(promiseArr).then((cartData) => {
+          console.log("nnn Promise.all ", cartData);
+          resolve(cartData);
+        });
       } else {
-        //TODO etch from local storage
+        //fetch from local storage
         let cartArray = [];
         const cart = localStorage.getItem("cart");
         if (cart) {
@@ -613,6 +638,25 @@ export const removeFromCart = (orderId) => {
       if (user && user.uid) {
         //TODO Add to Firebase
         console.log("if block");
+        const q = query(
+          collection(db, `users/${user.uid}/cart`),
+          where("orderId", "==", orderId)
+        );
+        const querySnapshot = await getDocs(q);
+        let promiseArr = [];
+
+        querySnapshot.forEach((_doc) => {
+          const promise = new Promise(async (resolve) => {
+            await deleteDoc(doc(db, `users/${user.uid}/cart`, _doc.id));
+            resolve();
+          });
+          promiseArr.push(promise);
+        });
+        await Promise.all(promiseArr).then(() => {
+          getCartData().then((res) => {
+            resolve(res);
+          });
+        });
       } else {
         console.log("else block");
         //TODO Save in local storage

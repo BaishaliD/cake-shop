@@ -4,9 +4,9 @@ import { TagOutlined } from "@ant-design/icons";
 import { Button, Divider } from "antd";
 import { useNavigate } from "react-router-dom";
 
-export default function CartSummary({ cartSummary }) {
+export default function CartSummary() {
   const navigate = useNavigate();
-  const { cartState, updateCartState } = useContext(Context);
+  const { cartState, updateCartState, cartSummary } = useContext(Context);
   const [deliveryCharge, setDeliveryCharge] = useState(100);
 
   return (
@@ -22,31 +22,35 @@ export default function CartSummary({ cartSummary }) {
         </Button>
       </div>
       <Divider />
-      <h4 className="uppercase mb-4">Cart summary</h4>
-      <div className="mb-4 text-accent1">{cartSummary.items} items</div>
-      <div className="w-full flex justify-between items-center my-2">
-        <div>Total MRP</div>
-        <div>Rs. {cartSummary.total}</div>
-      </div>
-      <div className="w-full flex justify-between items-center my-2">
-        <div>Discount on MRP</div>
-        <div className="text-green-600">- Rs. {cartSummary.discount}</div>
-      </div>
-      <div className="w-full flex justify-between items-center my-2">
-        <div>Coupon discount</div>
-        <div className="text-accent1">Apply coupon</div>
-      </div>
-      <div className="w-full flex justify-between items-center my-2">
-        <div>Delivery Charges</div>
-        <div>Rs. {deliveryCharge}</div>
-      </div>
-      <Divider />
-      <div className="w-full flex justify-between items-center text-lg font-bold">
-        <div>Total Amount</div>
-        <div>
-          Rs.{cartSummary.total - cartSummary.discount + deliveryCharge}
-        </div>
-      </div>
+      {cartSummary && (
+        <>
+          <h4 className="uppercase mb-4">Cart summary</h4>
+          <div className="mb-4 text-accent1">{cartSummary.items} items</div>
+          <div className="w-full flex justify-between items-center my-2">
+            <div>Total MRP</div>
+            <div>Rs. {cartSummary.total}</div>
+          </div>
+          <div className="w-full flex justify-between items-center my-2">
+            <div>Discount on MRP</div>
+            <div className="text-green-600">- Rs. {cartSummary.discount}</div>
+          </div>
+          <div className="w-full flex justify-between items-center my-2">
+            <div>Coupon discount</div>
+            <div className="text-accent1">Apply coupon</div>
+          </div>
+          <div className="w-full flex justify-between items-center my-2">
+            <div>Delivery Charges</div>
+            <div>Rs. {deliveryCharge}</div>
+          </div>
+          <Divider />
+          <div className="w-full flex justify-between items-center text-lg font-bold">
+            <div>Total Amount</div>
+            <div>
+              Rs.{cartSummary.total - cartSummary.discount + deliveryCharge}
+            </div>
+          </div>
+        </>
+      )}
       <div
         className="w-full mt-8 py-2 text-center bg-accent1 roboto text-secondary1 uppercase rounded cursor-pointer hover:shadow-md"
         onClick={() => {

@@ -7,6 +7,7 @@ import NonVeg from "../../assets/icons/nonveg.jpeg";
 import { useEffect, useState } from "react";
 import { flavour } from "../../database/StaticData";
 import { removeFromCart } from "../../../firebase";
+import { add, format } from "date-fns";
 
 export default function CartProductCard({
   data,
@@ -53,7 +54,9 @@ export default function CartProductCard({
         <div className="w-full md:w-4/5 flex">
           <Image
             height="200px"
-            src={product.image}
+            src={
+              Array.isArray(product.images) ? product.images[0] : product.images
+            }
             className="cover w-1/4 min-w-[150px]"
           />
           <div className="pl-4 pr-2 sm:px-8 py-2 w-3/4">
@@ -76,11 +79,16 @@ export default function CartProductCard({
               <>
                 <div className="flex w-full items-center my-2 text-sm">
                   <div className="w-1/4 sm:w-1/3">Price</div>
+                  {console.log(
+                    "info.price | info.discountedPrice ",
+                    info.price,
+                    info.discountedPrice
+                  )}
                   <Price
                     price={info.price}
                     discountedPrice={
                       info.price - info.discountedPrice > 0
-                        ? info.price - info.discountedPrice
+                        ? info.discountedPrice
                         : null
                     }
                     discount={info.discount}
@@ -101,7 +109,7 @@ export default function CartProductCard({
                     price={info.price * qty}
                     discountedPrice={
                       info.price - info.discountedPrice > 0
-                        ? (info.price - info.discountedPrice) * qty
+                        ? info.discountedPrice * qty
                         : null
                     }
                     discount={info.discount}
@@ -175,7 +183,16 @@ export default function CartProductCard({
           <div>
             <CheckCircleOutlined className="text-green-500" /> Delivery by
           </div>
-          <h4>{info.deliveryDate}</h4>
+          <h4>
+            {format(
+              add(new Date(), {
+                days: product.deliveryTimeInDays
+                  ? product.deliveryTimeInDays
+                  : 0,
+              }),
+              "dd/MM/yyyy"
+            )}
+          </h4>
         </div>
       </div>
     </Link>

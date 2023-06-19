@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
@@ -12,12 +12,14 @@ import { useWindowSize } from "../Hooks";
 import { message } from "antd";
 import { Badge, Button, Avatar, Dropdown } from "antd";
 import { logOut } from "../../firebaseAuth";
+import { Context } from "../Context";
 
 export default function NavBar({ setSideMenu }) {
   const [width] = useWindowSize();
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
+  const { cartCount } = useContext(Context);
 
   useEffect(() => {
     isLoggedIn().then((res) => {
@@ -58,7 +60,12 @@ export default function NavBar({ setSideMenu }) {
             <Icon icon={faSearch} />
             <ProfileDropdown username={username} loggedIn={loggedIn} />
             <Icon icon={faHeart} link="/wishlist" />
-            <Icon icon={faCartShopping} link="/cart" showBadge={true} />
+            <Icon
+              icon={faCartShopping}
+              link="/cart"
+              showBadge={true}
+              cartCount={cartCount}
+            />
           </div>
         </>
       ) : (
@@ -96,11 +103,15 @@ const NavItem = ({ name, link }) => {
   );
 };
 
-const Icon = ({ icon, link, showBadge = false }) => {
+const Icon = ({ icon, link, showBadge = false, cartCount }) => {
   const navigate = useNavigate();
   return (
     <div className="px-4">
-      <Badge count={showBadge ? 5 : 0} offset={[5, -5]} color={"#815B5B"}>
+      <Badge
+        count={showBadge ? cartCount : 0}
+        offset={[5, -5]}
+        color={"#815B5B"}
+      >
         <FontAwesomeIcon
           icon={icon}
           className="hover:opacity-75 cursor-pointer"
