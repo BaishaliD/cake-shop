@@ -2,6 +2,36 @@ import { flavour, type, occasion, category } from "./StaticData";
 
 export const filters = [
   {
+    condition: "priceRange",
+    text: "Price Range",
+    options: [
+      {
+        label: "Less than Rs.500",
+        value: 1,
+      },
+      {
+        label: "Rs.500 - Rs.1,000",
+        value: 2,
+      },
+      {
+        label: "Rs.1,000 - Rs.3,000",
+        value: 3,
+      },
+      {
+        label: "Rs.3,000 - Rs.5,000",
+        value: 4,
+      },
+      {
+        label: "Rs.5,000 - Rs.7,000",
+        value: 5,
+      },
+      {
+        label: "Above Rs.7,000",
+        value: 6,
+      },
+    ],
+  },
+  {
     condition: "category",
     text: "Category",
     options: generateArray(category),
@@ -17,7 +47,7 @@ export const filters = [
     options: generateArray(type),
   },
   {
-    condition: "Occasion",
+    condition: "occasion",
     text: "Occasion",
     options: generateArray(occasion),
   },

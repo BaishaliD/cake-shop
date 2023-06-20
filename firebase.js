@@ -18,6 +18,7 @@ import {
   runTransaction,
   increment,
   collectionGroup,
+  or,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -35,7 +36,6 @@ import {
 import { addressBook, cartItems } from "./src/database/CartData";
 import { Orders } from "./src/database/ProfileData";
 import { getSignedInUser } from "./firebaseAuth";
-import CartProductCard from "./src/pages/cart/CartProductCard";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -771,5 +771,32 @@ export const _fetchAddressBook = () => {
         reject("NO_LOGGED_IN_USER");
       }
     });
+  });
+};
+
+export const filter = async () => {
+  const q1 = query(
+    collection(db, "products"),
+    or(where("category", "==", "cupcake"), where("category", "==", "jarcake"))
+  );
+
+  const q2 = query(
+    collection(db, "products"),
+    or(
+      where("flavour", "==", "chocolate"),
+      where("flavour", "==", "strawberry")
+    )
+  );
+
+  const q3 = query(
+    collection(db, "products"),
+    or(where("occasion", "==", "christmas"), where("occasion", "==", "wedding"))
+  );
+
+  const finalQuery = query(collection(db, "products"), q1, q2, q3);
+
+  const querySnapshot = await getDocs(finalQuery);
+  querySnapshot.forEach((doc) => {
+    console.log("product filtered => ", doc.data());
   });
 };

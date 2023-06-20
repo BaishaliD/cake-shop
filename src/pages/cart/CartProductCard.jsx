@@ -3,7 +3,7 @@ import Image from "../../components/Image";
 import Quantity from "../../components/Quantity";
 import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import Veg from "../../assets/icons/veg.png";
-import NonVeg from "../../assets/icons/nonveg.jpeg";
+import NonVeg from "../../assets/icons/nonveg.png";
 import { useEffect, useState } from "react";
 import { flavour } from "../../database/StaticData";
 import { removeFromCart } from "../../../firebase";

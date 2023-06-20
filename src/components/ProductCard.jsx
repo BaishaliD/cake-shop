@@ -2,7 +2,7 @@ import { useNavigate, useLocation, Link } from "react-router-dom";
 import { StarFilled } from "@ant-design/icons";
 import Image from "../components/Image";
 import Veg from "../assets/icons/veg.png";
-import NonVeg from "../assets/icons/nonveg.jpeg";
+import NonVeg from "../assets/icons/nonveg.png";
 import { HeartOutlined, HeartFilled } from "@ant-design/icons";
 import { addToWishlist, removeFromWishlist } from "../../firebase";
 import { useState } from "react";
