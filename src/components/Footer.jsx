@@ -15,10 +15,10 @@ export default function Footer() {
         <Link to={"/privacyPolicy"}>
           <h3 className="font-normal cursor-pointer">Privacy Policy</h3>
         </Link>
-        <Link to={"/trackOrder"}>
+        <Link to={"/"}>
           <h3 className="font-normal cursor-pointer">Track Order</h3>
         </Link>
-        <Link to={"/reviews"}>
+        <Link to={"/"}>
           <h3 className="font-normal cursor-pointer">Reviews</h3>
         </Link>
       </div>
