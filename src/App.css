@@ -84,6 +84,26 @@ body {
   background-image: url("./assets/baking.gif");
 }
 
+.parallax-birthday {
+  background-image: url("./assets/occasion/birthday.jpeg");
+}
+
+.parallax-anniversary {
+  background-image: url("./assets/occasion/anniversary.webp");
+}
+
+.parallax-christmas {
+  background-image: url("./assets/occasion/christmas.jpeg");
+}
+
+.parallax-wedding {
+  background-image: url("./assets/occasion/wedding.webp");
+}
+
+.parallax-valentines {
+  background-image: url("./assets/occasion/valentines.jpg");
+}
+
 .cover .ant-image-img {
   object-fit: cover;
 }

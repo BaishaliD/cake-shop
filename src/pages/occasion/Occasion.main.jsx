@@ -25,10 +25,19 @@ export default function Occasion() {
       {!isLoading && data && products ? (
         <>
           <div
-            className="parallax h-96 bg-[url('/about-us/cake.jpeg')]"
-            // style={{
-            //   backgroundImage: Image,
-            // }}
+            className={`parallax h-96 ${
+              data.id === "birthday"
+                ? "parallax-birthday"
+                : data.id === "anniversary"
+                ? "parallax-anniversary"
+                : data.id === "christmas"
+                ? "parallax-christmas"
+                : data.id === "wedding"
+                ? "parallax-wedding"
+                : data.id === "valentines"
+                ? "parallax-valentines"
+                : ""
+            }`}
           >
             <div className="h-full w-full flex flex-col items-center justify-center text-primary1 roboto font-bold bg-black50 px-16 py-4">
               <div className="mb-6 text-6xl opacity-100 acme text-center">
