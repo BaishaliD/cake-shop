@@ -1,5 +1,6 @@
 import { Divider } from "antd";
 import ProductCard from "../../components/ProductCard";
+import { HeartOutlined } from "@ant-design/icons";
 
 export default function ProductSuggestion({ title, list, bgColor, textColor }) {
   return (
@@ -16,7 +17,6 @@ export default function ProductSuggestion({ title, list, bgColor, textColor }) {
             discountedPrice={item.discountedPrice}
             rating={item.rating}
             eggless={item.eggless}
-            buttonText="Add To Cart"
           />
         ))}
       </div>

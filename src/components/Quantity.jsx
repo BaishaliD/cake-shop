@@ -1,8 +1,7 @@
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
-export default function Quantity({ initialState = 1, size }) {
-  const [qty, setQty] = useState(initialState);
+export default function Quantity({ qty, setQty, size, updateQuantityInLocal }) {
   return (
     <div
       className="flex border max-w-fit select-none"
@@ -10,9 +9,15 @@ export default function Quantity({ initialState = 1, size }) {
     >
       <div
         className={`${size === "small" ? "p-1 text-sm" : "p-2"}`}
-        onClick={() => {
+        onClick={(e) => {
+          e.preventDefault();
           if (qty > 1) {
-            setQty((qty) => qty - 1);
+            setQty((qty) => {
+              if (updateQuantityInLocal) {
+                updateQuantityInLocal(qty - 1);
+              }
+              return qty - 1;
+            });
           }
         }}
       >
@@ -28,9 +33,14 @@ export default function Quantity({ initialState = 1, size }) {
       </div>
       <div
         className={`${size === "small" ? "p-1 text-sm" : "p-2"}`}
-        onClick={() => {
-          console.log("Plus");
-          setQty((qty) => qty + 1);
+        onClick={(e) => {
+          e.preventDefault();
+          setQty((qty) => {
+            if (updateQuantityInLocal) {
+              updateQuantityInLocal(qty + 1);
+            }
+            return qty + 1;
+          });
         }}
       >
         <PlusOutlined />

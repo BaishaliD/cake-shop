@@ -13,7 +13,6 @@ export default function BestSellers() {
   const [list, setList] = useState(null);
   useEffect(() => {
     getBestSellers().then((res) => {
-      console.log("getRandomProducts response :: ", res);
       setList(res);
     });
   }, []);
@@ -70,7 +69,7 @@ export default function BestSellers() {
                           <div className="px-2">({item.ratingNo})</div>
                         </div>
                         <div className="text-2xl text-primary1 sm:text-accent1 my-4">
-                          {item.minPrice}
+                          Rs. {item.minPrice}
                         </div>
                         <div className="text-center">{item.desc}</div>
                         <motion.div

@@ -5,7 +5,6 @@ export default function MyProfile() {
   const [submitting, setSubmitting] = useState(false);
   const [disableForm, setDisableForm] = useState(true);
   const updateProfile = () => {
-    console.log("Update profile!");
     setSubmitting(true);
     setTimeout(() => {
       setDisableForm(true);

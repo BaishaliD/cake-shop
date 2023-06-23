@@ -1,34 +1,28 @@
 import { useState, useEffect } from "react";
-import { Modal } from "antd";
+import { Modal, Form } from "antd";
 import AddAddress from "../../components/AddAddress";
 import AddressCard from "../../components/AddressCard";
 import { fetchAddressBook, removeAddress } from "../../../firebase";
 
 export default function AddressBook() {
   const [error, setError] = useState(null);
-  const [defaultAddress, setDefaultAddress] = useState(null);
   const [addressBook, setAddressBook] = useState([]);
   const [addAdressModal, setAddAdressModal] = useState(false);
+  const [form] = Form.useForm();
 
   useEffect(() => {
     window.scrollTo(0, 0);
     fetchAddressBook()
       .then((addressBook) => {
         if (addressBook && addressBook.length > 0) {
-          const defaultAdd = addressBook.find(
-            (address) => address.default === true
-          );
-          const otherAdd = addressBook.filter(
-            (address) => address.default === false
-          );
           setError(null);
-          setDefaultAddress(defaultAdd ? defaultAdd : null);
-          setAddressBook(otherAdd);
+          setAddressBook(addressBook);
         } else {
           setError("NO_ADDRESS_ADDED");
         }
       })
       .catch((err) => {
+        console.error("fetchAddressBook ", err);
         if (err === "NO_LOGGED_IN_USER") {
           setError(err);
         } else {
@@ -38,10 +32,7 @@ export default function AddressBook() {
   }, []);
 
   const updateAddressBook = (addressBook) => {
-    const defaultAdd = addressBook.find((address) => address.default === true);
-    const otherAdd = addressBook.filter((address) => address.default === false);
-    setDefaultAddress(defaultAdd);
-    setAddressBook(otherAdd);
+    setAddressBook(addressBook);
   };
 
   const removeAddressHandler = (id) => {
@@ -57,9 +48,15 @@ export default function AddressBook() {
         centered
         footer={null}
         open={addAdressModal}
-        onCancel={() => setAddAdressModal(false)}
+        onCancel={() => {
+          () => {
+            form.resetFields();
+          };
+          setAddAdressModal(false);
+        }}
       >
         <AddAddress
+          form={form}
           setShowModal={setAddAdressModal}
           updateAddressBook={updateAddressBook}
         />
@@ -75,33 +72,19 @@ export default function AddressBook() {
         </div>
       </div>
 
-      {error === "NO_ADDRESS_ADDED" ? (
-        <h1>No Address Added</h1>
-      ) : error === "NO_LOGGED_IN_USER" ? (
-        <h1>No Logged In User</h1>
-      ) : error === "SOMETHING_WENT_WRONG" ? (
-        <h1>Something Went Wrong</h1>
-      ) : null}
-
-      {defaultAddress && (
-        <>
-          <div className="text-lg mb-4 w-500 text-address-2">
-            Default Address
-          </div>
-          <AddressCard
-            data={defaultAddress}
-            removeAddress={removeAddressHandler}
-            setAddAdressModal={setAddAdressModal}
-            updateAddressBook={updateAddressBook}
-          />
-        </>
-      )}
+      <div className="w-full text-center pt-4 text-2xl px-16 text-gray-500">
+        {error === "NO_ADDRESS_ADDED"
+          ? "You have not added any address yet."
+          : error === "NO_LOGGED_IN_USER"
+          ? "Log In to view the saved addresses."
+          : error === "SOMETHING_WENT_WRONG"
+          ? "Oops, seems like something is not right. We are working on fixing it."
+          : null}
+      </div>
 
       {addressBook && addressBook.length > 0 && (
         <>
-          <div className="text-lg mt-12 mb-4 w-500 text-accent2">
-            All Addresses
-          </div>
+          <div className="text-lg mb-4 w-500 text-accent2">Saved Addresses</div>
           {addressBook.map((address) => (
             <AddressCard
               data={address}

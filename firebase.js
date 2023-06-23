@@ -8,6 +8,7 @@ import {
   setDoc,
   getDocs,
   getDoc,
+  deleteDoc,
   query,
   where,
   limit,
@@ -16,6 +17,8 @@ import {
   arrayUnion,
   runTransaction,
   increment,
+  collectionGroup,
+  or,
 } from "firebase/firestore";
 import {
   getStorage,
@@ -32,6 +35,7 @@ import {
 } from "./src/database/AllProducts";
 import { addressBook, cartItems } from "./src/database/CartData";
 import { Orders } from "./src/database/ProfileData";
+import { getSignedInUser } from "./firebaseAuth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -66,6 +70,8 @@ export const addCakes = () => {
     console.error("Error adding cake : ", e);
   }
 };
+
+/************** PRODUCT *************** */
 
 export const getProductById = (id) => {
   return new Promise(async (resolve, reject) => {
@@ -102,7 +108,21 @@ export const getAllProducts = (n = null) => {
     processData(querySnapshot, dataArray, promiseArr);
 
     await Promise.all(promiseArr).catch((e) => reject(e));
+    resolve(dataArray);
+  });
+};
 
+export const getReviewsOfProduct = (id) => {
+  return new Promise(async (resolve, reject) => {
+    const querySnapshot = await getDocs(
+      collection(db, `products/${id}/reviews`)
+    );
+    let dataArray = [];
+    let promiseArr = [];
+
+    processData(querySnapshot, dataArray, promiseArr);
+
+    await Promise.all(promiseArr).catch((e) => reject(e));
     resolve(dataArray);
   });
 };
@@ -193,38 +213,164 @@ export const getProducts = async (key, value = "none", n = null) => {
   });
 };
 
-const processData = (querySnapshot, dataArray, promiseArr) => {
+/************** PRODUCT *************** */
+
+/************** IMAGE PROCESSING *************** */
+
+export const processData = (querySnapshot, dataArray, promiseArr) => {
   querySnapshot.forEach(async (doc) => {
     let promise = new Promise(async (resolve, reject) => {
       const data = doc.data();
       let imageArr = await Promise.all(
-        data.images.map(async (image) => {
-          const spaceRef = ref(storage, image);
-          const url = await getDownloadURL(spaceRef);
-          return url;
-        })
+        data.images && data.images.length > 0
+          ? data.images.map(async (image) => {
+              const spaceRef = ref(storage, image);
+              const url = await getDownloadURL(spaceRef);
+              return url;
+            })
+          : []
       );
       data.images = imageArr;
-
-      if (data.reviews && data.reviews.length > 0) {
-        data.reviews.forEach(async (review, i) => {
-          if (review.images && review.images.length > 0) {
-            let reviewImageArr = await Promise.all(
-              review.images.map(async (image) => {
-                const spaceRef = ref(storage, image);
-                const url = await getDownloadURL(spaceRef);
-                return url;
-              })
-            );
-            data.reviews[i].images = reviewImageArr;
-          }
-        });
-      }
-
       dataArray.push(data);
       resolve();
     });
     promiseArr.push(promise);
+  });
+};
+
+export const processUploadedReviewImages = (
+  querySnapshot,
+  dataArray,
+  promiseArr
+) => {
+  querySnapshot.forEach(async (doc) => {
+    let promise = new Promise(async (resolve, reject) => {
+      const product = await getDoc(doc.ref.parent.parent);
+      const productData = product.data();
+      console.log("productData ", productData);
+      const data = doc.data();
+      let uploadedImagesArr = await Promise.all(
+        data.uploadedImages && data.uploadedImages.length > 0
+          ? data.uploadedImages.map(async (image) => {
+              const spaceRef = ref(storage, image);
+              const url = await getDownloadURL(spaceRef);
+              return url;
+            })
+          : []
+      );
+      data.uploadedImages = uploadedImagesArr;
+
+      let productImageArr = await Promise.all(
+        productData.images && productData.images.length > 0
+          ? productData.images.map(async (image) => {
+              const spaceRef = ref(storage, image);
+              const url = await getDownloadURL(spaceRef);
+              return url;
+            })
+          : []
+      );
+
+      dataArray.push({
+        id: doc.id,
+        product: {
+          id: product.id,
+          name: productData.name,
+          image:
+            productImageArr && productImageArr.length > 0
+              ? productImageArr[0]
+              : null,
+        },
+        ...data,
+      });
+      resolve();
+    });
+    promiseArr.push(promise);
+  });
+};
+
+/************** IMAGE PROCESSING *************** */
+
+/************** REVIEWS *************** */
+
+export const uploadReview = async (id, review) => {
+  return new Promise(async (resolve, reject) => {
+    const user = await getSignedInUser();
+
+    if (
+      review.title ||
+      review.text ||
+      (review.images && review.images.length > 0)
+    ) {
+      const currentDate = new Date().toLocaleDateString("en-US", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      });
+      const reviewDoc = {
+        rating: review.rating,
+        title: review.title,
+        text: review.text,
+        uploadedImages: review.images,
+        author: {
+          id: user && user.uid ? user.uid : null,
+          name: review.name,
+          email: review.email,
+        },
+        date: currentDate,
+      };
+      addDoc(collection(db, `products/${id}/reviews`), reviewDoc);
+    }
+
+    console.log("uploadReview function :: ", id, review);
+
+    try {
+      const productDocRef = doc(db, "products", id);
+      await runTransaction(db, async (transaction) => {
+        const _doc = await transaction.get(productDocRef);
+        if (!_doc.exists()) {
+          throw "Document does not exist!";
+        }
+        const oldRating = _doc.data().rating ? _doc.data().rating : 0;
+        const oldRatingNo = _doc.data().ratingNo ? _doc.data().ratingNo : 0;
+        const newRating = (
+          (oldRating * oldRatingNo + review.rating) /
+          (oldRatingNo + 1)
+        ).toFixed(1);
+
+        let ratings = _doc.data().ratings ? _doc.data().ratings : {};
+
+        ratings[review.rating] = ratings[review.rating]
+          ? ratings[review.rating] + 1
+          : 1;
+
+        transaction.update(productDocRef, {
+          rating: newRating,
+          ratings: ratings,
+          ratingNo: increment(1),
+        });
+
+        const wishlistedProduct = query(
+          collectionGroup(db, "wishlist"),
+          where("id", "==", id)
+        );
+        console.log("wishlistedProducts ", wishlistedProduct);
+        const querySnapshot = await getDocs(wishlistedProduct);
+        querySnapshot.forEach(async (wishlistDoc) => {
+          console.log("wishlistDocRef ", wishlistDoc.data());
+          await updateDoc(wishlistDoc.ref, {
+            rating: newRating,
+          });
+        });
+      });
+
+      console.log("Transaction successfully committed!");
+      getReviewsOfProduct(id).then((res) => {
+        resolve(res);
+      });
+    } catch (e) {
+      console.log("Transaction failed: ", e);
+      reject(e);
+    }
   });
 };
 
@@ -240,85 +386,299 @@ export const uploadReviewImages = (url, filename) => {
   });
 };
 
-export const uploadReview = (id, review) => {
+export const getReviewsByUser = () => {
   return new Promise(async (resolve, reject) => {
-    const docRef = doc(db, "products", id);
+    const user = await getSignedInUser();
+    if (user && user.uid) {
+      const reviewsByUser = query(
+        collectionGroup(db, "reviews"),
+        where("author.id", "==", user.uid)
+      );
+      const querySnapshot = await getDocs(reviewsByUser);
+      let dataArray = [];
+      let promiseArr = [];
 
-    console.log("uploadReview function :: ", id, review);
+      processUploadedReviewImages(querySnapshot, dataArray, promiseArr);
 
-    const currentDate = new Date().toLocaleDateString("en-US", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
-    try {
-      await runTransaction(db, async (transaction) => {
-        const sfDoc = await transaction.get(docRef);
-        if (!sfDoc.exists()) {
-          throw "Document does not exist!";
-        }
-        const oldRating = sfDoc.data().rating ? sfDoc.data().rating : 0;
-        const oldRatingNo = sfDoc.data().ratingNo ? sfDoc.data().ratingNo : 0;
-        const newRating = (
-          (oldRating * oldRatingNo + review.rating) /
-          (oldRatingNo + 1)
-        ).toFixed(1);
-
-        console.log(
-          "RATINGS : oldRating : ",
-          oldRating,
-          " oldRatingNo : ",
-          oldRatingNo,
-          " newRating : ",
-          newRating
-        );
-        let ratings = sfDoc.data().ratings ? sfDoc.data().ratings : {};
-
-        ratings[review.rating] = ratings[review.rating]
-          ? ratings[review.rating] + 1
-          : 1;
-
-        console.log("sfDoc.data().reviews -> ", sfDoc.data().reviews);
-
-        if (review.text || review.title || review.images) {
-          transaction.update(docRef, {
-            rating: newRating,
-            ratings: ratings,
-            ratingNo: increment(1),
-            reviews: arrayUnion({
-              date: currentDate,
-              ...review,
-            }),
-          });
-        } else {
-          transaction.update(docRef, {
-            rating: newRating,
-            ratings: ratings,
-            ratingNo: increment(1),
-          });
-        }
-      });
-      console.log("Transaction successfully committed!");
-      getProductById(id).then((res) => {
-        resolve(res);
-      });
-    } catch (e) {
-      console.log("Transaction failed: ", e);
-      reject(e);
+      await Promise.all(promiseArr).catch((e) => reject(e));
+      console.log("GetReviewsByUser promise : ", dataArray);
+      resolve(dataArray);
+    } else {
+      reject("NO_LOGGED_IN_USER");
     }
-    // console.log("Current date : ", currentDate);
-    // updateDoc(docRef, {
-    //   rating: increment(review.rating),
-    //   ratingNo: increment(1),
-    //   reviews: arrayUnion({
-    //     date: currentDate,
-    //     ...review,
-    //   }),
-    // })
-    //   .then(() => resolve())
-    //   .catch((e) => reject(e));
   });
 };
+
+/************** REVIEWS *************** */
+
+/************** ADDRESS *************** */
+
+export const addAddress = async (address) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await getSignedInUser();
+      if (user && user.uid) {
+        addDoc(collection(db, `users/${user.uid}/addresses`), address);
+
+        const querySnapshot = await getDocs(
+          collection(db, `users/${user.uid}/addresses`)
+        );
+        let addressBook = [];
+        querySnapshot.forEach((doc) => {
+          addressBook.push(doc.data());
+        });
+        if (addressBook.length > 0) {
+          resolve(addressBook);
+        } else {
+          reject("NO_ADDRESS_ADDED");
+        }
+      } else {
+        reject("NO_LOGGED_IN_USER");
+      }
+    } catch {
+      reject();
+    }
+  });
+};
+
+export const fetchAddressBook = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await getSignedInUser();
+      if (user && user.uid) {
+        const querySnapshot = await getDocs(
+          collection(db, `users/${user.uid}/addresses`)
+        );
+        let addressBook = [];
+        console.log("fetchAddressBook querySnapshot ", querySnapshot);
+        querySnapshot.forEach((doc) => {
+          addressBook.push(doc.data());
+        });
+
+        resolve(addressBook);
+      } else {
+        reject("NO_LOGGED_IN_USER");
+      }
+    } catch (err) {
+      console.log("fetchAddressBook catch block ", err);
+      reject();
+    }
+  });
+};
+
+/************** ADDRESS *************** */
+
+/************** WISHLIST *************** */
+
+export const addToWishlist = async (product) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await getSignedInUser();
+      if (user && user.uid) {
+        try {
+          await setDoc(
+            doc(db, `users/${user.uid}/wishlist`, product.id),
+            product
+          );
+          resolve();
+        } catch (err) {
+          console.log("addToWishlist error : ", err);
+          reject();
+        }
+      } else {
+        reject("NO_LOGGED_IN_USER");
+      }
+    } catch {
+      reject();
+    }
+  });
+};
+
+export const fetchWishlist = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await getSignedInUser();
+      if (user && user.uid) {
+        const querySnapshot = await getDocs(
+          collection(db, `users/${user.uid}/wishlist`)
+        );
+        let dataArray = [];
+        querySnapshot.forEach((doc) => dataArray.push(doc.data()));
+        resolve(dataArray);
+      } else {
+        reject("NO_LOGGED_IN_USER");
+      }
+    } catch (err) {
+      console.log("fetchWishlist catch block ", err);
+      reject();
+    }
+  });
+};
+
+export const removeFromWishlist = (id) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await getSignedInUser();
+      if (user && user.uid) {
+        try {
+          await deleteDoc(doc(db, `users/${user.uid}/wishlist`, id));
+          fetchWishlist()
+            .then((res) => resolve(res))
+            .catch((err) => reject(err));
+        } catch (err) {
+          reject();
+        }
+      } else {
+        reject("NO_LOGGED_IN_USER");
+      }
+    } catch {
+      reject();
+    }
+  });
+};
+
+/************** WISHLIST *************** */
+
+/**************** CART ***************** */
+export const addToCart = ({ id, weight, flavour, qty }) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const cartItem = {
+        orderId: id + "_" + Date.now(),
+        id,
+        weight,
+        flavour,
+        qty,
+      };
+      const user = await getSignedInUser();
+      if (user && user.uid) {
+        // Add to Firebase
+        await addDoc(collection(db, `users/${user.uid}/cart`), cartItem);
+        resolve("added to cart");
+      } else {
+        //Save in local storage
+        let cartArray = [];
+        const cart = localStorage.getItem("cart");
+        if (cart) {
+          cartArray = JSON.parse(cart);
+        }
+        console.log("cartItem ", cartItem);
+        cartArray.push(cartItem);
+        localStorage.setItem("cart", JSON.stringify(cartArray));
+        resolve();
+      }
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+
+export const getCartData = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await getSignedInUser();
+      if (user && user.uid) {
+        //Fetch from Firebase
+        const querySnapshot = await getDocs(
+          collection(db, `users/${user.uid}/cart`)
+        );
+
+        let promiseArr = [];
+        querySnapshot.forEach(async (doc) => {
+          const info = doc.data();
+          let promise = new Promise((resolve) => {
+            getProductById(info.id).then((product) => {
+              console.log("nnn PRODUCT ", product);
+              resolve({
+                product: { ...product },
+                info: { ...info },
+              });
+            });
+          });
+          promiseArr.push(promise);
+        });
+        console.log("nnn getCartData promiseArr ", promiseArr);
+        await Promise.all(promiseArr).then((cartData) => {
+          console.log("nnn Promise.all ", cartData);
+          resolve(cartData);
+        });
+      } else {
+        //fetch from local storage
+        let cartArray = [];
+        const cart = localStorage.getItem("cart");
+        if (cart) {
+          cartArray = JSON.parse(cart);
+        }
+
+        if (cartArray.length > 0) {
+          const cartDataPromise = cartArray.map((item) =>
+            getProductById(item.id).then((product) => {
+              console.log("product ", product, item);
+              return { product: { ...product }, info: { ...item } };
+            })
+          );
+          await Promise.all(cartDataPromise).then((cartData) => {
+            resolve(cartData);
+          });
+        } else {
+          resolve(cartArray);
+        }
+      }
+    } catch {
+      reject();
+    }
+  });
+};
+
+export const removeFromCart = (orderId) => {
+  console.log("removeFromCart orderId ", orderId);
+  return new Promise(async (resolve, reject) => {
+    try {
+      const user = await getSignedInUser();
+      if (user && user.uid) {
+        //TODO Add to Firebase
+        console.log("if block");
+        const q = query(
+          collection(db, `users/${user.uid}/cart`),
+          where("orderId", "==", orderId)
+        );
+        const querySnapshot = await getDocs(q);
+        let promiseArr = [];
+
+        querySnapshot.forEach((_doc) => {
+          const promise = new Promise(async (resolve) => {
+            await deleteDoc(doc(db, `users/${user.uid}/cart`, _doc.id));
+            resolve();
+          });
+          promiseArr.push(promise);
+        });
+        await Promise.all(promiseArr).then(() => {
+          getCartData().then((res) => {
+            resolve(res);
+          });
+        });
+      } else {
+        console.log("else block");
+        //TODO Save in local storage
+        const cart = localStorage.getItem("cart");
+
+        const cartArray = cart ? JSON.parse(cart) : [];
+
+        const ind = cartArray.findIndex((el) => el.orderId === orderId);
+        console.log("cartArray remove index ", ind);
+        cartArray.splice(ind, 1);
+        console.log("cartArray after splice ", cartArray);
+        localStorage.setItem("cart", JSON.stringify(cartArray));
+        getCartData().then((res) => {
+          resolve(res);
+        });
+      }
+    } catch (err) {
+      reject(err);
+    }
+  });
+};
+/**************** CART ***************** */
 
 /** ********* FETCH FROM LOCAL DATABASE *************** */
 
@@ -385,38 +745,13 @@ export const updateAddress = (address) => {
   });
 };
 
-export const addAddress = (address) => {
-  return new Promise(async (resolve, reject) => {
-    const userId = auth.currentUser?.uid;
-    if (userId) {
-      const userRef = doc(db, "users", userId);
-      console.log("addressss ", typeof address, address);
-      // await updateDoc(userRef, {
-      //   addresses: arrayUnion(address),
-      // });
-      await updateDoc(userRef, {
-        addresses: { [address.id]: address },
-      });
-      const userDoc = await getDoc(userRef);
-      const updatedAddresses = userDoc.data()?.addresses;
-      if (updatedAddresses) {
-        resolve(updatedAddresses);
-      } else {
-        reject("ADDRESS_NOT_ADDED");
-      }
-    } else {
-      reject("NO_LOGGED_IN_USER");
-    }
-  });
-};
-
 export const fetchOrders = () => {
   return new Promise((resolve, reject) => {
     resolve(Orders);
   });
 };
 
-export const fetchAddressBook = () => {
+export const _fetchAddressBook = () => {
   return new Promise(async (resolve, reject) => {
     onAuthStateChanged(auth, async (user) => {
       console.log("fetchAddressBook called ", user);
@@ -425,6 +760,7 @@ export const fetchAddressBook = () => {
       if (userId) {
         const userRef = doc(db, "users", userId);
         const userDoc = await getDoc(userRef);
+        console.log("USER DOC : ", userDoc.data());
         const addresses = userDoc.data()?.addresses;
         if (addresses) {
           resolve(addresses);
@@ -435,5 +771,32 @@ export const fetchAddressBook = () => {
         reject("NO_LOGGED_IN_USER");
       }
     });
+  });
+};
+
+export const filter = async () => {
+  const q1 = query(
+    collection(db, "products"),
+    or(where("category", "==", "cupcake"), where("category", "==", "jarcake"))
+  );
+
+  const q2 = query(
+    collection(db, "products"),
+    or(
+      where("flavour", "==", "chocolate"),
+      where("flavour", "==", "strawberry")
+    )
+  );
+
+  const q3 = query(
+    collection(db, "products"),
+    or(where("occasion", "==", "christmas"), where("occasion", "==", "wedding"))
+  );
+
+  const finalQuery = query(collection(db, "products"), q1, q2, q3);
+
+  const querySnapshot = await getDocs(finalQuery);
+  querySnapshot.forEach((doc) => {
+    console.log("product filtered => ", doc.data());
   });
 };

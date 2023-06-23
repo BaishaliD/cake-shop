@@ -7,18 +7,17 @@ export default function AddAddress({
   data,
   setShowModal,
   updateAddressBook,
+  form,
 }) {
+  // const [form] = Form.useForm();
   const onFinish = (values) => {
-    console.log("Success:", edit, values);
     values.id = data && data.id ? data.id : `add_${Date.now()}`;
     if (edit === true) {
       updateAddress(values).then((res) => {
-        console.log("Address updated!");
         updateAddressBook(res);
       });
     } else {
       addAddress(values).then((res) => {
-        console.log("New address added!", res);
         updateAddressBook(res);
       });
     }
@@ -26,8 +25,12 @@ export default function AddAddress({
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    console.log("AddAddress onFinishFailed:", errorInfo);
   };
+
+  // const onReset = () => {
+  //   form.resetFields();
+  // };
 
   const required = [
     {
@@ -39,6 +42,7 @@ export default function AddAddress({
   return (
     <div className="my-4 w-full">
       <Form
+        form={form}
         name="address"
         wrapperCol={{
           offset: 0,
@@ -54,7 +58,6 @@ export default function AddAddress({
                 layout: "vertical",
                 address: "",
                 city: "",
-                default: false,
                 id: "",
                 locality: "",
                 name: "",
@@ -122,9 +125,9 @@ export default function AddAddress({
           </Form.Item>
         </div>
 
-        <Form.Item name="default" valuePropName="checked">
+        {/* <Form.Item name="default" valuePropName="checked">
           <Checkbox>Make this my default address</Checkbox>
-        </Form.Item>
+        </Form.Item> */}
 
         <div className="w-full flex justify-center">
           <Form.Item>

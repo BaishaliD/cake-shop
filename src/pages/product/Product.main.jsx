@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams, useLocation } from "react-router-dom";
-import { Button, Rate, Segmented, Divider, Popover } from "antd";
+import { Rate, Divider, Popover, notification } from "antd";
 import {
   HeartFilled,
   HeartOutlined,
@@ -11,28 +11,35 @@ import Carousel from "../../components/Carousel";
 import Quantity from "../../components/Quantity";
 import ReviewBoard from "./ReviewBoard";
 import Veg from "../../assets/icons/veg.png";
-import NonVeg from "../../assets/icons/nonveg.jpeg";
+import NonVeg from "../../assets/icons/nonveg.png";
 import {
   getProductById,
-  fetchProduct,
-  fetchRandomList,
   getRandomProducts,
   getProducts,
+  getReviewsOfProduct,
+  addToCart,
 } from "../../../firebase";
 import NoImage from "../../assets/no-image.jpeg";
 import { suggestions, flavour as flavourName } from "../../database/StaticData";
+import PageLoader from "../../components/PageLoader";
+import { Context } from "../../Context";
 
 export default function Product() {
   const location = useLocation();
   const { from } = location.state || {};
+  const [api, contextHolder] = notification.useNotification();
 
   const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [reviewSubmitted, setReviewSubmitted] = useState(false);
+  const [reviewList, setReviewList] = useState([]);
   const [reviewData, setReviewData] = useState(null);
   const [discountedPrice, setDiscountedPrice] = useState(null);
   const [price, setPrice] = useState(null);
   const [discount, setDiscount] = useState(null);
   const [flavour, setFlavour] = useState(null);
   const [weight, setWeight] = useState(null);
+  const [qty, setQty] = useState(1);
 
   const [suggested, setSuggested] = useState(null);
   const [suggestedText, setSuggestedText] = useState("");
@@ -42,6 +49,16 @@ export default function Product() {
   const [wishlisted, setWishlisted] = useState(true);
 
   const [open, setOpen] = useState(false);
+  const { setCartCount } = useContext(Context);
+
+  const openNotification = (productName, placement) => {
+    api.open({
+      message: `${productName} added to cart!`,
+      // description: <Context.Consumer>{({ name }) => `Hello, ${name}!`}</Context.Consumer>,
+      placement,
+      duration: 1.5,
+    });
+  };
 
   const hide = () => {
     setOpen(false);
@@ -50,30 +67,17 @@ export default function Product() {
     setOpen(newOpen);
   };
 
-  const updateReviewData = (data) => {
-    console.log("updateReviewData called :: ", data);
-    setReviewData({
-      ratings: data.ratings,
-      rating: data.rating,
-      ratingNo: data.ratingNo,
-      reviews: data.reviews,
-    });
-  };
-
   let { id } = useParams();
 
   useEffect(() => {
+    setQty(1);
     window.scrollTo(0, 0);
-
-    // fetchProduct(id).then((product) => {
     getProductById(id).then((product) => {
-      console.log("GET DATA IN PRODUCT PAGE :: ", product);
       setData(product);
       setReviewData({
         ratings: product.ratings,
         rating: product.rating,
         ratingNo: product.ratingNo,
-        reviews: product.reviews,
       });
       if (product.priceList && product.priceList.length > 0) {
         setPrice(product.priceList[0].price);
@@ -95,8 +99,12 @@ export default function Product() {
         );
       }
       fetchSuggestions(product.category);
+      setIsLoading(false);
     });
-  }, [id]);
+    getReviewsOfProduct(id).then((reviews) => {
+      setReviewList(reviews);
+    });
+  }, [id, reviewSubmitted]);
 
   const getPrice = (flavour, weight) => {
     const obj = data.priceList.find(
@@ -108,9 +116,7 @@ export default function Product() {
   };
 
   const fetchSuggestions = async (category) => {
-    console.log("fetchSuggestions -> ", from);
     const prevRoute = from ? from.split("/") : null;
-    console.log("prev route :: ", prevRoute);
     if (prevRoute && Array.isArray(prevRoute)) {
       if (
         prevRoute[1] === "occasion" &&
@@ -150,8 +156,40 @@ export default function Product() {
     setmoreCategory(_moreCategory);
   };
 
+  const handleAddToCart = () => {
+    addToCart({
+      id,
+      weight: weight
+        ? weight
+        : data.weight && data.weight.length > 0
+        ? data.weight[0]
+        : data.weight
+        ? data.weight
+        : null,
+      flavour: flavour
+        ? flavour
+        : data.flavour && data.flavour.length > 0
+        ? data.flavour[0]
+        : data.flavour
+        ? data.flavour
+        : null,
+      qty,
+    })
+      .then((res) => {
+        console.log("Add to cart res ", res);
+        openNotification(data.name, "topRight");
+        setCartCount((prev) => prev + 1);
+      })
+      .catch((err) => console.log("Add to cart error ", err));
+  };
+
+  if (isLoading) {
+    return <PageLoader />;
+  }
+
   return (
     <div className="pt-24 bg-secondary2">
+      {contextHolder}
       {data && (
         <>
           <div className="flex flex-col md:flex-row">
@@ -172,10 +210,10 @@ export default function Product() {
                 {discountedPrice ? (
                   <>
                     <span className="text-accent2 text-2xl font-bold mr-2">
-                      {discountedPrice}
+                      Rs. {discountedPrice}
                     </span>
                     <span className="text-gray-500 line-through text-xl font-normal mr-2">
-                      {price}
+                      Rs. {price}
                     </span>
                     {discount && (
                       <div className="bg-green-300 rounded px-2 text-green-800 text-sm mr-2">
@@ -185,7 +223,7 @@ export default function Product() {
                   </>
                 ) : (
                   <span className="text-accent2 text-2xl font-bold mr-2">
-                    {price}
+                    Rs. {price}
                   </span>
                 )}
 
@@ -292,7 +330,7 @@ export default function Product() {
               {/* SELECT WEIGHT END */}
 
               <div className="my-8 flex justify-between items-center">
-                <Quantity />
+                <Quantity qty={qty} setQty={setQty} />
                 <div
                   className="pr-2"
                   onClick={() => {
@@ -314,7 +352,10 @@ export default function Product() {
                   )}
                 </div>
               </div>
-              <div className="w-full my-2 py-2 text-center bg-accent2 roboto text-secondary1 uppercase rounded-md">
+              <div
+                className="w-full my-2 py-2 text-center bg-accent2 roboto text-secondary1 uppercase rounded-md"
+                onClick={handleAddToCart}
+              >
                 Add To Cart
               </div>
               <div className="my-12">
@@ -332,9 +373,9 @@ export default function Product() {
               ratings={reviewData.ratings}
               rating={reviewData.rating}
               ratingNo={reviewData.ratingNo}
-              reviews={reviewData.reviews}
+              reviews={reviewList}
               id={data.id}
-              updateReviewData={updateReviewData}
+              setReviewSubmitted={setReviewSubmitted}
             />
           )}
         </>

@@ -1,56 +1,118 @@
 import { Link, useNavigate } from "react-router-dom";
 import Image from "../../components/Image";
 import Quantity from "../../components/Quantity";
-import { CheckCircleOutlined } from "@ant-design/icons";
+import { CheckCircleOutlined, CloseCircleOutlined } from "@ant-design/icons";
 import Veg from "../../assets/icons/veg.png";
-import NonVeg from "../../assets/icons/nonveg.jpeg";
+import NonVeg from "../../assets/icons/nonveg.png";
+import { useEffect, useState } from "react";
+import { flavour } from "../../database/StaticData";
+import { removeFromCart } from "../../../firebase";
+import { add, format } from "date-fns";
 
-export default function CartProductCard({ data, width }) {
+export default function CartProductCard({
+  data,
+  width,
+  handleRemoveFromCart,
+  cartItems,
+  setCartItems,
+  updateCartSummary,
+}) {
   const navigate = useNavigate();
+  const { product, info } = data;
+  const [qty, setQty] = useState(info.qty);
+
+  const updateQuantityInLocal = (qty) => {
+    let cart = localStorage.getItem("cart");
+    if (cart) {
+      cart = JSON.parse(cart);
+      cart.forEach((el) => {
+        console.log("el.orderId ", el.orderId);
+        console.log("info.orderId ", info.orderId);
+        if (el.orderId === info.orderId) {
+          console.log("Qty reset to ", qty);
+          el.qty = qty;
+        }
+      });
+      localStorage.setItem("cart", JSON.stringify(cart));
+    }
+    const updatedCartItems = cartItems.map((el) => {
+      if (el.info.orderId === info.orderId) {
+        el.info.qty = qty;
+      }
+      return el;
+    });
+    setCartItems(updatedCartItems);
+    updateCartSummary(updatedCartItems);
+  };
+
   return (
-    <Link to={`/product/${data.id}`}>
+    <Link to={`/product/${info.id}`}>
       <div
-        className="w-full min-h-52 flex flex-col md:flex-row my-2 p-4 shadow-sm hover:shadow-md cursor-pointer"
+        className="w-full min-h-52 flex flex-col md:flex-row md:items-end my-2 p-4 shadow-sm hover:shadow-md cursor-pointer relative"
         style={{ border: "#0505050f solid 1px" }}
       >
         <div className="w-full md:w-4/5 flex">
           <Image
             height="200px"
-            src={data.image}
+            src={
+              Array.isArray(product.images) ? product.images[0] : product.images
+            }
             className="cover w-1/4 min-w-[150px]"
           />
           <div className="pl-4 pr-2 sm:px-8 py-2 w-3/4">
             <div className="text-accent2 mb-2 flex flex-col items-start sm:items-center sm:flex-row text-lg font-bold">
-              <span>{data.name}</span>
+              <span>{product.name}</span>
               <img
-                src={data.eggless ? Veg : NonVeg}
+                src={product.eggless ? Veg : NonVeg}
                 className="h-5 w-5 sm:ml-2"
               />
             </div>
             <div className="flex flex-col xs:flex-row text-accent2 mb-6 text-sm">
-              <span className="mr-4">Weight: {data.weight}</span>
-              <span>Flavour: {data.flavour}</span>
+              {info.weight && (
+                <span className="mr-4">Weight: {info.weight}</span>
+              )}
+              {flavour[info.flavour] && (
+                <span>Flavour: {flavour[info.flavour]}</span>
+              )}
             </div>
             {width > 480 && (
               <>
                 <div className="flex w-full items-center my-2 text-sm">
                   <div className="w-1/4 sm:w-1/3">Price</div>
+                  {console.log(
+                    "info.price | info.discountedPrice ",
+                    info.price,
+                    info.discountedPrice
+                  )}
                   <Price
-                    price={data.price}
-                    discountedPrice={data.discountedPrice}
-                    discount={data.discount}
+                    price={info.price}
+                    discountedPrice={
+                      info.price - info.discountedPrice > 0
+                        ? info.discountedPrice
+                        : null
+                    }
+                    discount={info.discount}
                   />
                 </div>
                 <div className="flex w-full items-center my-2 text-sm">
                   <div className="w-1/4 sm:w-1/3">Quantity</div>
-                  <Quantity size="small" initialState={data.qty} />
+                  <Quantity
+                    size="small"
+                    qty={qty}
+                    setQty={setQty}
+                    updateQuantityInLocal={updateQuantityInLocal}
+                  />
                 </div>
                 <div className="flex w-full items-center my-2 text-sm">
                   <div className="w-1/4 sm:w-1/3">Total</div>
                   <Price
-                    price={data.price}
-                    discountedPrice={data.discountedPrice}
-                    discount={data.discount}
+                    price={info.price * qty}
+                    discountedPrice={
+                      info.price - info.discountedPrice > 0
+                        ? info.discountedPrice * qty
+                        : null
+                    }
+                    discount={info.discount}
                   />
                 </div>
               </>
@@ -68,20 +130,25 @@ export default function CartProductCard({ data, width }) {
           >
             <div className="w-1/3 flex flex-col items-center">
               <Price
-                price={data.price}
-                discountedPrice={data.discountedPrice}
-                discount={data.discount}
+                price={product.minPrice}
+                discountedPrice={product.discountedPrice}
+                discount={product.discount}
                 col={true}
               />
             </div>
             <div className="w-1/3 flex justify-center">
-              <Quantity size="small" initialState={data.qty} />
+              <Quantity
+                size="small"
+                qty={qty}
+                setQty={setQty}
+                updateQuantityInLocal={updateQuantityInLocal}
+              />
             </div>
             <div className="w-1/3 flex flex-col items-center">
               <Price
-                price={data.price}
-                discountedPrice={data.discountedPrice}
-                discount={data.discount}
+                price={product.minPrice * qty}
+                discountedPrice={product.discountedPrice * qty}
+                discount={product.discount}
                 col={true}
                 bold={true}
               />
@@ -89,17 +156,43 @@ export default function CartProductCard({ data, width }) {
           </div>
         )}
 
-        <div className="h-full w-full md:w-1/5 flex flex-row md:flex-col justify-between items-end">
-          <div className="text-sm flex flex-col">
+        <CloseCircleOutlined
+          className="absolute top-4 right-4 text-gray-400 text-2xl"
+          onClick={(e) => handleRemoveFromCart(e, info.orderId)}
+        />
+
+        {/* <div className="bg-gray-200 h-full w-full md:w-1/5 flex flex-row md:flex-col justify-between items-end">
+          <div className="text-sm flex flex-col justify-end">
             <div>
               <CheckCircleOutlined className="text-green-500" /> Delivery by
             </div>
-            <h4>{data.delivery}</h4>
+            <h4>{info.deliveryDate}</h4>
           </div>
-          <div className="text-sm text-gray-500 underline">
-            <div className="my-2">Remove from Cart</div>
+          <div className="text-sm text-gray-500 underline text-right">
+            <div
+              className="my-2"
+              onClick={(e) => handleRemoveFromCart(e, info.orderId)}
+            >
+              Remove from Cart
+            </div>
             <div className="my-2">Move to Wishlist</div>
           </div>
+        </div> */}
+
+        <div className="w-full md:w-1/5 flex flex-row md:flex-col justify-between items-end text-sm">
+          <div>
+            <CheckCircleOutlined className="text-green-500" /> Delivery by
+          </div>
+          <h4>
+            {format(
+              add(new Date(), {
+                days: product.deliveryTimeInDays
+                  ? product.deliveryTimeInDays
+                  : 0,
+              }),
+              "dd/MM/yyyy"
+            )}
+          </h4>
         </div>
       </div>
     </Link>
@@ -115,13 +208,13 @@ const Price = ({
 }) => {
   return (
     <div className={`flex ${col && "flex-col"} items-center`}>
-      {discountedPrice ? (
+      {discountedPrice > 0 ? (
         <>
           <span className={`text-accent2 mr-2 ${bold && "font-bold"}`}>
-            {discountedPrice}
+            Rs. {discountedPrice}
           </span>
           <span className="text-gray-500 line-through font-normal mr-2">
-            {price}
+            Rs. {price}
           </span>
           {discount && (
             <div
@@ -134,7 +227,7 @@ const Price = ({
         </>
       ) : (
         <span className={`text-accent2 mr-2 ${bold && "font-bold"}`}>
-          {price}
+          Rs. {price}
         </span>
       )}
     </div>

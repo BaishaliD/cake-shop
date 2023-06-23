@@ -1,10 +1,11 @@
-import { Divider, Spin } from "antd";
+import { Divider } from "antd";
 import { useParams } from "react-router-dom";
 import { TypesPage } from "../../database/StaticData";
 import Gallery from "../../components/Gallery";
 import Filter from "../../components/Filter";
 import { useEffect, useState } from "react";
 import { getProducts } from "../../../firebase";
+import PageLoader from "../../components/PageLoader";
 
 export default function Type() {
   const { type } = useParams();
@@ -14,7 +15,6 @@ export default function Type() {
   useEffect(() => {
     window.scrollTo(0, 0);
     getProducts("type", type).then((data) => {
-      console.log("DATA IN COMPONENT :: ", data);
       setProducts(data);
       setIsLoading(false);
     });
@@ -25,12 +25,12 @@ export default function Type() {
     <div className="pt-24">
       {!isLoading && data ? (
         <>
-          <div className="flex min-h-screen">
-            <div className="w-1/5 min-h-full bg-primary1">
+          <div className="flex min-h-screen bg-secondary1 relative">
+            {/* <div className="bg-secondary2 fixed top-24 w-screen z-[60]">
               <Filter />
-            </div>
-            <div className="w-4/5 min-h-full bg-secondary1">
-              <div className="pt-8 text-accent1 w-full text-center text-4xl font-bold">
+            </div> */}
+            <div className="w-full min-h-full pt-0">
+              <div className="pt-8 text-accent1 w-full text-center text-2xl font-bold">
                 {data.title}
               </div>
               <Divider />
@@ -39,9 +39,7 @@ export default function Type() {
           </div>
         </>
       ) : (
-        <div className="min-h-screen flex justify-center items-center">
-          <Spin size="large" />
-        </div>
+        <PageLoader />
       )}
     </div>
   );

@@ -16,6 +16,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "antd": "^5.2.3",
+    "date-fns": "^2.30.0",
     "firebase": "^9.15.0",
     "framer-motion": "^10.4.0",
     "rc-util": "^5.28.0",

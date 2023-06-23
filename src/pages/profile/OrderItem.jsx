@@ -1,7 +1,7 @@
 import Image from "../../components/Image";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import Veg from "../../assets/icons/veg.png";
-import NonVeg from "../../assets/icons/nonveg.jpeg";
+import NonVeg from "../../assets/icons/nonveg.png";
 
 export default function OrderItem({ data }) {
   return (

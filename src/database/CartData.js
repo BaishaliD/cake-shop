@@ -57,7 +57,6 @@ export let addressBook = [
     city: "Kolkata",
     state: "West Bengal",
     type: "home",
-    default: true,
   },
   {
     id: "add_02",
@@ -70,7 +69,6 @@ export let addressBook = [
     city: "Gurgaon",
     state: "Haryana",
     type: "work",
-    default: false,
   },
   {
     id: "add_03",
@@ -83,6 +81,5 @@ export let addressBook = [
     city: "Gurgaon",
     state: "Haryana",
     type: "home",
-    default: false,
   },
 ];

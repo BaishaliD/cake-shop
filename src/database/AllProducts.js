@@ -1405,7 +1405,7 @@ export const fondantCakes = [
     name: "Darth Vader's Temptation",
     desc: "Star Wars themed fondant cake",
     minPrice: "Rs. 1,800",
-    discountedPrice: "Rs. 1,440",
+    discountedPrice: "Rs. 1,340",
     discount: "20%",
     rating: 3.5,
     ratingNo: 8,

@@ -23,7 +23,6 @@ export default function Login() {
   }, [isSignUp]);
 
   const onFinish = (values) => {
-    console.log("Success:", values);
     if (isSignUp) {
       //register user
       handleSignUpWithEmailAndPassword(
@@ -32,23 +31,25 @@ export default function Login() {
         values.password
       )
         .then((res) => {
-          console.log("User registered with email : ", res);
           navigate("/");
         })
-        .catch((error) => setErrorMessage(error));
+        .catch((error) => {
+          console.error("handleSignUpWithEmailAndPassword ", error);
+          setErrorMessage(error);
+        });
     } else {
       //login user
       handleSignInWithEmailAndPassword(values.email, values.password)
         .then((res) => {
-          console.log("User logged in  with email: ", res);
           navigate("/");
         })
-        .catch((error) => setErrorMessage(error));
+        .catch((error) => {
+          console.error("handleSignInWithEmailAndPassword ", error);
+          setErrorMessage(error);
+        });
     }
   };
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
+  const onFinishFailed = (errorInfo) => {};
   return (
     <div className="w-screen h-screen bg-cake-pattern bg-center bg-repeat bg-[length:400px] flex justify-center items-center">
       <div className="bg-white w-[500px] xs:rounded-xl shadow-lg p-8 xs:p-16 flex-col justify-center items-center">
@@ -65,10 +66,12 @@ export default function Login() {
             onClick={() =>
               handleSignInWithGooglePopup()
                 .then((res) => {
-                  console.log("User logged in via Google : ", res);
                   navigate("/");
                 })
-                .catch((error) => setErrorMessage(error))
+                .catch((error) => {
+                  console.error("handleSignInWithGooglePopup ", error);
+                  setErrorMessage(error);
+                })
             }
           />
           {/* <img
@@ -77,7 +80,6 @@ export default function Login() {
             onClick={() =>
               signInWithFacebookPopup()
                 .then((res) => {
-                  console.log("User logged in via Google : ", res);
                   navigate("/");
                 })
                 .catch((error) => setErrorMessage(error))

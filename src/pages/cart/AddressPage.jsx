@@ -7,26 +7,31 @@ import { fetchCartData, removeAddress } from "../../../firebase";
 import Address from "./Address";
 import CartSummary from "./CartSummary";
 import { useNavigate } from "react-router-dom";
+import { fetchAddressBook } from "../../../firebase";
+import Error from "./Error";
+import PageLoader from "../../components/PageLoader";
 
 export default function AddressPage() {
   const navigate = useNavigate();
   const { cartState, updateCartState } = useContext(Context);
   const [width] = useWindowSize();
-  const [defaultAddress, setDefaultAddress] = useState({});
   const [addressBook, setAddressBook] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    fetchCartData().then((res) => {
-      const defaultAdd = res.addressBook.find(
-        (address) => address.default === true
-      );
-      const otherAdd = res.addressBook.filter(
-        (address) => address.default === false
-      );
-      setDefaultAddress(defaultAdd);
-      setAddressBook(otherAdd);
-    });
+    setLoading(true);
+    fetchAddressBook()
+      .then((res) => {
+        setError(false);
+        setAddressBook(res);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setError(true);
+        setLoading(false);
+      });
   }, []);
 
   const goToStep = (step) => {
@@ -47,11 +52,16 @@ export default function AddressPage() {
   };
 
   const updateAddressBook = (addressBook) => {
-    const defaultAdd = addressBook.find((address) => address.default === true);
-    const otherAdd = addressBook.filter((address) => address.default === false);
-    setDefaultAddress(defaultAdd);
-    setAddressBook(otherAdd);
+    setAddressBook(addressBook);
   };
+
+  if (loading) {
+    return <PageLoader />;
+  }
+
+  if (error) {
+    return <Error />;
+  }
 
   return (
     <div className="pt-24 bg-secondary2 pb-16">
@@ -69,14 +79,13 @@ export default function AddressPage() {
           Step {cartState + 1}/3
         </div>
       </div>
-      {defaultAddress || (addressBook && addressBook.length > 0) ? (
+      {addressBook && addressBook.length > 0 ? (
         <div className="flex flex-col lg:flex-row justify-center">
           <div
             className="h-full w-full lg:w-2/3 flex flex-col px-2 sm:px-8"
             style={{ borderRight: width > 1023 ? "solid 1px #0505050f" : "" }}
           >
             <Address
-              defaultAddress={defaultAddress}
               addressBook={addressBook}
               removeAddress={removeAddressHandler}
               updateAddressBook={updateAddressBook}
@@ -85,7 +94,14 @@ export default function AddressPage() {
           <CartSummary />
         </div>
       ) : (
-        <h1>No address added!</h1>
+        <div className="w-full text-center pt-4 text-2xl px-16 text-gray-500">
+          <div>You have not added any items to the Cart.</div>
+          <a href="/products">
+            <span className="underline text-accent1 cursor-pointer">
+              Continue Shopping
+            </span>
+          </a>
+        </div>
       )}
     </div>
   );

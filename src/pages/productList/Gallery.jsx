@@ -2,6 +2,7 @@ import ProductCard from "../../components/ProductCard";
 import { Pagination } from "antd";
 import { useState } from "react";
 import { useEffect } from "react";
+import { HeartOutlined } from "@ant-design/icons";
 
 export default function Gallery({ products }) {
   const [productList, setProductList] = useState([]);
@@ -32,7 +33,6 @@ export default function Gallery({ products }) {
               discountedPrice={item.discountedPrice}
               rating={item.rating}
               eggless={item.eggless}
-              buttonText="Add To Cart"
             />
           ))}
       </div>

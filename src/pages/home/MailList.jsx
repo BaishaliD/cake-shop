@@ -35,17 +35,10 @@ export default function MailList() {
             placeholder="Type in your email id"
             value={email}
             onChange={(e) => {
-              console.log("Input changed!");
               setEmail(e.target.value);
             }}
           />
-          <Button
-            type="primary"
-            className="px-8 bg-accent1"
-            onClick={() => {
-              console.log("Email Id is : ", email);
-            }}
-          >
+          <Button type="primary" className="px-8 bg-accent1" onClick={() => {}}>
             Join
           </Button>
         </Input.Group>

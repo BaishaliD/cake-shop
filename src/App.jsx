@@ -4,7 +4,6 @@ import { Outlet, Routes, Route } from "react-router-dom";
 import Home from "./pages/home/Home.main";
 import Product from "./pages/product/Product.main";
 import ProductList from "./pages/productList/ProductList.main";
-import Cart from "./pages/cart/Cart.main";
 import Wishlist from "./pages/wishlist/Wishlist.main";
 import AboutUs from "./pages/AboutUs";
 import NavBar from "./components/NavBar";
@@ -29,7 +28,7 @@ function App() {
   const [sideMenu, setSideMenu] = useState(false);
 
   return (
-    <div className="App h-content">
+    <div className="App">
       {location.pathname !== "/login" && (
         <SideMenu sideMenu={sideMenu} setSideMenu={setSideMenu} />
       )}

@@ -20,6 +20,11 @@ body {
   font-family: "Acme", sans-serif;
 }
 
+.App {
+  max-width: 100vw;
+  overflow: hidden;
+}
+
 .tr-right {
   transform: translateX(8px);
 }
@@ -93,4 +98,16 @@ body {
 
 .w-500 {
   width: min(85vw, 500px);
+}
+
+.card-btn {
+  opacity: 0;
+  position: absolute;
+  bottom: -50px;
+  transition: 0.3s;
+}
+
+.show-btn:hover > .card-btn {
+  opacity: 1;
+  bottom: 0;
 }

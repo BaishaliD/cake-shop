@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { MenuOutlined, UserOutlined } from "@ant-design/icons";
@@ -9,17 +9,20 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { faUser, faHeart } from "@fortawesome/free-regular-svg-icons";
 import { useWindowSize } from "../Hooks";
+import { message } from "antd";
 import { Badge, Button, Avatar, Dropdown } from "antd";
+import { logOut } from "../../firebaseAuth";
+import { Context } from "../Context";
 
 export default function NavBar({ setSideMenu }) {
   const [width] = useWindowSize();
   const navigate = useNavigate();
   const [loggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
+  const { cartCount } = useContext(Context);
 
   useEffect(() => {
     isLoggedIn().then((res) => {
-      console.log("is logged in? ", res);
       setLoggedIn(res);
     });
   }, []);
@@ -57,7 +60,12 @@ export default function NavBar({ setSideMenu }) {
             <Icon icon={faSearch} />
             <ProfileDropdown username={username} loggedIn={loggedIn} />
             <Icon icon={faHeart} link="/wishlist" />
-            <Icon icon={faCartShopping} link="/cart" showBadge={true} />
+            <Icon
+              icon={faCartShopping}
+              link="/cart"
+              showBadge={true}
+              cartCount={cartCount}
+            />
           </div>
         </>
       ) : (
@@ -95,11 +103,15 @@ const NavItem = ({ name, link }) => {
   );
 };
 
-const Icon = ({ icon, link, showBadge = false }) => {
+const Icon = ({ icon, link, showBadge = false, cartCount }) => {
   const navigate = useNavigate();
   return (
     <div className="px-4">
-      <Badge count={showBadge ? 5 : 0} offset={[5, -5]} color={"#815B5B"}>
+      <Badge
+        count={showBadge ? cartCount : 0}
+        offset={[5, -5]}
+        color={"#815B5B"}
+      >
         <FontAwesomeIcon
           icon={icon}
           className="hover:opacity-75 cursor-pointer"
@@ -113,6 +125,8 @@ const Icon = ({ icon, link, showBadge = false }) => {
 };
 
 const ProfileDropdown = ({ username, loggedIn }) => {
+  const navigate = useNavigate();
+  const [messageApi, contextHolder] = message.useMessage();
   const items = [
     {
       label: (
@@ -120,6 +134,7 @@ const ProfileDropdown = ({ username, loggedIn }) => {
           className="w-[200px] py-2"
           style={{ borderBottom: "solid 1px #0505050f" }}
         >
+          {contextHolder}
           <div className="flex items-center mb-2">
             <Avatar size="large" icon={<UserOutlined />} />
             <div>
@@ -128,11 +143,31 @@ const ProfileDropdown = ({ username, loggedIn }) => {
             </div>
           </div>
 
-          <a href={loggedIn ? "#" : "/login"}>
-            <Button className="bg-accent1 text-secondary1 hover:bg-white">
-              {loggedIn ? "Sign Out" : "Login/Register"}
-            </Button>
-          </a>
+          <Button
+            className="bg-accent1 text-secondary1 hover:bg-white"
+            onClick={() => {
+              if (loggedIn) {
+                logOut()
+                  .then(() => {
+                    localStorage.removeItem("user");
+                    message.success("You are signed out", 1, () => {
+                      window.location.reload();
+                    });
+                  })
+                  .catch((err) => {
+                    console.error("logOut", err);
+                    messageApi.error(
+                      "Sorry, your Sign Out request could not be completed.",
+                      1
+                    );
+                  });
+              } else {
+                navigate("/login");
+              }
+            }}
+          >
+            {loggedIn ? "Sign Out" : "Login/Register"}
+          </Button>
         </div>
       ),
       key: "login",
@@ -149,7 +184,7 @@ const ProfileDropdown = ({ username, loggedIn }) => {
     },
     {
       label: (
-        <a href="/profile/orders">
+        <a href="/profile/address">
           <div className="py-2" style={{ borderBottom: "solid 1px #0505050f" }}>
             My Addresses
           </div>
@@ -159,7 +194,7 @@ const ProfileDropdown = ({ username, loggedIn }) => {
     },
     {
       label: (
-        <a href="/profile/orders">
+        <a href="/profile/reviews">
           <div className="py-2" style={{ borderBottom: "solid 1px #0505050f" }}>
             My Reviews
           </div>
@@ -169,7 +204,7 @@ const ProfileDropdown = ({ username, loggedIn }) => {
     },
     {
       label: (
-        <a href="/profile/orders">
+        <a href="/profile">
           <div className="py-2" style={{ borderBottom: "solid 1px #0505050f" }}>
             My Profile
           </div>
