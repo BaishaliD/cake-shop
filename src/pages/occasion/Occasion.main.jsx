@@ -38,11 +38,11 @@ export default function Occasion() {
               </div>
             </div>
           </div>
-          <div className="flex min-h-screen">
-            <div className="w-1/5 min-h-full bg-primary1">
+          <div className="bg-secondary1">
+            {/* <div className="bg-secondary2 w-screen pt-4">
               <Filter />
-            </div>
-            <div className="w-4/5 min-h-full bg-secondary1">
+            </div> */}
+            <div className="w-full min-h-full">
               <Gallery products={products} />
             </div>
           </div>

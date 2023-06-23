@@ -23,12 +23,12 @@ export default function Category() {
     <div className="pt-24">
       {!isLoading && data ? (
         <>
-          <div className="flex min-h-screen">
-            <div className="w-1/5 min-h-full bg-primary1">
+          <div className="flex min-h-screen bg-secondary1 relative">
+            {/* <div className="bg-secondary2 fixed top-24 w-screen z-[60]">
               <Filter />
-            </div>
-            <div className="w-4/5 min-h-full bg-secondary1">
-              <div className="pt-8 text-accent1 w-full text-center text-4xl font-bold">
+            </div> */}
+            <div className="w-full min-h-full pt-0">
+              <div className="pt-8 text-accent1 w-full text-center text-2xl font-bold">
                 {data.title}
               </div>
               <Divider />
