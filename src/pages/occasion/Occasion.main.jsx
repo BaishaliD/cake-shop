@@ -5,6 +5,7 @@ import Filter from "../../components/Filter";
 import { useEffect, useState } from "react";
 import { getProducts } from "../../../firebase";
 import PageLoader from "../../components/PageLoader";
+import Image from "../../assets/about-us/happiness.webp";
 
 export default function Occasion() {
   const { occasion } = useParams();
@@ -24,10 +25,10 @@ export default function Occasion() {
       {!isLoading && data && products ? (
         <>
           <div
-            className={`parallax h-96`}
-            style={{
-              backgroundImage: `url(/src/assets/occasion/${data.image})`,
-            }}
+            className="parallax h-96 bg-[url('/about-us/cake.jpeg')]"
+            // style={{
+            //   backgroundImage: Image,
+            // }}
           >
             <div className="h-full w-full flex flex-col items-center justify-center text-primary1 roboto font-bold bg-black50 px-16 py-4">
               <div className="mb-6 text-6xl opacity-100 acme text-center">
